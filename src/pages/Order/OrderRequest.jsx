@@ -10,8 +10,8 @@ export default function OrderRequest() {
     return (
         <>
         <div className='Wrapper'>
-            <div className='h'>매장에서 주문을</div>
-            <div className='h'>확인하고 있어요.</div>
+            <div className='h1'>매장에서 주문을</div>
+            <div className='h2'>확인하고 있어요.</div>
 
             <div className='c1'>접수된 후에는</div>
             <div className='c'>

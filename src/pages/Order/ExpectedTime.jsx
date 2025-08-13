@@ -4,6 +4,10 @@ export default function ExpectedTime() {
     return (
         <>
         <div className='Wrapper'>
+            <div className='logo'>
+                <img src="/TopBarLogo.svg"></img>
+            </div>
+            
             <div className='etplace'>
                 <img src="/place.svg" width={16.5} height={22} ></img>
                 <div className='etpltext'>서대문구 대현동</div>

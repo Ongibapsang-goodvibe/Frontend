@@ -6,9 +6,9 @@ const HealthForwarding = () => {
     return(
         <>
             <Wrapper>
-                <h1>문제를<br></br>
-                전달했어요.</h1>
-                <img src="IssueImage.png" alt="IssueImage" />
+                <h1>모든 답변이 끝났어요</h1>
+                <h2>다음에 또 뵐게요!</h2>
+                <img src="HealthImage.png" alt="하트뿅뿅 너구리" />
             </Wrapper>
         </>
     );
@@ -24,11 +24,15 @@ const Wrapper = styled.div`
 
   h1{
     margin-top: 6.25rem;
-    margin-bottom: 6.94rem;
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
-    line-height: 160%; /* 4rem */
-    letter-spacing: -0.0275rem;
+  }
+
+  h2{
+    margin-bottom: 2.88rem;
+    color: #FFF;
+    font-size: 2.5rem;
+    font-weight: 500;
   }
 `;

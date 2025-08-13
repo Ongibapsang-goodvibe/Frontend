@@ -8,7 +8,7 @@ const IssueForwarding = () => {
             <Wrapper>
                 <h1>문제를<br></br>
                 전달했어요.</h1>
-                <img src="IssueImage.png" alt="IssueImage" />
+                <img src="IssueImage.png" alt="슬퍼하는 너구리" />
             </Wrapper>
         </>
     );
@@ -28,7 +28,5 @@ const Wrapper = styled.div`
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
-    line-height: 160%; /* 4rem */
-    letter-spacing: -0.0275rem;
   }
 `;

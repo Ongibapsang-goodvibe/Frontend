@@ -7,25 +7,26 @@ const FoodComplaint = () => {
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const options = [
-    { id: 1, label: '너무 늦게 왔어요' },
-    { id: 2, label: '음식이 샜어요' },
-    { id: 3, label: '음식이 다 안 왔어요' },
+    { id: 1, label: '짜요' },
+    { id: 2, label: '싱거워요' },
+    { id: 3, label: '달아요' },
+    { id: 4, label: '느끼해요' },
     ];
 
     const handleDone = () => {
         const selectedOption = options.find(opt => opt.id === selected);
 
-        if (selected === 4) {
+        if (selected === 5) {
         // 4번(말로 할게요) 선택 시 음성 인식 페이지로 이동
         navigate('/voice-recognition');
         return;
         }
         
         if (selectedOption) {
-            console.log("선택한 옵션:", selectedOption.label);
+            console.log(selectedOption.label);
             // 여기에 서버 전송 / API 호출 로직
         }
-        navigate('/issue-forwarding');
+        navigate('/health-check');
     };
 
     return(
@@ -38,7 +39,7 @@ const FoodComplaint = () => {
                     className={selected === 1 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(1)}
                 >
-                    <span>너무 늦게 왔어요</span>
+                    <span>짜요</span>
                 </Button>
 
                 <Button
@@ -46,7 +47,7 @@ const FoodComplaint = () => {
                     className={selected === 2 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(2)}
                 >
-                    <span>음식이 샜어요</span>
+                    <span>싱거워요</span>
                 </Button>
 
                 <Button
@@ -54,13 +55,21 @@ const FoodComplaint = () => {
                     className={selected === 3 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(3)}
                 >
-                    <span>음식이 다 안 왔어요</span>
+                    <span>달아요</span>
                 </Button>
 
                 <Button
                     type="button"
                     className={selected === 4 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(4)}
+                >
+                    <span>느끼해요</span>
+                </Button>
+
+                <Button
+                    type="button"
+                    className={selected === 5 ? 'normal active' : 'normal'}
+                    onClick={() => setSelected(5)}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="36" viewBox="0 0 22 36" fill="none">
                         <path d="M4.40002 7.00032C4.40002 5.24991 5.09538 3.57119 6.33312 2.33346C7.57086 1.09574 9.2496 0.400391 11 0.400391C12.7505 0.400391 14.4292 1.09574 15.6669 2.33346C16.9047 3.57119 17.6 5.24991 17.6 7.00032V18.0002C17.6 19.7506 16.9047 21.4293 15.6669 22.6671C14.4292 23.9048 12.7505 24.6001 11 24.6001C9.2496 24.6001 7.57086 23.9048 6.33312 22.6671C5.09538 21.4293 4.40002 19.7506 4.40002 18.0002V7.00032Z" fill="white"/>
@@ -73,7 +82,7 @@ const FoodComplaint = () => {
                     <Button
                         type="button"
                         className="back"
-                        onClick={() => navigate('/receipt-check')}
+                        onClick={() => navigate('/eating-check')}
                     >
                         <span>돌아가기</span>
                     </Button>
@@ -102,16 +111,14 @@ const Wrapper = styled.div`
 
   h1{
     margin-top: 3.38rem;
-    margin-bottom: 4.49rem;
+    margin-bottom: 5.44rem;
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
-    line-height: 160%; /* 4rem */
-    letter-spacing: -0.0275rem;
   }
 
   .done-container{
-    margin-top: 2.69rem;
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
     gap: 1.56rem;
@@ -130,16 +137,14 @@ const Button = styled.button`
   &.normal{
     border-radius: 0.5rem;
     border: 1px solid #FFF;
-    height: 5.5rem;
+    height: 4.375rem;
     width: 20rem;
     margin-bottom: 1.25rem;
 
     background: linear-gradient(128deg, rgba(255, 255, 255, 0.20) 0.02%, rgba(115, 115, 115, 0.00) 91.11%);
     color: #FFF;
-    text-align: center;
     font-size: 2.25rem;
     font-weight: 600;
-    line-height: 160%; /* 3.6rem */
   }
 
   &.normal.active {
@@ -159,8 +164,6 @@ const Button = styled.button`
     color: #fff;
     font-size: 2rem;
     font-weight: 700;
-    line-height: 160%; /* 3.2rem */
-    letter-spacing: -0.022rem;
   }
   &.done {
     border-radius: 0.75rem;
@@ -171,7 +174,5 @@ const Button = styled.button`
     color: #000;
     font-size: 2rem;
     font-weight: 700;
-    line-height: 160%; /* 3.2rem */
-    letter-spacing: -0.022rem;
   }
 `;

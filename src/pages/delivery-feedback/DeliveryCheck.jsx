@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const ReceiptCheck = () => {
+const DeliveryCheck = () => {
     const navigate = useNavigate();
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
@@ -48,7 +48,7 @@ const ReceiptCheck = () => {
     );
 };
 
-export default ReceiptCheck;
+export default DeliveryCheck;
 
 const Wrapper = styled.div`
   height: 100%;
@@ -62,8 +62,6 @@ const Wrapper = styled.div`
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
-    line-height: 160%; /* 4rem */
-    letter-spacing: -0.0275rem;
   }
 `;
 
@@ -85,10 +83,8 @@ const Button = styled.button`
 
     background: linear-gradient(128deg, rgba(255, 255, 255, 0.20) 0.02%, rgba(115, 115, 115, 0.00) 91.11%);
     color: #FFF;
-    text-align: center;
     font-size: 2.25rem;
     font-weight: 600;
-    line-height: 160%; /* 3.6rem */
   }
 
   &.normal.active {
@@ -109,7 +105,5 @@ const Button = styled.button`
     color: #000;
     font-size: 2rem;
     font-weight: 700;
-    line-height: 160%; /* 3.2rem */
-    letter-spacing: -0.022rem;
   }
 `;

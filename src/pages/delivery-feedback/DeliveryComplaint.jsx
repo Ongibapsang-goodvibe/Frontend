@@ -22,7 +22,7 @@ const DeliveryComplaint = () => {
         }
         
         if (selectedOption) {
-            console.log("선택한 옵션:", selectedOption.label);
+            console.log(selectedOption.label);
             // 여기에 서버 전송 / API 호출 로직
         }
         navigate('/issue-forwarding');
@@ -73,7 +73,7 @@ const DeliveryComplaint = () => {
                     <Button
                         type="button"
                         className="back"
-                        onClick={() => navigate('/receipt-check')}
+                        onClick={() => navigate('/delivery-check')}
                     >
                         <span>돌아가기</span>
                     </Button>
@@ -102,16 +102,14 @@ const Wrapper = styled.div`
 
   h1{
     margin-top: 3.38rem;
-    margin-bottom: 4.49rem;
+    margin-bottom: 6rem;
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
-    line-height: 160%; /* 4rem */
-    letter-spacing: -0.0275rem;
   }
 
   .done-container{
-    margin-top: 2.69rem;
+    margin-top: 1.62rem;
     display: flex;
     justify-content: center;
     gap: 1.56rem;
@@ -136,10 +134,8 @@ const Button = styled.button`
 
     background: linear-gradient(128deg, rgba(255, 255, 255, 0.20) 0.02%, rgba(115, 115, 115, 0.00) 91.11%);
     color: #FFF;
-    text-align: center;
     font-size: 2.25rem;
     font-weight: 600;
-    line-height: 160%; /* 3.6rem */
   }
 
   &.normal.active {
@@ -159,8 +155,6 @@ const Button = styled.button`
     color: #fff;
     font-size: 2rem;
     font-weight: 700;
-    line-height: 160%; /* 3.2rem */
-    letter-spacing: -0.022rem;
   }
   &.done {
     border-radius: 0.75rem;
@@ -171,7 +165,5 @@ const Button = styled.button`
     color: #000;
     font-size: 2rem;
     font-weight: 700;
-    line-height: 160%; /* 3.2rem */
-    letter-spacing: -0.022rem;
   }
 `;

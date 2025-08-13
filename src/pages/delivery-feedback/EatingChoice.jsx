@@ -9,7 +9,7 @@ const EatingChoice = () => {
         <>
             <Wrapper>
                 <h1>맛있게 드세요!</h1>
-                <img src="EatingImage.png" alt="IssueImage" />
+                <img src="EatingImage.png" alt="기뻐하는 너구리" />
                 <div className="btn-container">
                     <Button
                         type="button"
@@ -46,8 +46,6 @@ const Wrapper = styled.div`
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
-    line-height: 160%; /* 4rem */
-    letter-spacing: -0.0275rem;
   }
 
   img{
@@ -75,8 +73,6 @@ const Button = styled.button`
 
     font-size: 2rem;
     font-weight: 700;
-    line-height: 160%; /* 3.2rem */
-    letter-spacing: -0.022rem;
     color: #000;
 
     &.eating-mate {

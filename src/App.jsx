@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import TopBar from "./components/TopBar";
 //delivery-feedback
-import ReceiptCheck from "./pages/delivery-feedback/ReceiptCheck";
+import DeliveryCheck from "./pages/delivery-feedback/DeliveryCheck";
 import DeliveryComplaint from "./pages/delivery-feedback/DeliveryComplaint";
 import EatingChoice from "./pages/delivery-feedback/EatingChoice";
 import IssueForwarding from "./pages/delivery-feedback/IssueForwarding";
@@ -30,7 +30,7 @@ function MainLayout() {
   // ✅ 라우트별 progress 값
   const progressMap = {
     /*delivery-feedback*/
-    "/receipt-check": { step: 1, total: 2 },
+    "/delivery-check": { step: 1, total: 2 },
     "/delivery-complaint": { step: 2, total: 2 },
     "/issue-forwarding": { step: 0, total: 0 },
     "/eating-choice": { step: 2, total: 2 },
@@ -57,7 +57,7 @@ function MainLayout() {
           {/* 기본 진입 시 receipt-check로 이동 (추후 홈화면으로 링크)*/}
           <Route path="/" element={<Navigate to="/receipt-check" replace />} />
           {/*delivery-feedback*/}
-          <Route path="/receipt-check" element={<ReceiptCheck />} />
+          <Route path="/delivery-check" element={<DeliveryCheck />} />
           <Route path="/delivery-complaint" element={<DeliveryComplaint />} />
           <Route path="/issue-forwarding" element={<IssueForwarding />} />
           <Route path="/eating-choice" element={<EatingChoice />} />

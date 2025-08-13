@@ -17,6 +17,8 @@
   font-family: var(--font-main);
   text-align: center;
   font-style: normal;
+  letter-spacing: -0.0275rem;
+  line-height: 160%; /* 3.6rem */
 }
 
 html, body {

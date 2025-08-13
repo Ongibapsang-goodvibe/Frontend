@@ -1,12 +1,3 @@
-function App() {
-  return (
-    <>
-      <h1>온기밥상</h1>
-    </>
-  )
-}
-
-export default App
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import TopBar from "./components/TopBar";
 import ReceiptCheck from "./pages/delivery-feedback/ReceiptCheck";

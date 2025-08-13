@@ -20,10 +20,6 @@ function TopBar({ progress }) {
         >
             <Fill style={{ width: `${pct}%` }} />
         </Progress>
-
-        <Logo>
-            <img src="/TopBarLogo.svg" alt="온기밥상" className="logo-img" />
-        </Logo>
     </Wrapper>
   );
 };
@@ -35,28 +31,17 @@ const Wrapper = styled.header`
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: 3.375rem;
-  background: var(--background-color);
+  height: 0.4rem;
   display: flex;
   align-items: center;         /* 세로 중앙 */
   justify-content: center;     /* 가로 중앙 */
 `;
 
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  .logo-img {
-    width: auto;
-    display: block;
-  }
-`;
-
-
 /* 겹치는 프로그레스바: 헤더의 절대 좌표 상단 */
 const Progress = styled.div`
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 0.3rem;
+  height: 0.4rem;
   background: #818181;  /* 트랙 */
   overflow: hidden;
   pointer-events: none;                 /* 클릭 방해 X */

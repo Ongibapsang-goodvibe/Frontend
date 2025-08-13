@@ -1,0 +1,58 @@
+.Wrapper {
+    width: 393px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.occancel {
+    color: #FFF;
+text-align: center;
+font-family: var(--font-main);
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}
+
+.octext {
+    margin-top: 220px;
+}
+
+.octext1, .octext4 {
+    color: #FFF;
+text-align: center;
+font-family: var(--font-main);
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}
+
+.octext2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.octext3 {
+    color: var(--main-color);
+font-family: var(--font-main);
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: 140%;
+}
+
+.octext5 {
+    margin-top: 25px;
+    color: #8E8E8E;
+text-align: center;
+font-family: var(--font-main);
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: 160%;
+}

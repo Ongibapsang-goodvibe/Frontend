@@ -1,0 +1,58 @@
+.Wrapper {
+    width: 393px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.och {
+    color: #FFF;
+text-align: center;
+font-family: var(--font-main);
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}
+
+.t {
+    margin-top: 210px;
+    display: flex;
+    align-items: center;
+}
+
+.t1 {
+    color: var(--main-color);
+text-align: center;
+font-family: var(--font-main);
+font-size: 64px;
+font-style: normal;
+font-weight: 700;
+line-height: 140%;
+}
+
+.t2 {
+    color: #FFF;
+font-family: var(--font-main);
+font-size: 40px;
+font-style: normal;
+font-weight: 600;
+line-height: 140%;
+}
+
+.time {
+    margin-top: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.t3 {
+    color: #8E8E8E;
+text-align: center;
+font-family: var(--font-main);
+font-size: 24px;
+font-style: normal;
+font-weight: 600;
+line-height: 160%;
+}

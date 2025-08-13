@@ -3,11 +3,20 @@
   --main-color-mint: #80cbc4;
   --main-color-yellow: #ffe082;
   --background-color: #252525;
-  --text-color: #fff;
-  --button-color: #3B3B3B;
+  --text-color: #696969;
+  --button-color: #5D5D5D;;
   --font-main: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 
   --outer-bg: #fff; /* 바깥 배경색 */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-main);
+  text-align: center;
+  font-style: normal;
 }
 
 html, body {
@@ -33,8 +42,8 @@ body {
 }
 
 .app-wrapper {
-  width: 390px;
-  height: 844px;
+  width: 393px;
+  height: 852px;
   background: var(--background-color);
   color: var(--text-color);
   font-family: var(--font-main);

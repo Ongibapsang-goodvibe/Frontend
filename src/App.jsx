@@ -10,6 +10,9 @@ export default App
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import TopBar from "./components/TopBar";
 import ReceiptCheck from "./pages/delivery-feedback/ReceiptCheck";
+import Complaint from "./pages/delivery-feedback/Complaint";
+import EatingChoice from "./pages/delivery-feedback/EatingChoice";
+import IssueForwarding from "./pages/delivery-feedback/IssueForwarding";
 
 export default function App() {
   return (
@@ -28,6 +31,9 @@ function MainLayout() {
   // ✅ 라우트별 progress 값
   const progressMap = {
     "/receipt-check": { step: 1, total: 2 },
+    "/complaint": { step: 2, total: 2 },
+    "/issue-forwarding": { step: 0, total: 0 },
+    "/eating-choice": { step: 2, total: 2 },
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
@@ -40,9 +46,12 @@ function MainLayout() {
       {/* 콘텐츠 */}
       <main className="app-container">
         <Routes>
-          {/* 기본 진입 시 receipt-check로 이동 */}
+          {/* 기본 진입 시 receipt-check로 이동 (추후 홈화면으로 링크)*/}
           <Route path="/" element={<Navigate to="/receipt-check" replace />} />
           <Route path="/receipt-check" element={<ReceiptCheck />} />
+          <Route path="/complaint" element={<Complaint />} />
+          <Route path="/issue-forwarding" element={<IssueForwarding />} />
+          <Route path="/eating-choice" element={<EatingChoice />} />
         </Routes>
       </main>
     </>

@@ -55,7 +55,7 @@ function MainLayout() {
       <main className="app-container">
         <Routes>
           {/* 기본 진입 시 receipt-check로 이동 (추후 홈화면으로 링크)*/}
-          <Route path="/" element={<Navigate to="/receipt-check" replace />} />
+          <Route path="/" element={<Navigate to="/delivery-check" replace />} />
           {/*delivery-feedback*/}
           <Route path="/delivery-check" element={<DeliveryCheck />} />
           <Route path="/delivery-complaint" element={<DeliveryComplaint />} />

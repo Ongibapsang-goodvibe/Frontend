@@ -1,9 +1,17 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import TopBar from "./components/TopBar";
+//delivery-feedback
 import ReceiptCheck from "./pages/delivery-feedback/ReceiptCheck";
-import Complaint from "./pages/delivery-feedback/Complaint";
+import DeliveryComplaint from "./pages/delivery-feedback/DeliveryComplaint";
 import EatingChoice from "./pages/delivery-feedback/EatingChoice";
 import IssueForwarding from "./pages/delivery-feedback/IssueForwarding";
+//food-health-feedback
+import EatingCheck from "./pages/food-health-feedback/EatingCheck";
+import FoodSatisfaction from "./pages/food-health-feedback/FoodSatisfaction";
+import FoodComplaint from "./pages/food-health-feedback/FoodComplaint";
+import HealthCheck from "./pages/food-health-feedback/HealthCheck";
+import FeelingCheck from "./pages/food-health-feedback/FeelingCheck";
+import HealthForwarding from "./pages/food-health-feedback/HealthForwarding";
 
 export default function App() {
   return (
@@ -21,10 +29,19 @@ function MainLayout() {
 
   // ✅ 라우트별 progress 값
   const progressMap = {
+    /*delivery-feedback*/
     "/receipt-check": { step: 1, total: 2 },
-    "/complaint": { step: 2, total: 2 },
+    "/delivery-complaint": { step: 2, total: 2 },
     "/issue-forwarding": { step: 0, total: 0 },
     "/eating-choice": { step: 2, total: 2 },
+    /*food-health-feedback*/
+    "/eating-check": { step: 1, total: 5 },
+    "/food-satisfaction": { step: 2, total: 5 },
+    "/food-complaint": { step: 2, total: 5 },
+    "/health-check": { step: 3, total: 5 },
+    "/feeling-check": { step: 4, total: 5 },
+    "/health-forwarding": { step: 5, total: 5 },
+
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
@@ -39,10 +56,18 @@ function MainLayout() {
         <Routes>
           {/* 기본 진입 시 receipt-check로 이동 (추후 홈화면으로 링크)*/}
           <Route path="/" element={<Navigate to="/receipt-check" replace />} />
+          {/*delivery-feedback*/}
           <Route path="/receipt-check" element={<ReceiptCheck />} />
-          <Route path="/complaint" element={<Complaint />} />
+          <Route path="/delivery-complaint" element={<DeliveryComplaint />} />
           <Route path="/issue-forwarding" element={<IssueForwarding />} />
           <Route path="/eating-choice" element={<EatingChoice />} />
+          {/*food-health-feedback*/}
+          <Route path="/eating-check" element={<EatingCheck />} />
+          <Route path="/food-satisfaction" element={<FoodSatisfaction />} />
+          <Route path="/food-complaint" element={<FoodComplaint />} />
+          <Route path="/health-check" element={<HealthCheck />} />
+          <Route path="/feeling-check" element={<FeelingCheck />} />
+          <Route path="/health-forwarding" element={<HealthForwarding />} />
         </Routes>
       </main>
     </>

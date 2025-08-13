@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const Complaint = () => {
+const FoodComplaint = () => {
     const navigate = useNavigate();
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
@@ -92,7 +92,7 @@ const Complaint = () => {
     );
 };
 
-export default Complaint;
+export default FoodComplaint;
 
 const Wrapper = styled.div`
   height: 100%;

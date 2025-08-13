@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const ReceiptCheck = () => {
+const EatingCheck = () => {
     const navigate = useNavigate();
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const handleDone = () => {
         if (selected === 'yes') navigate('/eating-choice');
-        if (selected === 'no') navigate('/delivery-complaint');
+        if (selected === 'no') navigate('/complaint');
     };
 
     return(
@@ -48,7 +48,7 @@ const ReceiptCheck = () => {
     );
 };
 
-export default ReceiptCheck;
+export default EatingCheck;
 
 const Wrapper = styled.div`
   height: 100%;

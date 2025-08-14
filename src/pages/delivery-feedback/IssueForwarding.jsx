@@ -8,7 +8,7 @@ const IssueForwarding = () => {
             <Wrapper>
                 <h1>문제를<br></br>
                 전달했어요.</h1>
-                <img src="IssueImage.png" alt="슬퍼하는 너구리" />
+                <img src="SadImage.png" alt="슬퍼하는 너구리" />
             </Wrapper>
         </>
     );

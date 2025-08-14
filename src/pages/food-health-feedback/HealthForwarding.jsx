@@ -8,7 +8,7 @@ const HealthForwarding = () => {
             <Wrapper>
                 <h1>모든 답변이 끝났어요</h1>
                 <h2>다음에 또 뵐게요!</h2>
-                <img src="HealthImage.png" alt="하트뿅뿅 너구리" />
+                <img src="LovelyImage.png" alt="하트뿅뿅 너구리" />
             </Wrapper>
         </>
     );

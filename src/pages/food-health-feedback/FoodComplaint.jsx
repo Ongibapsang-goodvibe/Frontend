@@ -26,7 +26,7 @@ const FoodComplaint = () => {
             console.log(selectedOption.label);
             // 여기에 서버 전송 / API 호출 로직
         }
-        navigate('/health-check');
+        navigate('/food-forwarding');
     };
 
     return(

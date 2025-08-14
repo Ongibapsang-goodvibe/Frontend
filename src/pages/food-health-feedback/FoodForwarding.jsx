@@ -32,7 +32,6 @@ const Wrapper = styled.div`
 
   h1{
     margin-top: 5.88rem;
-    margin-bottom: 1rem;
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
@@ -44,7 +43,8 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   width: 20rem;
-  gap: 1rem;
+  margin-bottom: 0.5rem;
+
   cursor: pointer;
 
   &.health-check{

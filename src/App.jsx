@@ -18,6 +18,7 @@ import IssueForwarding from "./pages/delivery-feedback/IssueForwarding";
 import EatingCheck from "./pages/food-health-feedback/EatingCheck";
 import FoodSatisfaction from "./pages/food-health-feedback/FoodSatisfaction";
 import FoodComplaint from "./pages/food-health-feedback/FoodComplaint";
+import FoodForwarding from "./pages/food-health-feedback/FoodForwarding";
 import HealthCheck from "./pages/food-health-feedback/HealthCheck";
 import FeelingCheck from "./pages/food-health-feedback/FeelingCheck";
 import HealthForwarding from "./pages/food-health-feedback/HealthForwarding";
@@ -53,12 +54,13 @@ function MainLayout() {
     "/issue-forwarding": { step: 0, total: 0 },
     "/eating-choice": { step: 2, total: 2 },
     /*food-health-feedback*/
-    "/eating-check": { step: 1, total: 5 },
-    "/food-satisfaction": { step: 2, total: 5 },
-    "/food-complaint": { step: 2, total: 5 },
-    "/health-check": { step: 3, total: 5 },
-    "/feeling-check": { step: 4, total: 5 },
-    "/health-forwarding": { step: 5, total: 5 },
+    "/eating-check": { step: 1, total: 3 },
+    "/food-satisfaction": { step: 2, total: 3 },
+    "/food-complaint": { step: 2, total: 3 },
+    "/food-forwarding": { step: 3, total: 3 },
+    "/health-check": { step: 1, total: 3 },
+    "/feeling-check": { step: 2, total: 3 },
+    "/health-forwarding": { step: 3, total: 3 },
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
@@ -90,6 +92,7 @@ function MainLayout() {
           <Route path="/eating-check" element={<EatingCheck />} />
           <Route path="/food-satisfaction" element={<FoodSatisfaction />} />
           <Route path="/food-complaint" element={<FoodComplaint />} />
+          <Route path="/food-forwarding" element={<FoodForwarding />} />
           <Route path="/health-check" element={<HealthCheck />} />
           <Route path="/feeling-check" element={<FeelingCheck />} />
           <Route path="/health-forwarding" element={<HealthForwarding />} />

@@ -2,21 +2,20 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const FoodComplaint = () => {
+const FoodSatisfaction = () => {
     const navigate = useNavigate();
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const options = [
-    { id: 1, label: '짜요' },
-    { id: 2, label: '싱거워요' },
-    { id: 3, label: '달아요' },
-    { id: 4, label: '느끼해요' },
+    { id: 1, label: '좋아하는 음식이에요' },
+    { id: 2, label: '간이 딱 맞아요' },
+    { id: 3, label: '속이 편해요' },
     ];
 
     const handleDone = () => {
         const selectedOption = options.find(opt => opt.id === selected);
 
-        if (selected === 5) {
+        if (selected === 4) {
         // 4번(말로 할게요) 선택 시 음성 인식 페이지로 이동
         navigate('/voice-recognition');
         return;
@@ -32,14 +31,14 @@ const FoodComplaint = () => {
     return(
         <>
             <Wrapper>
-                <h1>어떤 문제가 있나요?</h1>
+                <h1>어떤 점이 좋았나요?</h1>
 
                 <Button 
                     type="button"
                     className={selected === 1 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(1)}
                 >
-                    <span>짜요</span>
+                    <span>좋아하는 음식이에요</span>
                 </Button>
 
                 <Button
@@ -47,7 +46,7 @@ const FoodComplaint = () => {
                     className={selected === 2 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(2)}
                 >
-                    <span>싱거워요</span>
+                    <span>간이 딱 맞아요</span>
                 </Button>
 
                 <Button
@@ -55,21 +54,13 @@ const FoodComplaint = () => {
                     className={selected === 3 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(3)}
                 >
-                    <span>달아요</span>
+                    <span>속이 편해요</span>
                 </Button>
 
                 <Button
                     type="button"
                     className={selected === 4 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(4)}
-                >
-                    <span>느끼해요</span>
-                </Button>
-
-                <Button
-                    type="button"
-                    className={selected === 5 ? 'normal active' : 'normal'}
-                    onClick={() => setSelected(5)}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="36" viewBox="0 0 22 36" fill="none">
                         <path d="M4.40002 7.00032C4.40002 5.24991 5.09538 3.57119 6.33312 2.33346C7.57086 1.09574 9.2496 0.400391 11 0.400391C12.7505 0.400391 14.4292 1.09574 15.6669 2.33346C16.9047 3.57119 17.6 5.24991 17.6 7.00032V18.0002C17.6 19.7506 16.9047 21.4293 15.6669 22.6671C14.4292 23.9048 12.7505 24.6001 11 24.6001C9.2496 24.6001 7.57086 23.9048 6.33312 22.6671C5.09538 21.4293 4.40002 19.7506 4.40002 18.0002V7.00032Z" fill="white"/>
@@ -82,7 +73,7 @@ const FoodComplaint = () => {
                     <Button
                         type="button"
                         className="back"
-                        onClick={() => navigate('/eating-check')}
+                        onClick={() => navigate('/food-check')}
                     >
                         <span>돌아가기</span>
                     </Button>
@@ -101,7 +92,7 @@ const FoodComplaint = () => {
     );
 };
 
-export default FoodComplaint;
+export default FoodSatisfaction;
 
 const Wrapper = styled.div`
   height: 100%;
@@ -111,14 +102,14 @@ const Wrapper = styled.div`
 
   h1{
     margin-top: 3.38rem;
-    margin-bottom: 5.44rem;
+    margin-bottom: 6rem;
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
   }
 
   .done-container{
-    margin-top: 2rem;
+    margin-top: 1.62rem;
     display: flex;
     justify-content: center;
     gap: 1.56rem;
@@ -137,7 +128,7 @@ const Button = styled.button`
   &.normal{
     border-radius: 0.5rem;
     border: 1px solid #FFF;
-    height: 4.375rem;
+    height: 5.5rem;
     width: 20rem;
     margin-bottom: 1.25rem;
 

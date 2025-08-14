@@ -16,14 +16,15 @@ import DeliveryCheck from "./pages/delivery-feedback/DeliveryCheck";
 import DeliveryComplaint from "./pages/delivery-feedback/DeliveryComplaint";
 import EatingChoice from "./pages/delivery-feedback/EatingChoice";
 import IssueForwarding from "./pages/delivery-feedback/IssueForwarding";
-//food-health-feedback
-import EatingCheck from "./pages/food-health-feedback/EatingCheck";
-import FoodSatisfaction from "./pages/food-health-feedback/FoodSatisfaction";
-import FoodComplaint from "./pages/food-health-feedback/FoodComplaint";
-import FoodForwarding from "./pages/food-health-feedback/FoodForwarding";
-import HealthCheck from "./pages/food-health-feedback/HealthCheck";
-import FeelingCheck from "./pages/food-health-feedback/FeelingCheck";
-import HealthForwarding from "./pages/food-health-feedback/HealthForwarding";
+//food-feedback
+import FoodCheck from "./pages/food-feedback/FoodCheck";
+import FoodSatisfaction from "./pages/food-feedback/FoodSatisfaction";
+import FoodComplaint from "./pages/food-feedback/FoodComplaint";
+import FoodForwarding from "./pages/food-feedback/FoodForwarding";
+//health-feedback
+import HealthCheck from "./pages/health-feedback/HealthCheck";
+import FeelingCheck from "./pages/health-feedback/FeelingCheck";
+import HealthForwarding from "./pages/health-feedback/HealthForwarding";
 
 export default function App() {
   return (
@@ -60,7 +61,7 @@ function MainLayout() {
     "/issue-forwarding": { step: 0, total: 0 },
     "/eating-choice": { step: 2, total: 2 },
     /*food-health-feedback*/
-    "/eating-check": { step: 1, total: 3 },
+    "/food-check": { step: 1, total: 3 },
     "/food-satisfaction": { step: 2, total: 3 },
     "/food-complaint": { step: 2, total: 3 },
     "/food-forwarding": { step: 3, total: 3 },
@@ -94,11 +95,12 @@ function MainLayout() {
           <Route path="/delivery-complaint" element={<DeliveryComplaint />} />
           <Route path="/issue-forwarding" element={<IssueForwarding />} />
           <Route path="/eating-choice" element={<EatingChoice />} />
-          {/*food-health-feedback*/}
-          <Route path="/eating-check" element={<EatingCheck />} />
+          {/*food-feedback*/}
+          <Route path="/food-check" element={<FoodCheck />} />
           <Route path="/food-satisfaction" element={<FoodSatisfaction />} />
           <Route path="/food-complaint" element={<FoodComplaint />} />
           <Route path="/food-forwarding" element={<FoodForwarding />} />
+          {/*health-feedback*/}
           <Route path="/health-check" element={<HealthCheck />} />
           <Route path="/feeling-check" element={<FeelingCheck />} />
           <Route path="/health-forwarding" element={<HealthForwarding />} />

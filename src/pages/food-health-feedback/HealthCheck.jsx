@@ -34,30 +34,14 @@ const HealthCheck = () => {
                     <span>어딘가 불편해요</span>
                 </Button>
 
-                <div className="done-container">
-                    <Button
-                        type="button"
-                        className="back"
-                        onClick={() => {
-                          if (window.history.length > 1) {
-                            navigate(-1);
-                          } else {
-                            navigate('/eating-check');
-                          }
-                        }}
-                    >
-                        <span>돌아가기</span>
-                    </Button>
-
-                    <Button
-                        type="button"
-                        className="done"
-                        onClick={handleDone}
-                        disabled={!selected}
-                    >
-                        <span>선택완료</span>
-                    </Button>
-                </div>
+                <Button
+                    type="button"
+                    className="done"
+                    onClick={handleDone}
+                    disabled={!selected}
+                >
+                    <span>선택완료</span>
+                </Button>
             </Wrapper>
         </>
     );
@@ -77,13 +61,6 @@ const Wrapper = styled.div`
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;
-  }
-
-  .done-container{
-    margin-top: 1.62rem;
-    display: flex;
-    justify-content: center;
-    gap: 1.56rem;
   }
 `;
 
@@ -118,20 +95,10 @@ const Button = styled.button`
     }
   }
 
-  &.back {
+  &.done{
     border-radius: 0.75rem;
     height: 4.5rem;
-    width: 9.4375rem;
-
-    background: var(--button-color);
-    color: #fff;
-    font-size: 2rem;
-    font-weight: 700;
-  }
-  &.done {
-    border-radius: 0.75rem;
-    height: 4.5rem;
-    width: 9.4375rem;
+    margin-top: 3.44rem;
 
     background: var(--main-color);
     color: #000;

@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import styled from "styled-components"; 
 import TopBar from "./components/TopBar";
+import BottomBar from "./components/BottomBar";
 
 //Home
 import Home from "./pages/Home";
@@ -37,7 +39,11 @@ function MainLayout() {
   // 끝 슬래시 제거 (예: '/receipt-check/' -> '/receipt-check')
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
 
-  // ✅ 라우트별 progress 값
+  //BottomBar
+  const hiddenRoutes = ["/orderrequest"];
+  const showBottom = !hiddenRoutes.includes(pathname);
+
+  //TopBar 라우트별 progress 값
   const progressMap = {
     /*home*/
     "/home": { step: 0, total: 0 },
@@ -98,6 +104,9 @@ function MainLayout() {
           <Route path="/health-forwarding" element={<HealthForwarding />} />
         </Routes>
       </main>
+
+      {/* BottomBar는 항상 app-container 밖 */}
+      {showBottom && <BottomBar />}
     </>
   );
 }

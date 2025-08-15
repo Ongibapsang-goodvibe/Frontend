@@ -226,7 +226,7 @@ font-weight: 700;
 height: 122px;
 background-color: #FFF;
 position: absolute;
-bottom: 77px;
+bottom: 0;
 display: flex;
 justify-content: center;
 }

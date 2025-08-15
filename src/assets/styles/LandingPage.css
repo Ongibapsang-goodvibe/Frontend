@@ -1,4 +1,4 @@
-.Wrapper {
+.Wrap {
     width: 393px;
     height: 100%;
     display: flex;
@@ -7,10 +7,16 @@
     position: relative;
 }
 
-.lpfavicon {
-    margin-top: 365px;
+.Wrappe {
+    width: 393px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
 }
 
-.lptitle {
-    margin-top: 272px;
+.lpfavicon, .lp1favicon {
+    margin-top: 280.5px;
 }

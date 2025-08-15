@@ -13,6 +13,7 @@ import ExpectedTime from './pages/order/ExpectedTime';
 import OrderCancel from './pages/order/OrderCancel';
 //initial
 import LandingPage from './pages/initial/LandingPage';
+import LandingPage1 from './pages/initial/LandingPage1';
 import HealthStatus from './pages/initial/HealthStatus';
 import FoodRecommendation from './pages/initial/FoodRecommendation';
 //Payment
@@ -47,7 +48,7 @@ function MainLayout() {
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
 
   //BottomBar
-  const hiddenRoutes = ["/orderrequest"];
+  const hiddenRoutes = ["/order-request", "/landing-page", "/landing-page1"];
   const showBottom = !hiddenRoutes.includes(pathname);
 
   //TopBar 라우트별 progress 값
@@ -57,12 +58,14 @@ function MainLayout() {
       
     /*order*/
     "/case1": { step: 1, total: 2 },
+    "/order-completed": { step: 0, total: 0 },
     "/order-request": { step: 0, total: 0 },
     "/expected-time": { step: 0, total: 0 },
     "/order-cancel": { step: 0, total: 0 },
 
     /*initial*/
     "/landing-page": { step: 0, total: 0 },
+    "/landing-page1": { step: 0, total: 0 },
     "/Health-Status": { step: 0, total: 0 },
     "/food-recommendation": { step: 0, total: 0 },
 
@@ -106,6 +109,7 @@ function MainLayout() {
           <Route path="/order-cancel" element={<OrderCancel />} />
           {/*initial*/}
           <Route path='/landing-page' element={<LandingPage />} />
+          <Route path='/landing-page1' element={<LandingPage1 />} />
           <Route path='/health-status' element={<HealthStatus />} />
           <Route path='/food-recommendation' element={<FoodRecommendation />} />
           {/*payment*/}

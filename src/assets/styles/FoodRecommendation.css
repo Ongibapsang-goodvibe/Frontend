@@ -1,0 +1,75 @@
+.Wrapper {
+    width: 393px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.frcfbox {
+    position: absolute;
+    height: 122px;
+    width: 393px;
+    display: flex;
+    background: #252525;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fr {
+    color: #fff;
+text-align: center;
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}
+
+.notrecomlist {
+    margin-top: 20px;
+    width: 340px;
+    height: 520px;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+}
+
+.frlist {
+    margin-top: 16px;
+    display: flex;
+width: 320px;
+padding: 25px 28px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+border: 1px solid #FFF;
+background: #FFF;
+
+color: #252525;
+font-family: var(--font-main);
+font-size: 32px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px;
+}
+
+.frcfbt {
+    display: flex;
+width: 328px;
+height: 70px;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+background: var(--main-color);
+border: none;
+
+color: #000;
+text-align: center;
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}

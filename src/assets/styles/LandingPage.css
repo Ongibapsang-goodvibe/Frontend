@@ -1,0 +1,16 @@
+.Wrapper {
+    width: 393px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.lpfavicon {
+    margin-top: 365px;
+}
+
+.lptitle {
+    margin-top: 272px;
+}

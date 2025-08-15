@@ -2,13 +2,13 @@ import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "r
 import TopBar from "./components/TopBar";
 
 //Home
-import Home from "./pages/Home";
+import Home from "./pages/home/Home";
 //Order
-import Case1 from "./pages/Case1";
-import OrderRequest from './pages/Order/OrderRequest';
-import OrderCompleted from './pages/Order/OderCompleted';
-import ExpectedTime from './pages/Order/ExpectedTime';
-import OrderCancel from './pages/Order/OrderCancel';
+import Case1 from "./pages/case/Case1";
+import OrderRequest from './pages/order/OrderRequest';
+import OrderCompleted from './pages/order/OderCompleted';
+import ExpectedTime from './pages/order/ExpectedTime';
+import OrderCancel from './pages/order/OrderCancel';
 //initial
 import LandingPage from './pages/initial/LandingPage';
 import HealthStatus from './pages/initial/HealthStatus';
@@ -49,14 +49,14 @@ function MainLayout() {
       
     /*order*/
     "/case1": { step: 1, total: 2 },
-    "/orderrequest": { step: 0, total: 0 },
-    "/expectedtime": { step: 0, total: 0 },
-    "/ordercancel": { step: 0, total: 0 },
+    "/order-request": { step: 0, total: 0 },
+    "/expected-time": { step: 0, total: 0 },
+    "/order-cancel": { step: 0, total: 0 },
 
     /*initial*/
-    "/landingpage": { step: 0, total: 0 },
-    "/HealthStatus": { step: 0, total: 0 },
-    "/foodrecommendation": { step: 0, total: 0 },
+    "/landing-page": { step: 0, total: 0 },
+    "/Health-Status": { step: 0, total: 0 },
+    "/food-recommendation": { step: 0, total: 0 },
 
     /*Payment*/
     "/payment": { step: 2, total: 2 },
@@ -91,14 +91,14 @@ function MainLayout() {
           <Route path="/home" element={<Home />} />
           {/*order*/}
           <Route path="/case1" element={<Case1 />} />
-          <Route path="/orderrequest" element={<OrderRequest />} />
-          <Route path="/ordercompleted" element={<OrderCompleted />} />
-          <Route path="/expectedtime" element={<ExpectedTime />} />
-          <Route path="/ordercancel" element={<OrderCancel />} />
+          <Route path="/order-request" element={<OrderRequest />} />
+          <Route path="/order-completed" element={<OrderCompleted />} />
+          <Route path="/expected-time" element={<ExpectedTime />} />
+          <Route path="/order-cancel" element={<OrderCancel />} />
           {/*initial*/}
-          <Route path='/landingpage' element={<LandingPage />} />
-          <Route path='/healthstatus' element={<HealthStatus />} />
-          <Route path='/foodrecommendation' element={<FoodRecommendation />} />
+          <Route path='/landing-page' element={<LandingPage />} />
+          <Route path='/health-status' element={<HealthStatus />} />
+          <Route path='/food-recommendation' element={<FoodRecommendation />} />
           {/*payment*/}
           <Route path='/payment' element={<Payment />} />
           {/*delivery-feedback*/}

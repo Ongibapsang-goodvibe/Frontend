@@ -9,6 +9,12 @@ import OrderRequest from './pages/Order/OrderRequest';
 import OrderCompleted from './pages/Order/OderCompleted';
 import ExpectedTime from './pages/Order/ExpectedTime';
 import OrderCancel from './pages/Order/OrderCancel';
+//initial
+import LandingPage from './pages/initial/LandingPage';
+import HealthStatus from './pages/initial/HealthStatus';
+import FoodRecommendation from './pages/initial/FoodRecommendation';
+//Payment
+import Payment from './pages/payment/Payment';
 //delivery-feedback
 import DeliveryCheck from "./pages/delivery-feedback/DeliveryCheck";
 import DeliveryComplaint from "./pages/delivery-feedback/DeliveryComplaint";
@@ -47,6 +53,14 @@ function MainLayout() {
     "/expectedtime": { step: 0, total: 0 },
     "/ordercancel": { step: 0, total: 0 },
 
+    /*initial*/
+    "/landingpage": { step: 0, total: 0 },
+    "/HealthStatus": { step: 0, total: 0 },
+    "/foodrecommendation": { step: 0, total: 0 },
+
+    /*Payment*/
+    "/payment": { step: 2, total: 2 },
+
     /*delivery-feedback*/
     "/delivery-check": { step: 1, total: 2 },
     "/delivery-complaint": { step: 2, total: 2 },
@@ -81,6 +95,12 @@ function MainLayout() {
           <Route path="/ordercompleted" element={<OrderCompleted />} />
           <Route path="/expectedtime" element={<ExpectedTime />} />
           <Route path="/ordercancel" element={<OrderCancel />} />
+          {/*initial*/}
+          <Route path='/landingpage' element={<LandingPage />} />
+          <Route path='/healthstatus' element={<HealthStatus />} />
+          <Route path='/foodrecommendation' element={<FoodRecommendation />} />
+          {/*payment*/}
+          <Route path='/payment' element={<Payment />} />
           {/*delivery-feedback*/}
           <Route path="/delivery-check" element={<DeliveryCheck />} />
           <Route path="/delivery-complaint" element={<DeliveryComplaint />} />

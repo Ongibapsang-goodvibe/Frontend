@@ -1,0 +1,126 @@
+.Wrapper {
+    width: 393px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.hslogo {
+    display: flex;
+width: 393px;
+height: 54px;
+padding: 5px 153px;
+flex-direction: column;
+justify-content: center;
+align-items: flex-start;
+gap: 10px;
+}
+
+.hsh, .hsh1 {
+    color: #fff;
+text-align: center;
+font-family: var(--font-main);
+font-size: 40px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}
+
+.hsh1 {
+    margin-bottom: 20px;
+}
+
+.bt-group {
+    width: 340px;
+    height: 520px;
+    overflow-y: scroll;
+    padding-bottom: 20px;
+}
+
+.bt {
+    margin-top: 16px;
+    display: flex;
+width: 320px;
+padding: 25px 28px;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+border: 1px solid #FFF;
+background: linear-gradient(128deg, rgba(255, 255, 255, 0.20) 0.02%, rgba(115, 115, 115, 0.00) 91.11%);
+
+color: #FFF;
+font-family: var(--font-main);
+font-size: 32px;
+font-style: normal;
+font-weight: 600;
+line-height: 24px;
+}
+
+.bt.active {
+    display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+background: #FFF;
+
+color: #252525;
+}
+
+.hsbutton {
+    position: absolute;
+    height: 122px;
+    width: 393px;
+    display: flex;
+    background: #252525;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.hsreturn {
+    display: flex;
+width: 151px;
+height: 70px;
+justify-content: center;
+align-items: center;
+border : none;
+border-radius: 8px;
+background: #5D5D5D;
+margin-right: 25px;
+}
+
+.hsreturntext {
+    color: #FFF;
+text-align: center;
+font-family: var(--font-main);
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}
+
+.hschoose {
+    display: flex;
+width: 152px;
+height: 70px;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+background: var(--main-color);
+border: none;
+}
+
+.hschoosetext {
+    color: #000;
+text-align: center;
+font-family: var(--font-main);
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const EatingCheck = () => {
+const FoodCheck = () => {
     const navigate = useNavigate();
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
@@ -48,7 +48,7 @@ const EatingCheck = () => {
     );
 };
 
-export default EatingCheck;
+export default FoodCheck;
 
 const Wrapper = styled.div`
   height: 100%;

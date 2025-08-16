@@ -1,4 +1,4 @@
-import "../assets/styles/Case1.css";
+import "../../assets/styles/Case1.css";
 
 export default function Case1() {
     return (

@@ -66,7 +66,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   width: 20rem;
-  gap: 1rem;
+  gap: 0.625rem;
   cursor: pointer;
 
   svg { flex-shrink: 0; }

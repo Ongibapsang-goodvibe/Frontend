@@ -9,7 +9,7 @@ const IssueForwarding = () => {
                 <h1>문제를 전달했어요. <br />
                 불편을 드려 <br />
                 죄송합니다.</h1>
-                <img src="SadImage.svg" alt="슬퍼하는 너구리" />
+                <img src="SadImage.png" alt="슬퍼하는 너구리" />
             </Wrapper>
         </>
     );

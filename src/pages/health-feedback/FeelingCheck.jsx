@@ -7,11 +7,11 @@ const HealthCheck = () => {
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const options = [
-    { id: 1, label: '기분 좋아요' },
-    { id: 2, label: '그냥 그래요' },
-    { id: 3, label: '조금 외로워요' },
-    { id: 4, label: '우울해요' },
-    { id: 5, label: '많이 힘들어요' },
+    { id: 1, label: '최고예요!' },
+    { id: 2, label: '괜찮아요' },
+    { id: 3, label: '그냥 그래요' },
+    { id: 4, label: '안 좋아요' },
+    { id: 5, label: '나빠요' },
     ];
 
     const handleDone = () => {
@@ -33,7 +33,8 @@ const HealthCheck = () => {
                     className={selected === 1 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(1)}
                 >
-                    <span>기분 좋아요</span>
+                  <img src="blue.svg"/>
+                  <span>최고예요!</span>
                 </Button>
 
                 <Button
@@ -41,7 +42,8 @@ const HealthCheck = () => {
                     className={selected === 2 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(2)}
                 >
-                    <span>그냥 그래요</span>
+                  <img src="green.svg"/>
+                  <span>괜찮아요</span>
                 </Button>
 
                 <Button
@@ -49,7 +51,8 @@ const HealthCheck = () => {
                     className={selected === 3 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(3)}
                 >
-                    <span>조금 외로워요</span>
+                  <img src="yellow.svg"/>
+                  <span>그냥 그래요</span>
                 </Button>
 
                 <Button
@@ -57,7 +60,8 @@ const HealthCheck = () => {
                     className={selected === 4 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(4)}
                 >
-                    <span>우울해요</span>
+                  <img src="orange.svg"/>
+                  <span>안 좋아요</span>
                 </Button>
 
                 <Button
@@ -65,7 +69,8 @@ const HealthCheck = () => {
                     className={selected === 5 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(5)}
                 >
-                    <span>많이 힘들어요</span>
+                  <img src="red.svg"/>
+                  <span>나빠요</span>
                 </Button>
 
                 <div className="done-container">
@@ -125,7 +130,7 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.625rem;
   cursor: pointer;
 
   svg { flex-shrink: 0; }

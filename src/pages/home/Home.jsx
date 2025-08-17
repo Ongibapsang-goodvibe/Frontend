@@ -1,33 +1,142 @@
 import "../../assets/styles/Home.css";
 
+import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 export default function Home() {
+    const location = useLocation();
+    const from = location.state?.from;
+
+    {/*login: <SectionLoigin /> 이슈포워딩 페이지*/}
+    const sectionMap = {
+        ordercompleted: <SectionWait />,
+    };
+
+    const defaultSection = <SectionDefault />;
+
+    const [currentSection, setCurrentSection] = useState(sectionMap[from] || defaultSection);
+
+    useEffect(() => {
+        if (currentSection.type === SectionWait) {
+            const timer = setTimeout(() => {
+                setCurrentSection(<SectionDelivery />);
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [currentSection]);
+
     return (
-        <div className='Wrapper'>
-            <div className='logo'>
-                <img src="/TopBarLogo.svg"></img>
-            </div>
+        <div className='Wrapper-black'>
+            <div className='Home-container1'>
             <div className='place'>
-                <img src="/place.svg" width={16.5} height={22} ></img>
+                <img src="/place1.svg" height={20} ></img>
                 <div className='pltext'>서대문구 대현동</div>
             </div>
-            <div className='q1'>무엇을 드시고 싶으세요?</div>
-            <div className='bt'>
-                <button className='recom'>
-                    <div className='recomtext'>음식 추천받기</div>
+            <div className='Home-case'>{currentSection}
+            </div>
+            <div className='home-box'>
+                <img src="/home.svg" className='bobby-home'></img>
+            </div>
+            </div>
+            
+            <div className='Home-container2'>
+                <button className='type'>
+                    <img src="/type.svg" width={20}></img>
+                    <div className='home-type'>글자로 검색</div>
                 </button>
-                <button className='recent'>
-                    <div className='recenttext'>최근 주문한 음식</div>
+                <button className='voice'>
+                    <img src="/mic.svg" width={20}></img>
+                    <div className='home-voice'>음성으로 검색</div>
                 </button>
-                
             </div>
-            <div className='inputbox'>
-                <img src="/keybord.svg" height={38} width={38} ></img>
-                <div className='inputtext'>글자로 입력</div>
+
+            <div className='Home-container3'>
+                <div className='home-menu'>
+                    <button className='menu-button'>
+                        <img src='/menu1.svg' width={66}></img>
+                    </button>
+                    <div className='menu-name'>국 · 찌개</div>
+                </div>
+                <div className='home-menu'>
+                    <button className='menu-button'>
+                        <img src='/menu2.svg' width={66}></img>
+                    </button>
+                    <div className='menu-name'>밥</div>
+                </div>
+                <div className='home-menu'>
+                    <button className='menu-button'>
+                        <img src='/menu3.svg' width={66}></img>
+                    </button>
+                    <div className='menu-name'>국</div>
+                </div>
+                <div className='home-menu'>
+                    <button className='menu-button'>
+                        <img src='/menu4.svg' width={66}></img>
+                    </button>
+                    <div className='menu-name'>반찬</div>
+                </div>
             </div>
-            <div className='voicebox'>
-                <img src="/mic.svg" height={58} width={36.25} ></img>
-                <div className='voicetext'>눌러서 말하기</div>
-            </div>
+
+            <button className='home-recom'>음식 추천받기</button>
         </div>
+    );
+}
+
+function SectionDefault() {
+    return (
+        <>
+        <div className='q'>
+            <div className='nickname'>영철</div>
+            <div className='q1'>님, 오늘은</div>
+        </div>
+        <div className='q1'>무엇을 드시고 싶으세요?</div>
+        </>
+    );
+}
+
+function SectionWait() {
+    return (
+        <>
+        <div className='q'>
+            <div className='nickname'>약 30분 뒤</div>
+            <div className='q1'>에</div>
+        </div>
+        <div className='q1'>음식이 도착합니다.</div>
+        </>
+    );
+}
+
+function SectionDelivery() {
+    return (
+        <>
+        <div className='bobby-comment'>
+            <div className='bobby-ment'>배달 잘 받으셨나요?</div>
+            <button className='bobby-button'>
+                <div className='answer-text'>눌러서 답하기</div>
+                <img src='/ment.svg' width={6}></img>
+            </button>
+        </div>
+        <div className='polygon'>
+            <img src='/polygon.svg' width={25.0264}></img>
+        </div>
+        </>
+    );
+}
+
+function SectionMeal() {
+    return (
+        <>
+        <div className='bobby-comment'>
+            <div className='bobby-ment'>식사 잘 하셨나요?</div>
+            <button className='bobby-button'>
+                <div className='answer-text'>눌러서 답하기</div>
+                <img src='/ment.svg' width={6}></img>
+            </button>
+        </div>
+        <div className='polygon'>
+            <img src='/polygon.svg' width={25.0264}></img>
+        </div>
+        </>
     );
 }

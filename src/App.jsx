@@ -5,18 +5,21 @@ import BottomBar from "./components/BottomBar";
 
 //Home
 import Home from "./pages/home/Home";
-//Order
+//menu
 import Case1 from "./pages/case/Case1";
+//Order
 import OrderRequest from './pages/order/OrderRequest';
-import OrderCompleted from './pages/order/OderCompleted';
-import ExpectedTime from './pages/order/ExpectedTime';
+import OrderCompleted from './pages/order/OrderCompleted';
 import OrderCancel from './pages/order/OrderCancel';
 //initial
 import LandingPage from './pages/initial/LandingPage';
+import LandingPage1 from './pages/initial/LandingPage1';
 import HealthStatus from './pages/initial/HealthStatus';
 import FoodRecommendation from './pages/initial/FoodRecommendation';
 //Payment
 import Payment from './pages/payment/Payment';
+//Review
+import Review from './pages/review/Review';
 //delivery-feedback
 import DeliveryCheck from "./pages/delivery-feedback/DeliveryCheck";
 import DeliveryComplaint from "./pages/delivery-feedback/DeliveryComplaint";
@@ -47,27 +50,41 @@ function MainLayout() {
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
 
   //BottomBar
-  const hiddenRoutes = ["/orderrequest"];
+  const hiddenRoutes = [
+    "/landing-page",
+    "/landing-page1",
+    "/health-status",
+    "/food-recommendation",
+    "/order-request",
+    "/order-completed"
+  ];
+
   const showBottom = !hiddenRoutes.includes(pathname);
 
   //TopBar 라우트별 progress 값
   const progressMap = {
     /*home*/
     "/home": { step: 0, total: 0 },
-      
-    /*order*/
+
+    /*menu*/
     "/case1": { step: 1, total: 2 },
+
+    /*order*/
+    "/order-completed": { step: 0, total: 0 },
     "/order-request": { step: 0, total: 0 },
-    "/expected-time": { step: 0, total: 0 },
     "/order-cancel": { step: 0, total: 0 },
 
     /*initial*/
     "/landing-page": { step: 0, total: 0 },
-    "/Health-Status": { step: 0, total: 0 },
+    "/landing-page1": { step: 0, total: 0 },
+    "/health-status": { step: 0, total: 0 },
     "/food-recommendation": { step: 0, total: 0 },
 
     /*Payment*/
     "/payment": { step: 2, total: 2 },
+
+    /*Review */
+    "/review": { step: 0, total: 0 },
 
     /*delivery-feedback*/
     "/delivery-check": { step: 1, total: 2 },
@@ -102,14 +119,16 @@ function MainLayout() {
           <Route path="/case1" element={<Case1 />} />
           <Route path="/order-request" element={<OrderRequest />} />
           <Route path="/order-completed" element={<OrderCompleted />} />
-          <Route path="/expected-time" element={<ExpectedTime />} />
           <Route path="/order-cancel" element={<OrderCancel />} />
           {/*initial*/}
           <Route path='/landing-page' element={<LandingPage />} />
+          <Route path='/landing-page1' element={<LandingPage1 />} />
           <Route path='/health-status' element={<HealthStatus />} />
           <Route path='/food-recommendation' element={<FoodRecommendation />} />
           {/*payment*/}
           <Route path='/payment' element={<Payment />} />
+          {/*review*/}
+          <Route path='/review' element={<Review />} />
           {/*delivery-feedback*/}
           <Route path="/delivery-check" element={<DeliveryCheck />} />
           <Route path="/delivery-complaint" element={<DeliveryComplaint />} />

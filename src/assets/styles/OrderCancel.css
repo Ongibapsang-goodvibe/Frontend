@@ -1,29 +1,19 @@
-.Wrapper {
+.Wrap {
     width: 393px;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-}
-
-.occancel {
-    margin-top: 54px;
-    color: #FFF;
-text-align: center;
-font-family: var(--font-main);
-font-size: 40px;
-font-style: normal;
-font-weight: 700;
-line-height: 160%;
+    background: linear-gradient(180deg, #CFCFFF 0%, #A4D8FC 100%);
 }
 
 .octext {
-    margin-top: 220px;
+    margin-top: 54px;
 }
 
-.octext1, .octext4 {
-    color: #FFF;
+.octext1 {
+    color: var(--background-color);
 text-align: center;
 font-family: var(--font-main);
 font-size: 40px;
@@ -39,15 +29,6 @@ line-height: 160%;
     justify-content: center;
 }
 
-.octext3 {
-    color: var(--main-color);
-font-family: var(--font-main);
-font-size: 40px;
-font-style: normal;
-font-weight: 700;
-line-height: 140%;
-}
-
 .octext5 {
     margin-top: 25px;
     color: #8E8E8E;
@@ -57,4 +38,8 @@ font-size: 24px;
 font-style: normal;
 font-weight: 600;
 line-height: 160%;
+}
+
+.bobby-oc {
+    margin: 0;
 }

@@ -1,9 +1,11 @@
 import '../../assets/styles/HealthStatus.css';
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function HealthStatus() {
     const [active, setActive ] = useState([]);
+    const navigate = useNavigate();
 
     const labels = [ 
         { id: 1, label: "당뇨" },
@@ -25,12 +27,13 @@ export default function HealthStatus() {
     
     return (
         <>
-        <div className='Wrapper'>
-            <div className='hslogo'>
-                <img src="/TopBarLogo.svg"></img>
-            </div>
+        <div className='Wrapper-black'>
             <div className='hsh'>다음 중 해당하는 것을</div>
-            <div className='hsh1'>모두 선택해주세요.</div>
+            <div className='hs'>
+                <div className='hsh-orange'>모두</div>
+                <div className='hsh1'>선택해주세요.</div>
+            </div>
+            
 
             <div className='bt-group'>
                 {labels.map((btn) => (
@@ -45,10 +48,10 @@ export default function HealthStatus() {
             </div>
 
             <div className='hsbutton'>
-                <button className='hsreturn'>
-                    <div className='hsreturntext'>돌아가기</div>
+                <button className='hsreturn' onClick={() => {navigate("/home")}}>
+                    <div className='hsreturntext'>건너뛰기</div>
                 </button>
-                <button className='hschoose'>
+                <button className='hschoose' onClick={() => {navigate("/food-recommendation", { state: { selected: active } })}}>
                     <div className='hschoosetext'>선택완료</div>
                 </button>
             </div>

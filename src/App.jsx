@@ -131,7 +131,7 @@ function MainLayout() {
           <Route path='/review' element={<Review />} />
           {/*delivery-feedback*/}
           <Route path="/delivery-check" element={<DeliveryCheck />} />
-          <Route path="//no-issue" element={<NoIssue />} />
+          <Route path="/no-issue" element={<NoIssue />} />
           <Route path="/delivery-complaint" element={<DeliveryComplaint />} />
           <Route path="/issue-forwarding" element={<IssueForwarding />} />
           {/*food-feedback*/}

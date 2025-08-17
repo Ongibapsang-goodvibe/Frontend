@@ -44,6 +44,11 @@ body {
 }
 
 /* 앱 프레임: 3행 그리드 (Top / Content / Bottom) */
+/* 
+  Top: 로고바 
+  Content: 프로그레스 바 + 페이지 내용
+  Bottom: 네비게이션 바
+*/
 .app-wrapper {
   width: 393px;
   height: 852px;

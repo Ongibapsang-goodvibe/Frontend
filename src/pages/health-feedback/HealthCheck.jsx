@@ -25,6 +25,7 @@ const HealthCheck = () => {
                     onClick={() => setSelected('yes')}
                 >
                     <span>아무 문제 없어요</span>
+                    <img src="blue.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -32,6 +33,7 @@ const HealthCheck = () => {
                     onClick={() => setSelected('no')}
                 >
                     <span>어딘가 불편해요</span>
+                    <img src="red.svg"/>
                 </Button>
 
                 <Button
@@ -69,7 +71,7 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   width: 20rem;
-  gap: 1rem;
+  gap: 0.625rem;
   cursor: pointer;
 
   svg { flex-shrink: 0; }

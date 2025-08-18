@@ -1,4 +1,4 @@
-.Wrapper {
+.Wrapper-black {
     width: 393px;
     height: 100%;
     display: flex;
@@ -17,6 +17,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: row;
 }
 
 .fr {
@@ -29,11 +30,14 @@ line-height: 160%;
 }
 
 .notrecomlist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 20px;
     width: 340px;
-    height: 520px;
-    overflow-y: scroll;
-    padding-bottom: 20px;
+    height: 597px;
+    overflow-y: auto;
+    padding-bottom: 40px;
 }
 
 .frlist {
@@ -50,15 +54,33 @@ background: #FFF;
 
 color: #252525;
 font-family: var(--font-main);
-font-size: 32px;
+font-size: 28px;
 font-style: normal;
 font-weight: 600;
 line-height: 24px;
 }
 
+.frbackbt {
+    display: flex;
+width: 151px;
+height: 70px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 8px;
+border: none;
+background: #5D5D5D;
+color: #FFF;
+text-align: center;
+font-family: var(--font-main);
+font-size: 32px;
+font-weight: 700;
+margin-right: 25px;
+}
+
 .frcfbt {
     display: flex;
-width: 328px;
+width: 152px;
 height: 70px;
 justify-content: center;
 align-items: center;

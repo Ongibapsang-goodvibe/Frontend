@@ -5,27 +5,26 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    background: linear-gradient(180deg, #FFEECF 0%, #FFDDB2 100%);
 }
 
 .och {
     margin-top: 54px;
-    color: #FFF;
+    color: var(--background-color);
 text-align: center;
 font-family: var(--font-main);
 font-size: 40px;
 font-style: normal;
 font-weight: 700;
-line-height: 160%;
 }
 
 .t {
-    margin-top: 210px;
     display: flex;
     align-items: center;
 }
 
 .t1 {
-    color: var(--main-color);
+    color: #E75900;
 text-align: center;
 font-family: var(--font-main);
 font-size: 64px;
@@ -35,12 +34,10 @@ line-height: 140%;
 }
 
 .t2 {
-    color: #FFF;
+    color: var(--background-color);
 font-family: var(--font-main);
 font-size: 40px;
-font-style: normal;
 font-weight: 600;
-line-height: 140%;
 }
 
 .time {
@@ -57,4 +54,10 @@ font-size: 24px;
 font-style: normal;
 font-weight: 600;
 line-height: 160%;
+}
+
+.bobby-oc {
+    position: absolute;
+    bottom: 0px;
+    margin-left: 30px;
 }

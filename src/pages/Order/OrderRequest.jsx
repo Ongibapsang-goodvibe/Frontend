@@ -2,16 +2,28 @@ import "../../assets/styles/OrderRequest.css";
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 export default function OrderRequest() {
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            navigate("/order-completed");
+        }, 5000);
+
+        return () => clearTimeout(timer);
+    }, [navigate]);
+
     return (
         <>
         <div className='Wrapper'>
             <div className='h1'>매장에서 주문을</div>
-            <div className='h2'>확인하고 있어요.</div>
+            <div className='h2'>
+                <div className='h3'>확인</div>
+                <div className='h4'>하고 있어요.</div>
+            </div>
 
             <div className='c1'>접수된 후에는</div>
             <div className='c'>
@@ -20,7 +32,7 @@ export default function OrderRequest() {
             </div>
 
             <div className='favicon'>
-                <img src="/favicon.svg"></img>
+                <img src="/order-request.svg"></img>
             </div>
 
             <button className='cancel' onClick={() => setIsOpen(true)}>
@@ -37,7 +49,7 @@ export default function OrderRequest() {
                             <button className='no' onClick={() => setIsOpen(false)}>
                                 <div className='nobt'>아니요</div>
                             </button>
-                            <button className='yes' onClick={() => {navigate("/ordercancel")}}>
+                            <button className='yes' onClick={() => {navigate("/order-cancel")}}>
                                 <div className='yesbt'>네</div>
                             </button>
                         </div>

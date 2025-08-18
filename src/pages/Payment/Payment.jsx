@@ -3,8 +3,11 @@ import UP from "../../../public/up.svg";
 import DOWN from "../../../public/down.svg";
 
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 export default function Payment() {
+
+    const navigate = useNavigate();
     const [selectedPayment, setSelectedPayment] = useState("cash");
     const [cardNumber, setCardNumber] = useState("");
 
@@ -127,7 +130,7 @@ export default function Payment() {
         </div>
 
         <div className='pmbt'>
-                <button className="pay-button">9,400원 결제하기</button>
+                <button className="pay-button" onClick={() => {navigate("/order-request")}}>9,400원 결제하기</button>
         </div>
 
     </div>

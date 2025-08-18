@@ -68,40 +68,56 @@ const Button = styled.button`
   }
 `;
 
-//아이콘 컴포넌트 분리
+// 아이콘 컴포넌트 분리
 const HomeIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-    <path d="M4.6875 12.4219V26.25C4.6875 26.4986 4.78627 26.7371 4.96209 26.9129C5.1379 27.0887 5.37636 27.1875 5.625 27.1875H11.25V19.2188C11.25 18.8458 11.3982 18.4881 11.6619 18.2244C11.9256 17.9607 12.2833 17.8125 12.6562 17.8125H17.3438C17.7167 17.8125 18.0744 17.9607 18.3381 18.2244C18.6018 18.4881 18.75 18.8458 18.75 19.2188V27.1875H24.375C24.6236 27.1875 24.8621 27.0887 25.0379 26.9129C25.2137 26.7371 25.3125 26.4986 25.3125 26.25V12.4219" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M28.125 15L15.6381 3.04687C15.3451 2.7375 14.6602 2.73398 14.3619 3.04687L1.875 15M23.4375 10.4883V3.75H20.625V7.79297" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.6875 12.4219V26.25C4.6875 26.4986 4.78627 26.7371 4.96209 26.9129C5.1379 27.0887 5.37636 27.1875 5.625 27.1875H11.25V19.2188C11.25 18.8458 11.3982 18.4881 11.6619 18.2244C11.9256 17.9607 12.2833 17.8125 12.6562 17.8125H17.3438C17.7167 17.8125 18.0744 17.9607 18.3381 18.2244C18.6018 18.4881 18.75 18.8458 18.75 19.2188V27.1875H24.375C24.6236 27.1875 24.8621 27.0887 25.0379 26.9129C25.2137 26.7371 25.3125 26.4986 25.3125 26.25V12.4219"
+      stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M28.125 15L15.6381 3.04687C15.3451 2.7375 14.6602 2.73398 14.3619 3.04687L1.875 15M23.4375 10.4883V3.75H20.625V7.79297"
+      stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
 const HomeIconActive = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-    <path d="M4.6875 12.4219V26.25C4.6875 26.4986 4.78627 26.7371 4.96209 26.9129C5.1379 27.0887 5.37636 27.1875 5.625 27.1875H11.25V19.2188C11.25 18.8458 11.3982 18.4881 11.6619 18.2244C11.9256 17.9607 12.2833 17.8125 12.6562 17.8125H17.3438C17.7167 17.8125 18.0744 17.9607 18.3381 18.2244C18.6018 18.4881 18.75 18.8458 18.75 19.2188V27.1875H24.375C24.6236 27.1875 24.8621 27.0887 25.0379 26.9129C25.2137 26.7371 25.3125 26.4986 25.3125 26.25V12.4219" fill="#FFA83F"/>
-    <path d="M4.6875 12.4219V26.25C4.6875 26.4986 4.78627 26.7371 4.96209 26.9129C5.1379 27.0887 5.37636 27.1875 5.625 27.1875H11.25V19.2188C11.25 18.8458 11.3982 18.4881 11.6619 18.2244C11.9256 17.9607 12.2833 17.8125 12.6562 17.8125H17.3438C17.7167 17.8125 18.0744 17.9607 18.3381 18.2244C18.6018 18.4881 18.75 18.8458 18.75 19.2188V27.1875H24.375C24.6236 27.1875 24.8621 27.0887 25.0379 26.9129C25.2137 26.7371 25.3125 26.4986 25.3125 26.25V12.4219" stroke="#FFA83F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M28.125 15L15.6381 3.04687C15.3451 2.7375 14.6602 2.73398 14.3619 3.04687L1.875 15M23.4375 10.4883V3.75H20.625V7.79297" fill="#FFA83F"/>
-    <path d="M28.125 15L15.6381 3.04687C15.3451 2.7375 14.6602 2.73398 14.3619 3.04687L1.875 15M23.4375 10.4883V3.75H20.625V7.79297" stroke="#FFA83F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.6875 12.4219V26.25C4.6875 26.4986 4.78627 26.7371 4.96209 26.9129C5.1379 27.0887 5.37636 27.1875 5.625 27.1875H11.25V19.2188C11.25 18.8458 11.3982 18.4881 11.6619 18.2244C11.9256 17.9607 12.2833 17.8125 12.6562 17.8125H17.3438C17.7167 17.8125 18.0744 17.9607 18.3381 18.2244C18.6018 18.4881 18.75 18.8458 18.75 19.2188V27.1875H24.375C24.6236 27.1875 24.8621 27.0887 25.0379 26.9129C25.2137 26.7371 25.3125 26.4986 25.3125 26.25V12.4219"
+      fill="#FFA83F"/>
+    <path d="M4.6875 12.4219V26.25C4.6875 26.4986 4.78627 26.7371 4.96209 26.9129C5.1379 27.0887 5.37636 27.1875 5.625 27.1875H11.25V19.2188C11.25 18.8458 11.3982 18.4881 11.6619 18.2244C11.9256 17.9607 12.2833 17.8125 12.6562 17.8125H17.3438C17.7167 17.8125 18.0744 17.9607 18.3381 18.2244C18.6018 18.4881 18.75 18.8458 18.75 19.2188V27.1875H24.375C24.6236 27.1875 24.8621 27.0887 25.0379 26.9129C25.2137 26.7371 25.3125 26.4986 25.3125 26.25V12.4219"
+      stroke="#FFA83F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M28.125 15L15.6381 3.04687C15.3451 2.7375 14.6602 2.73398 14.3619 3.04687L1.875 15M23.4375 10.4883V3.75H20.625V7.79297"
+      fill="#FFA83F"/>
+    <path d="M28.125 15L15.6381 3.04687C15.3451 2.7375 14.6602 2.73398 14.3619 3.04687L1.875 15M23.4375 10.4883V3.75H20.625V7.79297"
+      stroke="#FFA83F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
 const ReportIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-    <path d="M17.5 2.5H7.5C6.83696 2.5 6.20107 2.76339 5.73223 3.23223C5.26339 3.70107 5 4.33696 5 5V25C5 25.663 5.26339 26.2989 5.73223 26.7678C6.20107 27.2366 6.83696 27.5 7.5 27.5H22.5C23.163 27.5 23.7989 27.2366 24.2678 26.7678C24.7366 26.2989 25 25.663 25 25V10L17.5 2.5Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M17.5 2.5V10H25" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M15 13.75L15 22.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M20 17.5L20 22.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M10 15.625L10 21.25L10 22.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17.5 2.5H7.5C6.83696 2.5 6.20107 2.76339 5.73223 3.23223C5.26339 3.70107 5 4.33696 5 5V25C5 25.663 5.26339 26.2989 5.73223 26.7678C6.20107 27.2366 6.83696 27.5 7.5 27.5H22.5C23.163 27.5 23.7989 27.2366 24.2678 26.7678C24.7366 26.2989 25 25.663 25 25V10L17.5 2.5Z"
+      stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M17.5 2.5V10H25"
+      stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M15 13.75L15 22.5"
+      stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M20 17.5L20 22.5"
+      stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M10 15.625L10 21.25L10 22.5"
+      stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
 const ReportIconActive = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-    <path d="M17.5 2.5H7.5C6.83696 2.5 6.20107 2.76339 5.73223 3.23223C5.26339 3.70107 5 4.33696 5 5V25C5 25.663 5.26339 26.2989 5.73223 26.7678C6.20107 27.2366 6.83696 27.5 7.5 27.5H22.5C23.163 27.5 23.7989 27.2366 24.2678 26.7678C24.7366 26.2989 25 25.663 25 25V10L17.5 2.5Z" fill="#FFA83F" stroke="#FFA83F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M17.5 1.5V10H26" stroke="#252525" stroke-width="2" stroke-linejoin="round"/>
-    <path d="M15 13.75L15 22.5" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M20 17.5L20 22.5" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M10 15.625L10 21.25L10 22.5" stroke="#252525" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M17.5 2.5H7.5C6.83696 2.5 6.20107 2.76339 5.73223 3.23223C5.26339 3.70107 5 4.33696 5 5V25C5 25.663 5.26339 26.2989 5.73223 26.7678C6.20107 27.2366 6.83696 27.5 7.5 27.5H22.5C23.163 27.5 23.7989 27.2366 24.2678 26.7678C24.7366 26.2989 25 25.663 25 25V10L17.5 2.5Z"
+      fill="#FFA83F" stroke="#FFA83F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M17.5 1.5V10H26"
+      stroke="#252525" strokeWidth="2" strokeLinejoin="round"/>
+    <path d="M15 13.75L15 22.5"
+      stroke="#252525" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M20 17.5L20 22.5"
+      stroke="#252525" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M10 15.625L10 21.25L10 22.5"
+      stroke="#252525" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 

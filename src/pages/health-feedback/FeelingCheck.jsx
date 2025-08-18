@@ -33,7 +33,7 @@ const HealthCheck = () => {
                     className={selected === 1 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(1)}
                 >
-                  <img src="blue.svg"/>
+                  <img src="BlueEmoji.svg"/>
                   <span>최고예요!</span>
                 </Button>
 
@@ -42,7 +42,7 @@ const HealthCheck = () => {
                     className={selected === 2 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(2)}
                 >
-                  <img src="green.svg"/>
+                  <img src="GreenEmoji.svg"/>
                   <span>괜찮아요</span>
                 </Button>
 
@@ -51,7 +51,7 @@ const HealthCheck = () => {
                     className={selected === 3 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(3)}
                 >
-                  <img src="yellow.svg"/>
+                  <img src="YellowEmoji.svg"/>
                   <span>그냥 그래요</span>
                 </Button>
 
@@ -60,7 +60,7 @@ const HealthCheck = () => {
                     className={selected === 4 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(4)}
                 >
-                  <img src="orange.svg"/>
+                  <img src="OrangeEmoji.svg"/>
                   <span>안 좋아요</span>
                 </Button>
 
@@ -69,7 +69,7 @@ const HealthCheck = () => {
                     className={selected === 5 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(5)}
                 >
-                  <img src="red.svg"/>
+                  <img src="RedEmoji.svg"/>
                   <span>나빠요</span>
                 </Button>
 

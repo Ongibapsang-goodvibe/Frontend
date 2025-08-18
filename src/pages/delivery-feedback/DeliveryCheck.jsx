@@ -21,7 +21,7 @@ const DeliveryCheck = () => {
                     onClick={() => setSelected('yes')}
                 >
                     <span>네</span>
-                    <img src="blue.svg"/>
+                    <img src="BlueEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -29,7 +29,7 @@ const DeliveryCheck = () => {
                     onClick={() => setSelected('no')}
                 >
                     <span>문제가 있어요</span>
-                    <img src="red.svg"/>
+                    <img src="RedEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"

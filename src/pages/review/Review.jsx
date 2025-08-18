@@ -17,17 +17,17 @@ export default function Review() {
                     <div className='menu-nick'>순두부국</div>
                     <div className='menu-composition'></div>
                     <div className='menu-carbohydrate'>
-                        <img src="/blue.svg" width={10}></img>
+                        <img src="/bluecircle.svg" width={10}></img>
                         <div className='menu-detail-text'>탄수화물</div>
                         <div className='menu-detail-percent'>13%</div>
                     </div>
                     <div className='menu-protien'>
-                        <img src="/orange.svg" width={10}></img>
+                        <img src="/orangecircle.svg" width={10}></img>
                         <div className='menu-detail-text'>단백질</div>
                         <div className='menu-detail-percent'>42%</div>
                     </div>
                     <div className='menu-fat'>
-                        <img src="/yellow.svg" width={10}></img>
+                        <img src="/yellowcircle.svg" width={10}></img>
                         <div className='menu-detail-text'>지방</div>
                         <div className='menu-detail-percent'>45%</div>
                     </div>

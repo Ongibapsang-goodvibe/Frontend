@@ -22,8 +22,8 @@ import Payment from './pages/payment/Payment';
 import Review from './pages/review/Review';
 //delivery-feedback
 import DeliveryCheck from "./pages/delivery-feedback/DeliveryCheck";
+import NoIssue from "./pages/delivery-feedback/NoIssue";
 import DeliveryComplaint from "./pages/delivery-feedback/DeliveryComplaint";
-import EatingChoice from "./pages/delivery-feedback/EatingChoice";
 import IssueForwarding from "./pages/delivery-feedback/IssueForwarding";
 //food-feedback
 import FoodCheck from "./pages/food-feedback/FoodCheck";
@@ -88,9 +88,9 @@ function MainLayout() {
 
     /*delivery-feedback*/
     "/delivery-check": { step: 1, total: 2 },
-    "/delivery-complaint": { step: 2, total: 2 },
-    "/issue-forwarding": { step: 0, total: 0 },
-    "/eating-choice": { step: 2, total: 2 },
+    "/no-issue": { step: 2, total: 2 },
+    "/delivery-complaint": { step: 3, total: 4 },
+    "/issue-forwarding": { step: 4, total: 4 },
     /*food-health-feedback*/
     "/food-check": { step: 1, total: 3 },
     "/food-satisfaction": { step: 2, total: 3 },
@@ -131,9 +131,9 @@ function MainLayout() {
           <Route path='/review' element={<Review />} />
           {/*delivery-feedback*/}
           <Route path="/delivery-check" element={<DeliveryCheck />} />
+          <Route path="//no-issue" element={<NoIssue />} />
           <Route path="/delivery-complaint" element={<DeliveryComplaint />} />
           <Route path="/issue-forwarding" element={<IssueForwarding />} />
-          <Route path="/eating-choice" element={<EatingChoice />} />
           {/*food-feedback*/}
           <Route path="/food-check" element={<FoodCheck />} />
           <Route path="/food-satisfaction" element={<FoodSatisfaction />} />

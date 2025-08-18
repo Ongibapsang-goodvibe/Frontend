@@ -119,9 +119,9 @@ function MainLayout() {
   return (
     <>
       {/* 1행: LogoBar (있을 때만) */}
-      {showLogo && <LogoBar />}
-      {/* 로고바 없는 경우에만 ProgressBar 시도 렌더 (total=0이면 내부에서 null 처리) */}
-      {!showLogo && <ProgressBar progress={progress} />}
+      <div className="top-slot">
+        {showLogo ? <LogoBar /> : <ProgressBar progress={progress} />}
+      </div>
 
       {/* 2행: Content (스크롤 영역) */}
       <main className="app-container">

@@ -8,6 +8,9 @@ import BottomBar from "./components/BottomBar";
 import Home from "./pages/home/Home";
 //menu
 import SearchResult from "./pages/menu/SearchResult";
+import CurrentOrder from './pages/menu/CurrentOrder';
+import CurrentConfirm from './pages/menu/CurrentConfirm';
+import MenuRecommentadion from './pages/menu/MenuRecommendation';
 //Order
 import OrderRequest from './pages/order/OrderRequest';
 import OrderCompleted from './pages/order/OrderCompleted';
@@ -75,6 +78,9 @@ function MainLayout() {
 
     /*menu*/
     "/search-result": { step: 1, total: 2 },
+    "/current-order": { step: 1, total: 3 },
+    "/current-confirm": { step: 2, total: 3 },
+    "/menu-recommendation": { step: 1, total: 3 },
 
     /*order*/
     "/order-completed": { step: 0, total: 0 },
@@ -126,8 +132,10 @@ function MainLayout() {
           <Route path="/home" element={<Home />} />
           {/*menu*/}
           <Route path='/search-result' element={<SearchResult />} />
+          <Route path='/current-order' element={<CurrentOrder />} />
+          <Route path='/current-confirm' element={<CurrentConfirm />} />
+          <Route path='/menu-recommendation' element={<MenuRecommentadion />} />
           {/*order*/}
-          
           <Route path="/order-request" element={<OrderRequest />} />
           <Route path="/order-completed" element={<OrderCompleted />} />
           <Route path="/order-cancel" element={<OrderCancel />} />

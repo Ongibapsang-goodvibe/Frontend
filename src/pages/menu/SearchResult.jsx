@@ -11,13 +11,14 @@ export default function SearchResult() {
     const menuList = [
         { imgSrc: "/food1.svg", name: "콩나물 순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
         { imgSrc: "/food2.svg", name: "순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
+        { imgSrc: "/food1.svg", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
     ];
 
     return (
         <div className='Wrapper-black'>
-            <div className='search-result-scroll'>
             <div className='result-name'>주문할 음식을 눌러 <br /> 선택하세요.</div>
-
+            
+            <div className='search-result-scroll'>
             <div className='result-list'>
                 {menuList.map((menu, idx) => (
                     <MenuCard
@@ -54,7 +55,7 @@ function MenuCard({ imgSrc, name, price, restaurant, fee, deliveryTime, isSelect
         <div className={`menu-container ${isSelected ? "selected" : ""}`} onClick={onClick}>
             <div className='menu-card'>
                 <div className='menu-pic'>
-                    <img src={imgSrc} alt={name}></img>
+                    <img src={imgSrc} alt={name} width={101} height={133}></img>
                 </div>
                 <div className='menu-review-detail'>
                     <div className='menu-review-nick' style={{ color: isSelected ? "#252525" : "#FFF" }}>{name}</div>

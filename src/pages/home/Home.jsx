@@ -29,6 +29,7 @@ export default function Home() {
     return (
         <div className='Wrapper-black'>
             <div className='Home-container1'>
+            <img src='/homebar.svg'></img>
             <div className='place'>
                 <img src="/place1.svg" height={20} ></img>
                 <div className='pltext'>서대문구 대현동</div>

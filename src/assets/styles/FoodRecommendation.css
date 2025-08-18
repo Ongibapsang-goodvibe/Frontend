@@ -37,11 +37,12 @@ line-height: 160%;
     width: 340px;
     height: 597px;
     overflow-y: auto;
-    padding-bottom: 40px;
+    margin-bottom: 106px;
+    scrollbar-width: 3px;
 }
 
 .frlist {
-    margin-top: 16px;
+    margin-bottom: 16px;
     display: flex;
 width: 320px;
 padding: 25px 28px;

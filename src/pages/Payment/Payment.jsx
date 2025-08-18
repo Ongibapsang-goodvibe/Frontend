@@ -53,6 +53,7 @@ export default function Payment() {
             <label className="payment-option">
                 <input
                     type="radio"
+                    className='payment-option-text'
                     name="payment"
                     value="cash"
                     checked={selectedPayment === "cash"}
@@ -64,6 +65,7 @@ export default function Payment() {
             <label className="payment-option">
                 <input
                     type="radio"
+                    className='payment-option-text'
                     name="payment"
                     value="card"
                     checked={selectedPayment === "card"}
@@ -75,6 +77,7 @@ export default function Payment() {
             <label className="payment-option">
                 <input
                     type="radio"
+                    className='payment-option-text'
                     name="payment"
                     value="kakao"
                     checked={selectedPayment === "kakao"}
@@ -86,6 +89,7 @@ export default function Payment() {
             <label className="payment-option">
                 <input
                     type="radio"
+                    className='payment-option-text'
                     name="payment"
                     value="alredy"
                     checked={selectedPayment === "alredy"}
@@ -97,6 +101,7 @@ export default function Payment() {
             <div className="card-input">
                 <input
                     type="text"
+                    className='payment-option-text'
                     className='input'
                     placeholder="신용/체크카드"
                     disabled={selectedPayment !== "alredy"}

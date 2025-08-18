@@ -1,6 +1,6 @@
 .Wraper-black {
     width: 393px;
-    height: 100%;
+    height: 852px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,7 +10,7 @@
 
 .Wrapper-white {
     width: 393px;
-    height: 100%;
+    height: 852px;
     display: flex;
     flex-direction: column;
     align-items: center;

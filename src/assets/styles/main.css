@@ -45,8 +45,8 @@ body {
 
 /* 앱 프레임: 3행 그리드 (Top / Content / Bottom) */
 /* 
-  Top: 로고바 
-  Content: 프로그레스 바 + 페이지 내용
+  Top: 로고바 + 프로그레스 바
+  Content: 페이지 내용
   Bottom: 네비게이션 바
 */
 .app-wrapper {
@@ -59,14 +59,14 @@ body {
   overflow: hidden;
 
   display: grid;
-  padding-top: env(safe-area-inset-top, 0);
   grid-template-rows: auto minmax(0, 1fr) auto; /* 핵심 */
 }
 
 /* 가운데 콘텐츠 영역만 스크롤 */
 .app-container {
-  flex: unset;                       /* flex 레이아웃 아님 */
-  overflow-y: auto;                  /* none → auto */
-  -webkit-overflow-scrolling: touch; /* iOS 부드러운 스크롤 */
-  padding-bottom: env(safe-area-inset-bottom, 0); /* iOS 홈 인디케이터 여유 */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0;           /* 여분 패딩 제거 */
+  min-height: 0;        /* 그리드 자식 overflow 방지 */
+  overflow-x: hidden;   /* 가로 스크롤 예방(스크롤바 두께 등) */
 }

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import styled from "styled-components"; 
+import LogoBar from "./components/LogoBar";
 import ProgressBar from "./components/ProgressBar";
 import BottomBar from "./components/BottomBar";
 
@@ -49,6 +50,13 @@ function MainLayout() {
   // 끝 슬래시 제거 (예: '/receipt-check/' -> '/receipt-check')
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
 
+  // LogoBar
+  const logoShownRoutes = [
+    "/health-status",
+    "/food-recommendation",
+  ];
+  const showLogo = logoShownRoutes.includes(pathname);
+
   //BottomBar
   const hiddenRoutes = [
     "/landing-page",
@@ -58,10 +66,9 @@ function MainLayout() {
     "/order-request",
     "/order-completed"
   ];
-
   const showBottom = !hiddenRoutes.includes(pathname);
 
-  //TopBar 라우트별 progress 값
+  //ProgressBar 라우트별 progress 값
   const progressMap = {
     /*home*/
     "/home": { step: 0, total: 0 },
@@ -105,10 +112,12 @@ function MainLayout() {
 
   return (
     <>
-      {/* TopBar는 항상 app-container 밖 */}
-      <ProgressBar progress={progress} />
+      {/* 1행: LogoBar (있을 때만) */}
+      {showLogo && <LogoBar />}
+      {/* 로고바 없는 경우에만 ProgressBar 시도 렌더 (total=0이면 내부에서 null 처리) */}
+      {!showLogo && <ProgressBar progress={progress} />}
 
-      {/* 콘텐츠 */}
+      {/* 2행: Content (스크롤 영역) */}
       <main className="app-container">
         <Routes>
           {/* 기본 진입 시 home으로 이동 */}
@@ -146,7 +155,7 @@ function MainLayout() {
         </Routes>
       </main>
 
-      {/* BottomBar는 항상 app-container 밖 */}
+      {/* 3행: BottomBar (있을 때만) */}
       {showBottom && <BottomBar />}
     </>
   );

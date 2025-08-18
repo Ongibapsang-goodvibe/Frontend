@@ -16,7 +16,7 @@ import styled, { keyframes } from "styled-components";
  *   - 인식 실패: "인식되지 않음" 문구 표시
  * - 다시 버튼을 누르면 "다시 시도"로 listening 재시작
  */
-const VoiceOrder = () => {
+const MenuVoice = () => {
   // 브라우저가 지원하는 Web Speech Recognition 객체 얻기
   // (Chrome: window.SpeechRecognition 또는 window.webkitSpeechRecognition)
   const SR =
@@ -367,7 +367,7 @@ const VoiceOrder = () => {
   );
 };
 
-export default VoiceOrder;
+export default MenuVoice;
 
 
 const Wrapper = styled.div`

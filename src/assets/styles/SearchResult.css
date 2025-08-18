@@ -1,0 +1,207 @@
+.Wrapper-black {
+    width: 393px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #252525;
+}
+
+.search-result-scroll {
+    flex: 1;
+    width: 393px;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    margin-bottom: 122px;
+}
+
+.search-result-scroll::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.result-name {
+margin-top: 20px;
+margin-bottom: 20px;
+color: #fff;
+text-align: center;
+font-size: 40px;
+font-weight: 700;
+}
+
+.menu-container {
+width: 320px;
+margin-bottom: 30px;
+display: inline-flex;
+padding: 12px 11px;
+flex-direction: column;
+justify-content: center;
+gap: 10px;
+border-radius: 8px;
+border: 1px solid #FFF;
+background: linear-gradient(128deg, rgba(255, 255, 255, 0.20) 0.02%, rgba(115, 115, 115, 0.00) 91.11%);
+}
+
+.menu-container.selected {
+    background: #fff;
+}
+
+.menu-card {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+}
+
+.menu-review-detail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.menu-review-nick {
+width: 160px;
+color: #FFF;
+font-size: 40px;
+font-weight: 700;
+text-align: left;
+line-height: 1.1
+}
+
+.menu-nick-price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 11px;
+}
+
+.menu-review {
+display: flex;
+width: 75px;
+height: 26px;
+padding: 0 11px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+border-radius: 100px;
+border: none;
+background: #FFA83F;
+
+color: #000;
+text-align: center;
+font-size: 15px;
+font-weight: 700;
+}
+
+.menu-price {
+color:#FFF;
+text-align: center;
+font-size: 24px;
+font-weight: 700;
+}
+
+.menu-restaurant {
+color: #fff;
+font-size: 20px;
+font-weight: 500;
+}
+
+.menu-delivery-card {
+width: 301px;
+height: 28px;
+border-radius: 8px;
+background: #fff;
+display: flex;
+padding: 15px;
+flex-direction: row;
+align-items: center;
+justify-content: space-around;
+}
+
+.menu-fee, .menu-delivery {
+text-align: center;
+font-size: 14px;
+font-weight: 500;
+display: flex;
+flex-direction: row;
+gap: 5px;
+}
+
+.menu-fee-text1, .menu-delivery-text1, .menu-delivery-text2 {
+color: #252525;
+text-align: center;
+font-size: 14px;
+font-weight: 500;
+}
+
+.menu-delivery-text2 {
+font-weight: 700;
+}
+
+.menu-fee-text2 {
+color: #FFA83F;
+font-size: 14px;
+font-weight: 700;
+line-height: 160%;
+}
+
+.menu-bar {
+width: 0.5px;
+height: 18px;
+background: #252525;
+}
+
+.button {
+    position: absolute;
+    height: 122px;
+    width: 393px;
+    display: flex;
+    background: #252525;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.return {
+    display: flex;
+width: 151px;
+height: 70px;
+justify-content: center;
+align-items: center;
+border : none;
+border-radius: 8px;
+background: #5D5D5D;
+margin-right: 25px;
+}
+
+.returntext {
+    color: #FFF;
+text-align: center;
+font-family: var(--font-main);
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}
+
+.choose {
+    display: flex;
+width: 152px;
+height: 70px;
+justify-content: center;
+align-items: center;
+border-radius: 8px;
+background: var(--main-color);
+border: none;
+}
+
+.choosetext {
+    color: #000;
+text-align: center;
+font-family: var(--font-main);
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 160%;
+}

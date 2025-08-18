@@ -7,7 +7,7 @@ import BottomBar from "./components/BottomBar";
 //Home
 import Home from "./pages/home/Home";
 //menu
-import Case1 from "./pages/case/Case1";
+import SearchResult from "./pages/menu/SearchResult";
 //Order
 import OrderRequest from './pages/order/OrderRequest';
 import OrderCompleted from './pages/order/OrderCompleted';
@@ -74,7 +74,7 @@ function MainLayout() {
     "/home": { step: 0, total: 0 },
 
     /*menu*/
-    "/case1": { step: 1, total: 2 },
+    "/search-result": { step: 1, total: 2 },
 
     /*order*/
     "/order-completed": { step: 0, total: 0 },
@@ -124,8 +124,10 @@ function MainLayout() {
           <Route path="/" element={<Navigate to="/home" replace />} />
           {/*home*/}
           <Route path="/home" element={<Home />} />
+          {/*menu*/}
+          <Route path='/search-result' element={<SearchResult />} />
           {/*order*/}
-          <Route path="/case1" element={<Case1 />} />
+          
           <Route path="/order-request" element={<OrderRequest />} />
           <Route path="/order-completed" element={<OrderCompleted />} />
           <Route path="/order-cancel" element={<OrderCancel />} />

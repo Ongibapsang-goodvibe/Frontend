@@ -43,6 +43,9 @@ import HealthForwarding from "./pages/health-feedback/HealthForwarding";
 //menu-research
 import MenuVoice from "./pages/menu-research/MenuVoice";
 import MenuText from "./pages/menu-research/MenuText";
+//eating-mate
+import EatingMate from "./pages/eating-mate/EatingMate";
+import TalkingEnd from "./pages/eating-mate/TalkingEnd";
 
 export default function App() {
   return (
@@ -73,7 +76,9 @@ function MainLayout() {
     "/health-status",
     "/food-recommendation",
     "/order-request",
-    "/order-completed"
+    "/order-completed",
+    "/eating-mate",
+    "/eating-mate/end",
   ];
   const showBottom = !hiddenRoutes.includes(pathname);
 
@@ -113,6 +118,7 @@ function MainLayout() {
     "/no-issue": { step: 2, total: 2 },
     "/delivery-complaint": { step: 3, total: 4 },
     "/issue-forwarding": { step: 4, total: 4 },
+
     /*food-health-feedback*/
     "/food-check": { step: 1, total: 3 },
     "/food-satisfaction": { step: 2, total: 3 },
@@ -125,6 +131,10 @@ function MainLayout() {
     /*menu-research*/
     "/menu-research/voice": { step: 0, total: 0 },
     "/menu-research/text": { step: 0, total: 0 },
+
+    /*eating-mate*/
+    "/eating-mate": { step: 0, total: 0 },
+    "/eating-mate/end": { step: 0, total: 0 },
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
@@ -180,6 +190,9 @@ function MainLayout() {
           {/*menu-research*/}
           <Route path="/menu-research/voice" element={<MenuVoice />} />
           <Route path="/menu-research/text" element={<MenuText />} />
+          {/*eating-mate*/}
+          <Route path="/eating-mate" element={<EatingMate />} />
+          <Route path="/eating-mate/end" element={<TalkingEnd />} />
         </Routes>
       </main>
 

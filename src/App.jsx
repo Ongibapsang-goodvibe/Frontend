@@ -46,6 +46,8 @@ import MenuText from "./pages/menu-research/MenuText";
 //eating-mate
 import EatingMate from "./pages/eating-mate/EatingMate";
 import TalkingEnd from "./pages/eating-mate/TalkingEnd";
+//nutrition
+import Nutrition from "./pages/nutrition/Nutrition";
 
 export default function App() {
   return (

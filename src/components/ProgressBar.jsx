@@ -1,13 +1,15 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
 
-function TopBar({ progress }) {
+function ProgressBar({ progress }) {
   const show = !!progress?.total;
   const pct = useMemo(() => {
     if (!show) return 0;
     const v = (progress.step / progress.total) * 100;
     return Math.min(100, Math.max(0, v));
   }, [show, progress?.step, progress?.total]);
+
+  if (!show) return null; // total=0이면 DOM 자체를 만들지 않음
 
   return (
     <Wrapper>
@@ -24,7 +26,7 @@ function TopBar({ progress }) {
   );
 };
 
-export default TopBar;
+export default ProgressBar;
 
 /* ===== styles ===== */
 const Wrapper = styled.header`
@@ -45,11 +47,6 @@ const Progress = styled.div`
   background: #818181;  /* 트랙 */
   overflow: hidden;
   pointer-events: none;                 /* 클릭 방해 X */
-
-  /* 나타났다/사라졌다 트랜지션 */
-  opacity: ${p => (p.$show ? 1 : 0)};
-  transform: translateY(${p => (p.$show ? "0" : "-6px")});
-  transition: opacity 180ms ease, transform 180ms ease;
 `;
 
 /* 채워지는 영역 */

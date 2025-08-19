@@ -1,15 +1,16 @@
-.Wrap {
+.Wraper-black {
     width: 393px;
-    height: 100%;
+    height: 852px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
+    background-color: #252525;
 }
 
-.Wrappe {
+.Wrapper-white {
     width: 393px;
-    height: 100%;
+    height: 852px;
     display: flex;
     flex-direction: column;
     align-items: center;

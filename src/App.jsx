@@ -1,12 +1,18 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import styled from "styled-components"; 
-import TopBar from "./components/TopBar";
+import LogoBar from "./components/LogoBar";
+import ProgressBar from "./components/ProgressBar";
 import BottomBar from "./components/BottomBar";
 
 //Home
 import Home from "./pages/home/Home";
+//mypage
+import MyPage from "./pages/mypage/MyPage";
 //menu
-import Case1 from "./pages/case/Case1";
+import SearchResult from "./pages/menu/SearchResult";
+import CurrentOrder from './pages/menu/CurrentOrder';
+import CurrentConfirm from './pages/menu/CurrentConfirm';
+import MenuRecommendation from './pages/menu/MenuRecommendation';
 //Order
 import OrderRequest from './pages/order/OrderRequest';
 import OrderCompleted from './pages/order/OrderCompleted';
@@ -34,6 +40,11 @@ import FoodForwarding from "./pages/food-feedback/FoodForwarding";
 import HealthCheck from "./pages/health-feedback/HealthCheck";
 import FeelingCheck from "./pages/health-feedback/FeelingCheck";
 import HealthForwarding from "./pages/health-feedback/HealthForwarding";
+//menu-research
+import MenuVoice from "./pages/menu-research/MenuVoice";
+import MenuText from "./pages/menu-research/MenuText";
+//nutrition
+import Nutrition from './pages/nutrition/nutrition';
 
 export default function App() {
   return (
@@ -49,6 +60,16 @@ function MainLayout() {
   // 끝 슬래시 제거 (예: '/receipt-check/' -> '/receipt-check')
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
 
+  // LogoBar
+  const logoShownRoutes = [
+    "/health-status",
+    "/food-recommendation",
+    "/my-page",
+    "/nutrition",
+  ];
+
+  const showLogo = logoShownRoutes.includes(pathname);
+
   //BottomBar
   const hiddenRoutes = [
     "/landing-page",
@@ -61,13 +82,19 @@ function MainLayout() {
 
   const showBottom = !hiddenRoutes.includes(pathname);
 
-  //TopBar 라우트별 progress 값
+  //ProgressBar 라우트별 progress 값
   const progressMap = {
     /*home*/
     "/home": { step: 0, total: 0 },
 
+    /*mypage*/
+    "/my-page": { step: 0, total: 0},
+
     /*menu*/
-    "/case1": { step: 1, total: 2 },
+    "/search-result": { step: 1, total: 2 },
+    "/current-order": { step: 1, total: 3 },
+    "/current-confirm": { step: 2, total: 3 },
+    "/menu-recommendation": { step: 0, total: 0 },
 
     /*order*/
     "/order-completed": { step: 0, total: 0 },
@@ -99,24 +126,38 @@ function MainLayout() {
     "/health-check": { step: 1, total: 3 },
     "/feeling-check": { step: 2, total: 3 },
     "/health-forwarding": { step: 3, total: 3 },
+
+    /*menu-research*/
+    "/menu-research/voice": { step: 0, total: 0 },
+    "/menu-research/text": { step: 0, total: 0 },
+    
+    "nutrition": { step: 0, total: 0 },
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
 
   return (
     <>
-      {/* TopBar는 항상 app-container 밖 */}
-      <TopBar progress={progress} />
+      {/* 1행: LogoBar (있을 때만) */}
+      <div className="top-slot">
+        {showLogo ? <LogoBar /> : <ProgressBar progress={progress} />}
+      </div>
 
-      {/* 콘텐츠 */}
+      {/* 2행: Content (스크롤 영역) */}
       <main className="app-container">
         <Routes>
           {/* 기본 진입 시 home으로 이동 */}
           <Route path="/" element={<Navigate to="/home" replace />} />
           {/*home*/}
           <Route path="/home" element={<Home />} />
+          {/*mypage*/}
+          <Route path='/my-page' element={<MyPage />} />
+          {/*menu*/}
+          <Route path='/search-result' element={<SearchResult />} />
+          <Route path='/current-order' element={<CurrentOrder />} />
+          <Route path='/current-confirm' element={<CurrentConfirm />} />
+          <Route path='/menu-recommendation' element={<MenuRecommendation />} />
           {/*order*/}
-          <Route path="/case1" element={<Case1 />} />
           <Route path="/order-request" element={<OrderRequest />} />
           <Route path="/order-completed" element={<OrderCompleted />} />
           <Route path="/order-cancel" element={<OrderCancel />} />
@@ -131,7 +172,7 @@ function MainLayout() {
           <Route path='/review' element={<Review />} />
           {/*delivery-feedback*/}
           <Route path="/delivery-check" element={<DeliveryCheck />} />
-          <Route path="//no-issue" element={<NoIssue />} />
+          <Route path="/no-issue" element={<NoIssue />} />
           <Route path="/delivery-complaint" element={<DeliveryComplaint />} />
           <Route path="/issue-forwarding" element={<IssueForwarding />} />
           {/*food-feedback*/}
@@ -143,10 +184,15 @@ function MainLayout() {
           <Route path="/health-check" element={<HealthCheck />} />
           <Route path="/feeling-check" element={<FeelingCheck />} />
           <Route path="/health-forwarding" element={<HealthForwarding />} />
+          {/*menu-research*/}
+          <Route path="/menu-research/voice" element={<MenuVoice />} />
+          <Route path="/menu-research/text" element={<MenuText />} />
+
+          <Route path='/nutrition' element={<Nutrition />} />
         </Routes>
       </main>
 
-      {/* BottomBar는 항상 app-container 밖 */}
+      {/* 3행: BottomBar (있을 때만) */}
       {showBottom && <BottomBar />}
     </>
   );

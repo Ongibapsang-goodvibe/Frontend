@@ -21,7 +21,7 @@ const FoodCheck = () => {
                     onClick={() => setSelected('yes')}
                 >
                     <span>잘 먹었어요</span>
-                    <img src="blue.svg"/>
+                    <img src="BlueEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -29,7 +29,7 @@ const FoodCheck = () => {
                     onClick={() => setSelected('no')}
                 >
                     <span>별로였어요</span>
-                    <img src="red.svg"/>
+                    <img src="RedEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"

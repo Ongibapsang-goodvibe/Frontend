@@ -18,7 +18,7 @@ export default function OrderRequest() {
 
     return (
         <>
-        <div className='Wrapper'>
+        <div className='Wrapper-orange'>
             <div className='h1'>매장에서 주문을</div>
             <div className='h2'>
                 <div className='h3'>확인</div>

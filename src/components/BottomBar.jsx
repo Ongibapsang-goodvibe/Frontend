@@ -1,28 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useMatch } from 'react-router-dom';
 
 const BottomBar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   // 현재 경로랑 버튼의 route가 같으면 active 상태
-  const isActive = (route) => pathname === route;
+  const homeActive       = !!useMatch('/home');
+  const eatingMateActive = !!useMatch('/eating-mate/*'); 
+  const reportActive     = !!useMatch('/report/*');
+  const mypageActive     = !!useMatch('/mypage/*');
 
   return (
     <Bar role="navigation" aria-label="bottom bar">
-      <Button onClick={() => navigate('/home')} $active={isActive('/home')}>
-        {isActive('/home') ? <HomeIconActive /> : <HomeIcon />}
+      <Button onClick={() => navigate('/home')} $active={homeActive}>
+        <div>
+          {homeActive ? <HomeIconActive /> : <HomeIcon />}
+        </div>
         <span>홈</span>
       </Button>
 
-      <Button onClick={() => navigate('/report')} $active={isActive('/report')}>
-        {isActive('/report') ? <ReportIconActive /> : <ReportIcon />}
+      <Button onClick={() => navigate('/eating-mate')} $active={eatingMateActive}>
+        <div>
+          {eatingMateActive ? <EatingMateIconActive /> : <EatingMateIcon />}
+        </div>
+        <span>밥친구</span>
+      </Button>
+
+      <Button onClick={() => navigate('/report')} $active={reportActive}>
+        <div>
+          {reportActive  ? <ReportIconActive /> : <ReportIcon />}
+        </div>
         <span>영양 보고서</span>
       </Button>
 
-      <Button onClick={() => navigate('/mypage')} $active={isActive('/mypage')}>
-        {isActive('/mypage') ? <MypageIconActive /> : <MypageIcon />}
+      <Button onClick={() => navigate('/mypage')} $active={mypageActive}>
+        <div>
+          {mypageActive ? <MypageIconActive /> : <MypageIcon />}
+        </div>
         <span>내 정보</span>
       </Button>
     </Bar>
@@ -43,10 +59,16 @@ const Bar = styled.nav`
 
   /* iOS 홈 인디케이터 안전영역 */
   padding-bottom: env(safe-area-inset-bottom, 0);
+
+  div{
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const Button = styled.button`
-  width: 4.25rem;
   height: 3.5rem;
 
   display: flex;
@@ -88,6 +110,24 @@ const HomeIconActive = () => (
       fill="#FFA83F"/>
     <path d="M28.125 15L15.6381 3.04687C15.3451 2.7375 14.6602 2.73398 14.3619 3.04687L1.875 15M23.4375 10.4883V3.75H20.625V7.79297"
       stroke="#FFA83F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const EatingMateIconActive = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path d="M19.3333 1C20.3058 1 21.2384 1.40903 21.9261 2.13712C22.6137 2.8652 23 3.85269 23 4.88235V15.2353C23 16.265 22.6137 17.2525 21.9261 17.9805C21.2384 18.7086 20.3058 19.1176 19.3333 19.1176H13.2222L7.11111 23V19.1176H4.66667C3.69421 19.1176 2.76158 18.7086 2.07394 17.9805C1.38631 17.2525 1 16.265 1 15.2353V4.88235C1 3.85269 1.38631 2.8652 2.07394 2.13712C2.76158 1.40903 3.69421 1 4.66667 1H19.3333Z" fill="#FFA83F" stroke="#FFA83F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M8 11C8 11 9.5 13 12 13C14.5 13 16 11 16 11" stroke="#252525" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M9 7H9.01" stroke="#252525" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M15 7H15.01" stroke="#252525" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const EatingMateIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path d="M19.3333 1C20.3058 1 21.2384 1.40903 21.9261 2.13712C22.6137 2.8652 23 3.85269 23 4.88235V15.2353C23 16.265 22.6137 17.2525 21.9261 17.9805C21.2384 18.7086 20.3058 19.1176 19.3333 19.1176H13.2222L7.11111 23V19.1176H4.66667C3.69421 19.1176 2.76158 18.7086 2.07394 17.9805C1.38631 17.2525 1 16.265 1 15.2353V4.88235C1 3.85269 1.38631 2.8652 2.07394 2.13712C2.76158 1.40903 3.69421 1 4.66667 1H19.3333Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M8 11C8 11 9.5 13 12 13C14.5 13 16 11 16 11" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M9 7H9.01" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M15 7H15.01" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 

@@ -7,7 +7,35 @@ export default function HealthStatus() {
     const [active, setActive ] = useState([]);
     const navigate = useNavigate();
 
-    const labels = [ 
+    const userId = 3;
+    
+    const handleSubmit = async () => {
+    try {
+        const response = await fetch(
+            `${import.meta.env.VITE_API_BASE}/api/accounts/${userId}/disease/`,
+            {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "disease_id": active
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error('전송 실패');
+        }
+
+        navigate("/food-recommendation", { state: { selected: active } });
+
+    } catch (error) {
+        console.error(error);
+        alert('질병 선택 정보를 전송하는데 실패했습니다.');
+    }
+};
+    
+    const labels = [
         { id: 1, label: "당뇨" },
         { id: 2, label: "콩팥(신장) 질환" },
         { id: 3, label: "치아 불편" },
@@ -51,7 +79,7 @@ export default function HealthStatus() {
                 <button className='hsreturn' onClick={() => {navigate("/home")}}>
                     <div className='hsreturntext'>건너뛰기</div>
                 </button>
-                <button className='hschoose' onClick={() => {navigate("/food-recommendation", { state: { selected: active } })}}>
+                <button className='hschoose' onClick={handleSubmit}>
                     <div className='hschoosetext'>선택완료</div>
                 </button>
             </div>

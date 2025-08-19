@@ -44,11 +44,11 @@ export default function Home() {
             </div>
             
             <div className='Home-container2'>
-                <button className='type'>
+                <button className='type' onClick={() => navigate("/menu-research/text")}>
                     <img src="/type.svg" width={20}></img>
                     <div className='home-type'>글자로 검색</div>
                 </button>
-                <button className='voice'>
+                <button className='voice' onClick={() => navigate("/menu-research/voice")}>
                     <img src="/mic.svg" width={20}></img>
                     <div className='home-voice'>음성으로 검색</div>
                 </button>

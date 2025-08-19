@@ -102,7 +102,7 @@ function MainLayout() {
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
-  
+
   return (
     <>
       {/* TopBar는 항상 app-container 밖 */}

@@ -68,6 +68,7 @@ function MainLayout() {
     "/health-status",
     "/food-recommendation",
     "/mypage",
+    "/report/nutrition",
   ];
 
   const showLogo = logoShownRoutes.includes(pathname);
@@ -136,7 +137,7 @@ function MainLayout() {
     "/menu-research/voice": { step: 0, total: 0 },
     "/menu-research/text": { step: 0, total: 0 },
     /*nutrition*/
-    "nutrition": { step: 0, total: 0 },
+    "/report/nutrition": { step: 0, total: 0 },
 
     /*eating-mate*/
     "/eating-mate": { step: 0, total: 0 },
@@ -197,7 +198,7 @@ function MainLayout() {
           <Route path="/menu-research/voice" element={<MenuVoice />} />
           <Route path="/menu-research/text" element={<MenuText />} />
           {/*nutrition*/}
-          <Route path='/nutrition' element={<Nutrition />} />
+          <Route path='/report/nutrition' element={<Nutrition />} />
           {/*eating-mate*/}
           <Route path="/eating-mate" element={<EatingMate />} />
           <Route path="/eating-mate/end" element={<TalkingEnd />} />

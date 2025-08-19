@@ -11,8 +11,8 @@ export default function MenuRecommentadion() {
 
     const menuRecomList = [
         { imgSrc: "/food1.svg", tag: "지방 위주 식사", name: "콩나물 순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
-        { imgSrc: "/food2.svg", tag: "지방 위주 식사", name: "순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
-        { imgSrc: "/food1.svg", tag: "지방 위주 식사", name: "두부조림", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
+        { imgSrc: "/food2.svg", tag: "단백질 위주", name: "순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
+        { imgSrc: "/food1.svg", tag: "균형잡힌", name: "두부조림", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
     ];
 
     return (
@@ -62,9 +62,10 @@ function MenuRecomCard({ imgSrc, tag, name, carbsPercent, proteinPercent, fatPer
         >
             <div className="menu-pic">
                 <img src={imgSrc} alt={name} />
+                {isSelected && <div className="overlay">선택됨</div>}
             </div>
             <div className='menu-detail'>
-                <div className='menu-tag'>{tag}</div>
+                <div className={`menu-tag tag-${tag.replace(/\s+/g, "")}`}>{tag}</div>
                 <div className='menu-nick' style={{ color: isSelected ? "#252525" : "#FFF" }}>{name}</div>
 
                 <div className="macro-bar">

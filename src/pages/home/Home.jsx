@@ -2,10 +2,12 @@ import "../../assets/styles/Home.css";
 
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
     const location = useLocation();
     const from = location.state?.from;
+    const navigate = useNavigate();
 
     {/*login: <SectionLoigin /> 이슈포워딩 페이지*/}
     const sectionMap = {
@@ -78,8 +80,10 @@ export default function Home() {
                     <div className='menu-name'>반찬</div>
                 </div>
             </div>
-
-            <button className='home-recom'>음식 추천받기</button>
+            <div className='home-button'>
+                <button className='home-recent' onClick={() => navigate("/current-order")}>최근 주문</button>
+                <button className='home-recom' onClick={() => navigate("/menu-recommendation")}>✨ 음식 추천받기</button>
+            </div>
         </div>
     );
 }

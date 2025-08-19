@@ -1,6 +1,6 @@
 .Wrap {
     width: 393px;
-    height: 775px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;

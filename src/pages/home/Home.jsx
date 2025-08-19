@@ -2,12 +2,10 @@ import "../../assets/styles/Home.css";
 
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
     const location = useLocation();
     const from = location.state?.from;
-    const navigate = useNavigate();
 
     {/*login: <SectionLoigin /> 이슈포워딩 페이지*/}
     const sectionMap = {
@@ -31,7 +29,6 @@ export default function Home() {
     return (
         <div className='Wrapper-black'>
             <div className='Home-container1'>
-            <img src='/homebar.svg'></img>
             <div className='place'>
                 <img src="/place1.svg" height={20} ></img>
                 <div className='pltext'>서대문구 대현동</div>
@@ -44,11 +41,11 @@ export default function Home() {
             </div>
             
             <div className='Home-container2'>
-                <button className='type' onClick={() => navigate("/menu-research/text")}>
+                <button className='type'>
                     <img src="/type.svg" width={20}></img>
                     <div className='home-type'>글자로 검색</div>
                 </button>
-                <button className='voice' onClick={() => navigate("/menu-research/voice")}>
+                <button className='voice'>
                     <img src="/mic.svg" width={20}></img>
                     <div className='home-voice'>음성으로 검색</div>
                 </button>
@@ -80,10 +77,8 @@ export default function Home() {
                     <div className='menu-name'>반찬</div>
                 </div>
             </div>
-            <div className='home-button'>
-                <button className='home-recent' onClick={() => navigate("/current-order")}>최근 주문</button>
-                <button className='home-recom' onClick={() => navigate("/menu-recommendation")}>✨ 음식 추천받기</button>
-            </div>
+
+            <button className='home-recom'>음식 추천받기</button>
         </div>
     );
 }

@@ -137,10 +137,6 @@ font-style: normal;
 font-weight: 600;
 }
 
-.payment-option-text {
-    margin-right: 10px;
-}
-
 .card-input {
     display: flex;
 width: 361px;

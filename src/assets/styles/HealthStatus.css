@@ -39,15 +39,11 @@ margin-right: 10px;
     width: 340px;
     height: 597px;
     overflow-y: auto;
-    margin-bottom: 106px;
-    scrollbar-width: 3px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding-bottom: 40px;
 }
 
 .bt {
-    margin-bottom: 16px;
+    margin-top: 16px;
     display: flex;
 width: 320px;
 padding: 25px 28px;

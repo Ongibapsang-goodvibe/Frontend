@@ -1,6 +1,6 @@
 .Wrapper {
     width: 393px;
-    height: 852px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,6 +58,6 @@ line-height: 160%;
 
 .bobby-oc {
     position: absolute;
-    bottom: 90px;
+    bottom: 0px;
     margin-left: 30px;
 }

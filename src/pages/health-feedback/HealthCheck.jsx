@@ -25,7 +25,7 @@ const HealthCheck = () => {
                     onClick={() => setSelected('yes')}
                 >
                     <span>아무 문제 없어요</span>
-                    <img src="BlueEmoji.svg"/>
+                    <img src="blue.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -33,7 +33,7 @@ const HealthCheck = () => {
                     onClick={() => setSelected('no')}
                 >
                     <span>어딘가 불편해요</span>
-                    <img src="RedEmoji.svg"/>
+                    <img src="red.svg"/>
                 </Button>
 
                 <Button

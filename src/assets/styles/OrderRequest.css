@@ -1,99 +1,98 @@
-.Wrapper-orange {
+.Wrapper {
     width: 393px;
-    height: 852px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
     background: linear-gradient(180deg, #FFEECF 0%, #FFDDB2 100%);
-    padding-top: 50px;
 }
 
 .h1 {
-    color: var(--background-color);
-    text-align: center;
-    font-size: 40px;
-    font-weight: 700;
-    line-height: 160%;
-    margin-bottom: 10px;
+color: var(--background-color);
+text-align: center;
+font-size: 40px;
+font-weight: 700;
+line-height: 160%;
+margin-top: 54px;
+}
+
+.h4 {
+color: var(--background-color);
+text-align: center;
+font-size: 40px;
+font-weight: 700;
 }
 
 .h2 {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    margin-bottom: 20px;
 }
 
 .h3 {
     color: #E75900;
-    font-size: 40px;
-    font-weight: 700;
-}
-
-.h4 {
-    color: var(--background-color);
-    font-size: 40px;
-    font-weight: 700;
+font-size: 40px;
+font-weight: 700;
 }
 
 .c {
     display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 30px;
 }
 
 .c1 {
+    margin-top: 25px;
     color: var(--background-color);
-    text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 5px;
-}
-
-.c2 {
-    color: var(--background-color);
-    font-size: 24px;
-    font-weight: 400;
-    margin-right: 5px;
+text-align: center;
+font-size: 24px;
+font-weight: 700;
 }
 
 .c3 {
     color: var(--background-color);
-    font-size: 24px;
-    font-weight: 700;
+text-align: center;
+font-size: 24px;
+font-weight: 700;
+}
+
+.c2 {
+    color: var(--background-color);
+font-size: 24px;
+font-weight: 400;
+margin-right: 5px;
 }
 
 .favicon {
-    width: 300px;
-    height: 450px;
-    position: absolute;
-    bottom: 124px;
+width: 300px;
+height: 450px;
+position: absolute;
+bottom: 124px;
 }
 
 .cancel {
-    display: flex;
-    width: 135px;
-    height: 56px;
     position: absolute;
     bottom: 68px;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 12px;
-    background: #3B3B3B;
+display: flex;
+width: 135px;
+height: 56px;
+justify-content: center;
+align-items: center;
+
+border: none;
+border-radius: 12px;
+background: #3B3B3B;
 }
 
 .cctext {
-    color: #FFF;
-    text-align: center;
-    font-family: var(--font-main);
-    font-size: 20px;
-    font-weight: 500;
+color: #FFF;
+text-align: center;
+font-family: var(--font-main);
+font-size: 20px;
+font-style: normal;
+font-weight: 500;
+line-height: 160%;
 }
 
-/* 모달 중앙 배치 */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -109,79 +108,87 @@
 
 .ccmodal {
     display: flex;
+    position: fixed;
+    top: 293px;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    width: 361px;
-    height: 292px;
-    border-radius: 16px;
-    background: #FFF;
-    padding: 24px;
-    box-sizing: border-box;
-    position: relative;
+width: 361px;
+height: 292px;
+flex-shrink: 0;
+border-radius: 16px;
+background: #FFF;
+padding: 24px;
 }
 
 .confirmtext1 {
     color: #000;
-    text-align: center;
-    font-family: var(--font-main);
-    font-size: 32px;
-    font-weight: 700;
+text-align: center;
+font-family: var(--font-main);
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
 }
 
 .confirmtext2 {
     color: #4B5563;
-    text-align: center;
-    font-family: var(--font-main);
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 160%;
-    text-align: center;
+text-align: center;
+font-family: var(--font-main);
+font-size: 20px;
+font-style: normal;
+font-weight: 400;
+line-height: 160%;
 }
 
 .orbt {
     display: flex;
-    justify-content: center;
-    margin-top: 10px;
+    align-items: center;
 }
 
 .no {
     display: flex;
-    width: 150px;
-    height: 52px;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 50px;
-    background: #424242;
-    margin-right: 14px;
+width: 150px;
+height: 52px;
+padding: 12px 16px;
+justify-content: center;
+align-items: center;
+flex-shrink: 0;
+border: none;
+border-radius: 50px;
+background: #424242;
+margin-right: 14px;
 }
 
 .nobt {
-    color: #FFF;
-    font-family: var(--font-main);
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
+color: #FFF;
+text-align: center;
+font-family: var(--font-main);
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px;
 }
 
 .yes {
     display: flex;
-    width: 150px;
-    height: 52px;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 50px;
-    background: var(--main-color);
+width: 150px;
+height: 52px;
+padding: 12px 16px;
+justify-content: center;
+align-items: center;
+border: none;
+border-radius: 9999px;
+background: var(--main-color);
 }
 
 .yesbt {
     color: #000;
-    font-family: var(--font-main);
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
+text-align: center;
+font-family: var(--font-main);
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 24px;
 }
 
 .emo {

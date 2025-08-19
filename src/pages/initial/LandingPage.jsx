@@ -16,7 +16,7 @@ export default function LandingPage() {
 
     return (
         <>
-        <div className='Wrapper-black'>
+        <div className='Wrapp'>
             <img src="./initial1.svg" className='lpfavicon'></img>
         </div>
         </>

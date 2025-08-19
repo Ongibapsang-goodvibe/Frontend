@@ -28,7 +28,7 @@ const BottomBar = () => {
         <span>밥친구</span>
       </Button>
 
-      <Button onClick={() => navigate('/report')} $active={reportActive}>
+      <Button onClick={() => navigate('/report/nutrition')} $active={reportActive}>
         <div>
           {reportActive  ? <ReportIconActive /> : <ReportIcon />}
         </div>

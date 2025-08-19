@@ -135,7 +135,7 @@ function MainLayout() {
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
-
+  
   return (
     <>
       {/* 1행: LogoBar (있을 때만) */}

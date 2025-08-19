@@ -56,12 +56,13 @@ function MenuCard({ imgSrc, name, price, restaurant, fee, deliveryTime, isSelect
             <div className='menu-card'>
                 <div className='menu-pic'>
                     <img src={imgSrc} alt={name} width={101} height={133}></img>
+                    {isSelected && <div className="overlay">선택됨</div>}
                 </div>
                 <div className='menu-review-detail'>
                     <div className='menu-review-nick' style={{ color: isSelected ? "#252525" : "#FFF" }}>{name}</div>
                     <div className='menu-nick-price'>
                         <div className='menu-price'  style={{ color: isSelected ? "#252525" : "#FFF" }}>{price}</div>
-                        <button className='menu-review' onClick={() => navigate("/review")}>후기보기</button>
+                        <button className='menu-review' onClick={(e) => { e.stopPropagation(); navigate("/review"); }}>후기보기</button>
                     </div>
                     <div className='menu-restaurant'  style={{ color: isSelected ? "#252525" : "#FFF" }}>{restaurant}</div>
                 </div>

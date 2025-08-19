@@ -6,6 +6,8 @@ import BottomBar from "./components/BottomBar";
 
 //Home
 import Home from "./pages/home/Home";
+//mypage
+import MyPage from "./pages/mypage/MyPage";
 //menu
 import SearchResult from "./pages/menu/SearchResult";
 import CurrentOrder from './pages/menu/CurrentOrder';
@@ -57,6 +59,7 @@ function MainLayout() {
   const logoShownRoutes = [
     "/health-status",
     "/food-recommendation",
+    "/my-page",
   ];
   const showLogo = logoShownRoutes.includes(pathname);
 
@@ -76,11 +79,14 @@ function MainLayout() {
     /*home*/
     "/home": { step: 0, total: 0 },
 
+    /*mypage*/
+    "/my-page": { step: 0, total: 0},
+
     /*menu*/
     "/search-result": { step: 1, total: 2 },
     "/current-order": { step: 1, total: 3 },
     "/current-confirm": { step: 2, total: 3 },
-    "/menu-recommendation": { step: 1, total: 3 },
+    "/menu-recommendation": { step: 0, total: 0 },
 
     /*order*/
     "/order-completed": { step: 0, total: 0 },
@@ -130,6 +136,8 @@ function MainLayout() {
           <Route path="/" element={<Navigate to="/home" replace />} />
           {/*home*/}
           <Route path="/home" element={<Home />} />
+          {/*mypage*/}
+          <Route path='/my-page' element={<MyPage />} />
           {/*menu*/}
           <Route path='/search-result' element={<SearchResult />} />
           <Route path='/current-order' element={<CurrentOrder />} />

@@ -13,7 +13,7 @@
     flex-direction: column;
     align-items: center;
     width: 393px;
-    height: 645px;
+    flex: 1;
     overflow-y: auto;
     margin-bottom: 140px;
     scrollbar-width: none;
@@ -203,15 +203,30 @@ align-items: center;
 }
 
 .menu-tag {
-width: 86px;
+padding: 0px 4px;
 height: 19px;
-flex-shrink: 0;
+text-align: center;
 border-radius: 4px;
 background: rgba(255, 209, 61, 0.20);
 color: #EDA600;
 font-family: var(--font-main);
 font-size: 13px;
 font-weight: 700;
+}
+
+.tag-지방위주식사 {
+background: rgba(255, 209, 61, 0.20);
+color: #EDA600;
+}
+
+.tag-단백질위주 {
+color: #FF8141;
+background: rgba(255, 128, 64, 0.20);
+}
+
+.tag-균형잡힌 {
+color: #76D000;
+background: rgba(193, 246, 124, 0.20);
 }
 
 .menu-composition {
@@ -251,7 +266,7 @@ font-weight: 500;
 .macro-bar {
 display: flex;
 width: 100%;
-height: 20px;
+height: 8px;
 border-radius: 10px;
 overflow: hidden;
 background-color: #eee;
@@ -275,8 +290,7 @@ height: 100%;
 .menu-recom-scroll {
     margin-top: 20px;
     width: 350px;
-    max-height: 480px;
-    margin-bottom: 120px;
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;

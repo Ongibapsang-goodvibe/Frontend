@@ -65,7 +65,7 @@ function MainLayout() {
   const logoShownRoutes = [
     "/health-status",
     "/food-recommendation",
-    "/my-page",
+    "/mypage",
   ];
   const showLogo = logoShownRoutes.includes(pathname);
 
@@ -88,7 +88,7 @@ function MainLayout() {
     "/home": { step: 0, total: 0 },
 
     /*mypage*/
-    "/my-page": { step: 0, total: 0},
+    "/mypage": { step: 0, total: 0},
 
     /*menu*/
     "/search-result": { step: 1, total: 2 },
@@ -154,7 +154,7 @@ function MainLayout() {
           {/*home*/}
           <Route path="/home" element={<Home />} />
           {/*mypage*/}
-          <Route path='/my-page' element={<MyPage />} />
+          <Route path='/mypage' element={<MyPage />} />
           {/*menu*/}
           <Route path='/search-result' element={<SearchResult />} />
           <Route path='/current-order' element={<CurrentOrder />} />

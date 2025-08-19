@@ -43,6 +43,8 @@ import HealthForwarding from "./pages/health-feedback/HealthForwarding";
 //menu-research
 import MenuVoice from "./pages/menu-research/MenuVoice";
 import MenuText from "./pages/menu-research/MenuText";
+//nutrition
+import Nutrition from './pages/nutrition/nutrition';
 
 export default function App() {
   return (
@@ -63,7 +65,9 @@ function MainLayout() {
     "/health-status",
     "/food-recommendation",
     "/my-page",
+    "/nutrition",
   ];
+
   const showLogo = logoShownRoutes.includes(pathname);
 
   //BottomBar
@@ -75,6 +79,7 @@ function MainLayout() {
     "/order-request",
     "/order-completed"
   ];
+
   const showBottom = !hiddenRoutes.includes(pathname);
 
   //ProgressBar 라우트별 progress 값
@@ -125,6 +130,8 @@ function MainLayout() {
     /*menu-research*/
     "/menu-research/voice": { step: 0, total: 0 },
     "/menu-research/text": { step: 0, total: 0 },
+    
+    "nutrition": { step: 0, total: 0 },
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
@@ -180,6 +187,8 @@ function MainLayout() {
           {/*menu-research*/}
           <Route path="/menu-research/voice" element={<MenuVoice />} />
           <Route path="/menu-research/text" element={<MenuText />} />
+
+          <Route path='/nutrition' element={<Nutrition />} />
         </Routes>
       </main>
 

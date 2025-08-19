@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
   /* 상태별 UI 문구 / 버튼 라벨 / 버튼 색상 클래스 */
-  const EmOrange = styled.span` color: var(--main-color); `;
+  const EmOrange = styled.span` color: #FF8040; `;
   const EmGray   = styled.span` color: #8A8A8A; `;
   const EmMedium = styled.span` font-weight: 500; `;
 

@@ -12,7 +12,7 @@ import MyPage from "./pages/mypage/MyPage";
 import SearchResult from "./pages/menu/SearchResult";
 import CurrentOrder from './pages/menu/CurrentOrder';
 import CurrentConfirm from './pages/menu/CurrentConfirm';
-import MenuRecommentadion from './pages/menu/MenuRecommendation';
+import MenuRecommendation from './pages/menu/MenuRecommendation';
 //Order
 import OrderRequest from './pages/order/OrderRequest';
 import OrderCompleted from './pages/order/OrderCompleted';
@@ -142,7 +142,7 @@ function MainLayout() {
           <Route path='/search-result' element={<SearchResult />} />
           <Route path='/current-order' element={<CurrentOrder />} />
           <Route path='/current-confirm' element={<CurrentConfirm />} />
-          <Route path='/menu-recommendation' element={<MenuRecommentadion />} />
+          <Route path='/menu-recommendation' element={<MenuRecommendation />} />
           {/*order*/}
           <Route path="/order-request" element={<OrderRequest />} />
           <Route path="/order-completed" element={<OrderCompleted />} />

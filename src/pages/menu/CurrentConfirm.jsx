@@ -9,7 +9,7 @@ export default function CurrentConfirm() {
 
     return (
         <>
-        <div className='Wrapper-black'>
+        <div className='Wrapper-current'>
             <div className='result-name'>같은 걸로</div>
             <div className='current-name1'>
                 <span>또 주문</span>
@@ -17,7 +17,7 @@ export default function CurrentConfirm() {
             </div>
 
             <div className='current-confirm-box'>
-                <div className='menu-review-nick' style={{ color: "#252525" }}>순두부국</div>
+                <div className='menu-current-nick' style={{ color: "#252525" }}>순두부국</div>
                 <div className='menu-price'  style={{ color: "#252525", fontSize: 32, fontWeight: 600 }}>7,900원</div>
                 <div className='current-restaurant' style={{ color: "#252525", fontSize: 20, fontWeight: 600 }}>맛나식당</div>
 

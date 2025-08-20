@@ -1,6 +1,6 @@
-.w {
+.Wrapper-payment {
     width: 393px;
-    height: 100%;
+    height: 768.61px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,7 +17,7 @@
 
 .order-container {
     padding-top: 20px;
-    height: 355px;
+    height: 320px;
     width: 393px;
     background-color: #fff;
     justify-content: space-around;
@@ -29,7 +29,7 @@ font-size: 40px;
 font-style: normal;
 font-weight: 700;
 line-height: 160%;
-margin-bottom: 20px;
+margin-bottom: 10px;
 }
 
 .input-pm {
@@ -72,6 +72,7 @@ font-style: normal;
 font-weight: 600;
 line-height: 20px;
 justify-content: space-between;
+cursor: pointer;
 }
 
 .input-ph {
@@ -89,6 +90,7 @@ background: #FFF;
 color: #818181;
 font-size: 16px;
 font-weight: 600;
+cursor: pointer;
 }
 
 .drop-down {
@@ -105,13 +107,13 @@ font-size: 16px;
 font-style: normal;
 font-weight: 600;
 padding: 20px;
-cursor: "pointer";
+cursor: pointer;
 }
 
 .payment-section {
     margin-top: 8px;
     width: 393px;
-    height: 308px;
+    height: 150px;
     background-color: #FFF;
     display: flex;
     flex-direction: column;
@@ -139,6 +141,7 @@ font-weight: 600;
 
 .payment-option-text {
     margin-right: 10px;
+    cursor: pointer;
 }
 
 .card-input {
@@ -178,9 +181,9 @@ background: #FFF;
 .price-summary {
     margin-top: 8px;
     width: 393px;
-    height: 306px;
+    height: 280px;
     background-color: #FFF;
-    padding: 18px 16px;
+    padding: 10px 16px;
     display: flex;
     flex-direction: column;
 }
@@ -232,6 +235,7 @@ background-color: #FFF;
 position: absolute;
 bottom: 0;
 display: flex;
+align-items: center;
 justify-content: center;
 }
 
@@ -245,6 +249,7 @@ align-items: center;
 border-radius: 8px;
 border: none;
 background: var(--main-color);
+cursor: pointer;
 
 color: #252525;
 text-align: center;

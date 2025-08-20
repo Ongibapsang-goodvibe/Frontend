@@ -55,7 +55,7 @@ export default function HealthStatus() {
     
     return (
         <>
-        <div className='Wrapper-black'>
+        <div className='Wrapper-health-status'>
             <div className='hsh'>다음 중 해당하는 것을</div>
             <div className='hs'>
                 <div className='hsh-orange'>모두</div>

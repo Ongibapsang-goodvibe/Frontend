@@ -12,7 +12,7 @@ export default function Payment() {
     const [cardNumber, setCardNumber] = useState("");
 
     return (
-        <div className='w'>
+        <div className='Wrapper-payment'>
         <div className='scroll'>
         <div className="order-container">
             <h2 className="order-title">주문하기</h2>
@@ -73,43 +73,6 @@ export default function Payment() {
                 />
                 만나서 카드결제
             </label>
-
-            <label className="payment-option">
-                <input
-                    type="radio"
-                    className='payment-option-text'
-                    name="payment"
-                    value="kakao"
-                    checked={selectedPayment === "kakao"}
-                    onChange={() => setSelectedPayment("kakao")}
-                />
-                카카오페이 / 토스페이
-            </label>
-
-            <label className="payment-option">
-                <input
-                    type="radio"
-                    className='payment-option-text'
-                    name="payment"
-                    value="alredy"
-                    checked={selectedPayment === "alredy"}
-                    onChange={() => setSelectedPayment("alredy")}
-                />
-                미리 결제 (신용/체크카드)
-            </label>
-
-            <div className="card-input">
-                <input
-                    type="text"
-                    className='payment-option-text'
-                    className='input'
-                    placeholder="신용/체크카드"
-                    disabled={selectedPayment !== "alredy"}
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                />
-                <button className="already" disabled={selectedPayment !== "alredy"}>변경</button>
-            </div>
         </div>
 
         <div className="price-summary">

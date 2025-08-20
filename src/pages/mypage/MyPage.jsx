@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function MyPage() {
     const navigate = useNavigate();
     return (
-        <div className='Wrapper-black'>
+        <div className='Wrapper-mypage'>
             <div className='mypage-header'>내 정보</div>
 
             <div className='mypage-container'>
@@ -27,6 +27,7 @@ export default function MyPage() {
             <div className='mypage-container'>
                 <div className='mypage-container2'>
                     <div className='mypage-text'>고객지원</div>
+                    <MyPageButton text="로그아웃" />
                     <MyPageButton text="이용약관" />
                     <MyPageButton 
                         text="탈퇴하기"

@@ -17,7 +17,7 @@ export default function MenuRecommentadion() {
 
     return (
         <>
-        <div className='Wrapper-black'>
+        <div className='Wrapper-menu-recom'>
             <div className='review-name'>이 음식 어때요?</div>
             <div className='rv1' style={{ fontWeight: 500 }}>영양 보고서와 건강정보를 바탕으로</div>
             <div className='rv2'>

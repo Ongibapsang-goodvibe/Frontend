@@ -28,7 +28,7 @@ const BottomBar = () => {
         <span>밥친구</span>
       </Button>
 
-      <Button onClick={() => navigate('/report/nutrition')} $active={reportActive}>
+      <Button className='report' onClick={() => navigate('/report/nutrition')} $active={reportActive}>
         <div>
           {reportActive  ? <ReportIconActive /> : <ReportIcon />}
         </div>
@@ -70,7 +70,10 @@ const Bar = styled.nav`
 
 const Button = styled.button`
   height: 3.5rem;
+  width: 2.6875rem;
 
+  &.report{width: 4.25rem;}
+  
   display: flex;
   flex-direction: column;
   align-items: center;

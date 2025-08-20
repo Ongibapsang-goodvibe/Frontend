@@ -11,11 +11,18 @@ export default function Review({ carbs, protein, fat }) {
     const proteinPercent = Math.round((protein / total) * 100);
     const fatPercent = Math.round((fat / total) * 100);
 
+    const reviewCommentList = [
+        { nick: "송 **님" , date: "2025년 8월 13일", text: "아 너무 맛있어요" },
+        { nick: "김** 님" , date: "2025년 8월 12일", text: "다 좋은데 김치가 느끼해요" },
+        { nick: "박** 님" , date: "2025년 8월 10일", text: "간간하니 좋아" },
+    ]
+
     return (
         <>
-        <div className='Wrapper-black'>
-        <div className='review-scroll'>
+        <div className='Wrapper-review'>
             <div className='review-name' style={{ marginBottom: 20 }}>맛나식당 순두부국</div>
+
+        <div className='review-scroll'>
 
             <MenuCard
                 imgSrc="/food1.svg"
@@ -73,21 +80,14 @@ export default function Review({ carbs, protein, fat }) {
 
             <div className='review-detail'>이런 후기를 직접 남겼어요.</div>
 
-            <div className='review-container4'>
-                <div className='review-nickname-date'>
-                    <div className='review-nickname'>송** 님</div>
-                    <div className='review-date'>2025년 8월 13일</div>
-                </div>
-                <div className='review-comment'>아 너무 맛있어요</div>
-            </div>
-
-            <div className='review-container4'>
-                <div className='review-nickname-date'>
-                    <div className='review-nickname'>송** 님</div>
-                    <div className='review-date'>2025년 8월 13일</div>
-                </div>
-                <div className='review-comment'>아 너무 맛있어요</div>
-            </div>
+            {reviewCommentList.map(( { nick, date, text }, index) => (
+                <ReviewComment
+                    key={index}
+                    nick={nick}
+                    date={date}
+                    text={text}
+                />
+            ))}
 
         </div>
             <div className='review-return'>
@@ -132,5 +132,19 @@ function MenuCard({ imgSrc, tag, name, carbsPercent, proteinPercent, fatPercent 
                 </div>
             </div>
         </div>
+    );
+}
+
+function ReviewComment({ nick, date, text }) {
+    return (
+        <>
+        <div className='review-container4'>
+            <div className='review-nickname-date'>
+                <div className='review-nickname'>{nick}</div>
+                <div className='review-date'>{date}</div>
+            </div>
+            <div className='review-comment'>{text}</div>
+        </div>
+        </>
     );
 }

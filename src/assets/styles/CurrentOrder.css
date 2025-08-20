@@ -1,3 +1,13 @@
+.Wrapper-current {
+    width: 393px;
+    height: 768.61px;
+    display: flex;
+    flex-direction: column;
+    background-color: #252525;
+    align-items: center;
+    justify-content: center;
+}
+
 .current-header {
 display: flex;
 flex-direction: row;
@@ -13,6 +23,7 @@ margin-bottom: 0px;
 }
 
 .current-text {
+margin-left: 5px;
 color: #FFA83F;
 font-size: 24px;
 font-weight: 700;
@@ -32,7 +43,7 @@ font-weight: 500;
 }
 
 .current-scroll {
-padding-top: 97px;
+padding-top: 105px;
 width: 350px;
 height: 630px;
 overflow-y: auto;

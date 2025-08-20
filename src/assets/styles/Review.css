@@ -1,6 +1,6 @@
-.Wrapper-black {
+.Wrapper-review {
     width: 393px;
-    height: 100%;
+    height: 775px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -16,7 +16,6 @@
     flex: 1;
     overflow-y: auto;
     margin-bottom: 140px;
-    scrollbar-width: none;
 }
 
 .review-container1 {
@@ -170,6 +169,7 @@ text-align: center;
 font-family: var(--font-main);
 font-size: 32px;
 font-weight: 700;
+cursor: pointer;
 }
 
 .menu-recom-card {
@@ -180,6 +180,7 @@ background:#FFF;
 display: flex;
 flex-direction: row;
 gap: 24px;
+cursor: pointer;
 }
 
 .menu-pic {

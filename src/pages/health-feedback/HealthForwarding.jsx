@@ -10,7 +10,7 @@ const HealthForwarding = () => {
                 <h2>답변이 보고서에 반영되었어요.</h2>
                 <p>*보호자 계정과 연결되어 있는 경우 <br />
                 보호자용 보고서에도 반영</p>
-                <img src="LovelyImage.png" alt="하트뿅뿅 너구리" />
+                <img src="/LovelyImage.png" alt="하트뿅뿅 너구리" />
             </Wrapper>
         </>
     );

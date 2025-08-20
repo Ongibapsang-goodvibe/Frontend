@@ -7,8 +7,8 @@ const DeliveryCheck = () => {
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const handleDone = () => {
-        if (selected === 'yes') navigate('/no-issue');
-        if (selected === 'no') navigate('/delivery-complaint');
+        if (selected === 'yes') navigate('/delivery-feedback/forwarding/no-issue');
+        if (selected === 'no') navigate('/delivery-feedback/complaint');
     };
 
     return(
@@ -21,7 +21,7 @@ const DeliveryCheck = () => {
                     onClick={() => setSelected('yes')}
                 >
                     <span>네</span>
-                    <img src="BlueEmoji.svg"/>
+                    <img src="/BlueEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -29,7 +29,7 @@ const DeliveryCheck = () => {
                     onClick={() => setSelected('no')}
                 >
                     <span>문제가 있어요</span>
-                    <img src="RedEmoji.svg"/>
+                    <img src="/RedEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -86,10 +86,6 @@ const Button = styled.button`
   &.normal.active {
     background: #fff;
     color: #000;
-
-    svg path {
-      fill: #000; /* active일 때 변경 */
-    }
   }
 
   &.done{

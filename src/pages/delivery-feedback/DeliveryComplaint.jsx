@@ -25,7 +25,7 @@ const DeliveryComplaint = () => {
             console.log(selectedOption.label);
             // 여기에 서버 전송 / API 호출 로직
         }
-        navigate('/issue-forwarding');
+        navigate('/delivery-feedback/forwarding/issue');
     };
 
     return(
@@ -73,7 +73,7 @@ const DeliveryComplaint = () => {
                     <Button
                         type="button"
                         className="back"
-                        onClick={() => navigate('/delivery-check')}
+                        onClick={() => navigate('/delivery-feedback/check')}
                     >
                         <span>돌아가기</span>
                     </Button>

@@ -84,12 +84,12 @@ function MainLayout() {
     "/eating-mate",
     "/eating-mate/end",
     //delivery-feedback
-    "/no-issue",
-    "/issue-forwarding",
+    "/delivery-feedback/forwarding/no-issue",
+    "/delivery-feedback/forwarding/issue",
     //food-feedback
-    "/food-forwarding",
+    "/food-feedback/forwarding",
     //health-feedback
-    "/health-forwarding",
+    "/health-feedback/forwarding",
   ];
 
   const showBottom = !hiddenRoutes.includes(pathname);
@@ -126,21 +126,21 @@ function MainLayout() {
     "/review": { step: 0, total: 0 },
 
     /*delivery-feedback*/
-    "/delivery-check": { step: 1, total: 2 },
-    "/no-issue": { step: 2, total: 2 },
-    "/delivery-complaint": { step: 3, total: 4 },
-    "/issue-forwarding": { step: 4, total: 4 },
+    "/delivery-feedback/check": { step: 1, total: 2 },
+    "/delivery-feedback/complaint": { step: 3, total: 4 },
+    "/delivery-feedback/forwarding/no-issue": { step: 2, total: 2 },
+    "/delivery-feedback/forwarding/issue": { step: 4, total: 4 },
 
     /*food-feedback*/
-    "/food-check": { step: 1, total: 3 },
-    "/food-satisfaction": { step: 2, total: 3 },
-    "/food-complaint": { step: 2, total: 3 },
-    "/food-forwarding": { step: 3, total: 3 },
+    "/food-feedback/check": { step: 1, total: 3 },
+    "/food-feedback/satisfaction": { step: 2, total: 3 },
+    "/food-feedback/complaint": { step: 2, total: 3 },
+    "/food-feedback/forwarding": { step: 3, total: 3 },
 
     /*health-feedback*/
-    "/health-check": { step: 1, total: 3 },
-    "/feeling-check": { step: 2, total: 3 },
-    "/health-forwarding": { step: 3, total: 3 },
+    "/health-feedback/health-check": { step: 1, total: 3 },
+    "/health-feedback/feeling-check": { step: 2, total: 3 },
+    "/health-feedback/forwarding": { step: 3, total: 3 },
 
     /*menu-search*/
     "/menu-search/voice": { step: 0, total: 0 },
@@ -191,19 +191,19 @@ function MainLayout() {
           {/*review*/}
           <Route path='/review' element={<Review />} />
           {/*delivery-feedback*/}
-          <Route path="/delivery-check" element={<DeliveryCheck />} />
-          <Route path="/no-issue" element={<NoIssue />} />
-          <Route path="/delivery-complaint" element={<DeliveryComplaint />} />
-          <Route path="/issue-forwarding" element={<IssueForwarding />} />
+          <Route path="/delivery-feedback/check" element={<DeliveryCheck />} />
+          <Route path="/delivery-feedback/complaint" element={<DeliveryComplaint />} />
+          <Route path="/delivery-feedback/forwarding/no-issue" element={<NoIssue />} />
+          <Route path="/delivery-feedback/forwarding/issue" element={<IssueForwarding />} />
           {/*food-feedback*/}
-          <Route path="/food-check" element={<FoodCheck />} />
-          <Route path="/food-satisfaction" element={<FoodSatisfaction />} />
-          <Route path="/food-complaint" element={<FoodComplaint />} />
-          <Route path="/food-forwarding" element={<FoodForwarding />} />
+          <Route path="/food-feedback/check" element={<FoodCheck />} />
+          <Route path="/food-feedback/satisfaction" element={<FoodSatisfaction />} />
+          <Route path="/food-feedback/complaint" element={<FoodComplaint />} />
+          <Route path="/food-feedback/forwarding" element={<FoodForwarding />} />
           {/*health-feedback*/}
-          <Route path="/health-check" element={<HealthCheck />} />
-          <Route path="/feeling-check" element={<FeelingCheck />} />
-          <Route path="/health-forwarding" element={<HealthForwarding />} />
+          <Route path="/health-feedback/health-check" element={<HealthCheck />} />
+          <Route path="/health-feedback/feeling-check" element={<FeelingCheck />} />
+          <Route path="/health-feedback/forwarding" element={<HealthForwarding />} />
           {/*menu-search*/}
           <Route path="/menu-search/voice" element={<MenuVoice />} />
           <Route path="/menu-search/text" element={<MenuText />} />

@@ -10,9 +10,9 @@ const HealthCheck = () => {
         if (selected === 'yes') {
           console.log("아무 문제 없어요");
             // 여기에 서버 전송 / API 호출 로직
-          navigate('/feeling-check');
+          navigate('/health-feedback/feeling-check');
         }
-        if (selected === 'no') navigate('/feeling-check'); // 추후 음성인식 화면으로 변경
+        if (selected === 'no') navigate('/health-feedback/feeling-check'); // 추후 음성인식 화면으로 변경
     };
 
     return(
@@ -25,7 +25,7 @@ const HealthCheck = () => {
                     onClick={() => setSelected('yes')}
                 >
                     <span>아무 문제 없어요</span>
-                    <img src="BlueEmoji.svg"/>
+                    <img src="/BlueEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -33,7 +33,7 @@ const HealthCheck = () => {
                     onClick={() => setSelected('no')}
                 >
                     <span>어딘가 불편해요</span>
-                    <img src="RedEmoji.svg"/>
+                    <img src="/RedEmoji.svg"/>
                 </Button>
 
                 <Button
@@ -91,10 +91,6 @@ const Button = styled.button`
   &.normal.active {
     background: #fff;
     color: #000;
-
-    svg path {
-      fill: #000; /* active일 때 변경 */
-    }
   }
 
   &.done{

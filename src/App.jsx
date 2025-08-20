@@ -40,9 +40,9 @@ import FoodForwarding from "./pages/food-feedback/FoodForwarding";
 import HealthCheck from "./pages/health-feedback/HealthCheck";
 import FeelingCheck from "./pages/health-feedback/FeelingCheck";
 import HealthForwarding from "./pages/health-feedback/HealthForwarding";
-//menu-research
-import MenuVoice from "./pages/menu-research/MenuVoice";
-import MenuText from "./pages/menu-research/MenuText";
+//menu-search
+import MenuVoice from "./pages/menu-search/MenuVoice";
+import MenuText from "./pages/menu-search/MenuText";
 //eating-mate
 import EatingMate from "./pages/eating-mate/EatingMate";
 import TalkingEnd from "./pages/eating-mate/TalkingEnd";
@@ -83,6 +83,13 @@ function MainLayout() {
     "/order-completed",
     "/eating-mate",
     "/eating-mate/end",
+    //delivery-feedback
+    "/no-issue",
+    "/issue-forwarding",
+    //food-feedback
+    "/food-forwarding",
+    //health-feedback
+    "/health-forwarding",
   ];
 
   const showBottom = !hiddenRoutes.includes(pathname);
@@ -124,18 +131,21 @@ function MainLayout() {
     "/delivery-complaint": { step: 3, total: 4 },
     "/issue-forwarding": { step: 4, total: 4 },
 
-    /*food-health-feedback*/
+    /*food-feedback*/
     "/food-check": { step: 1, total: 3 },
     "/food-satisfaction": { step: 2, total: 3 },
     "/food-complaint": { step: 2, total: 3 },
     "/food-forwarding": { step: 3, total: 3 },
+
+    /*health-feedback*/
     "/health-check": { step: 1, total: 3 },
     "/feeling-check": { step: 2, total: 3 },
     "/health-forwarding": { step: 3, total: 3 },
 
-    /*menu-research*/
-    "/menu-research/voice": { step: 0, total: 0 },
-    "/menu-research/text": { step: 0, total: 0 },
+    /*menu-search*/
+    "/menu-search/voice": { step: 0, total: 0 },
+    "/menu-search/text": { step: 0, total: 0 },
+
     /*nutrition*/
     "/report/nutrition": { step: 0, total: 0 },
 
@@ -194,9 +204,9 @@ function MainLayout() {
           <Route path="/health-check" element={<HealthCheck />} />
           <Route path="/feeling-check" element={<FeelingCheck />} />
           <Route path="/health-forwarding" element={<HealthForwarding />} />
-          {/*menu-research*/}
-          <Route path="/menu-research/voice" element={<MenuVoice />} />
-          <Route path="/menu-research/text" element={<MenuText />} />
+          {/*menu-search*/}
+          <Route path="/menu-search/voice" element={<MenuVoice />} />
+          <Route path="/menu-search/text" element={<MenuText />} />
           {/*nutrition*/}
           <Route path='/report/nutrition' element={<Nutrition />} />
           {/*eating-mate*/}

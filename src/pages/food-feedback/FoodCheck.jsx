@@ -95,7 +95,7 @@ const Button = styled.button`
   &.done{
     border-radius: 0.75rem;
     height: 4.5rem;
-    margin-top: 3.44rem;
+    margin-top: 2.5rem;
 
     background: var(--main-color);
     color: #000;

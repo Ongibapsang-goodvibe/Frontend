@@ -145,10 +145,6 @@ function MainLayout() {
     "/health-feedback/feeling-check": { step: 2, total: 3 },
     "/health-feedback/forwarding": { step: 3, total: 3 },
 
-    /*menu-research*/
-    "/menu-research/voice": { step: 0, total: 0 },
-    "/menu-research/text": { step: 0, total: 0 },
-    
     /*menu-search*/
     "/menu-search/voice": { step: 0, total: 0 },
     "/menu-search/text": { step: 0, total: 0 },

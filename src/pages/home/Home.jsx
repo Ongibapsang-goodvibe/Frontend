@@ -29,7 +29,7 @@ export default function Home() {
     }, [currentSection]);
 
     return (
-        <div className='Wrapper-black'>
+        <>
             <div className='Home-container1'>
             <img src='/homebar.svg'></img>
             <div className='place'>
@@ -45,12 +45,12 @@ export default function Home() {
             
             <div className='Home-container2'>
                 <button className='type' onClick={() => navigate("/menu-research/text")}>
-                    <img src="/type.svg" width={20}></img>
-                    <div className='home-type'>글자로 검색</div>
+                    <img src="/type.svg" style={{ pointerEvents: "none" }} width={20}></img>
+                    <span className='home-type' style={{ pointerEvents: "none" }}>글자로 검색</span>
                 </button>
                 <button className='voice' onClick={() => navigate("/menu-research/voice")}>
-                    <img src="/mic.svg" width={20}></img>
-                    <div className='home-voice'>음성으로 검색</div>
+                    <img src="/mic.svg" style={{ pointerEvents: "none" }} width={20}></img>
+                    <span className='home-voice' style={{ pointerEvents: "none" }}>음성으로 검색</span>
                 </button>
             </div>
 
@@ -84,7 +84,7 @@ export default function Home() {
                 <button className='home-recent' onClick={() => navigate("/current-order")}>최근 주문</button>
                 <button className='home-recom' onClick={() => navigate("/menu-recommendation")}>✨ 음식 추천받기</button>
             </div>
-        </div>
+        </>
     );
 }
 

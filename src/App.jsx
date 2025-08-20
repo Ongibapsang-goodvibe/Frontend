@@ -47,7 +47,8 @@ import MenuText from "./pages/menu-search/MenuText";
 import EatingMate from "./pages/eating-mate/EatingMate";
 import TalkingEnd from "./pages/eating-mate/TalkingEnd";
 //nutrition
-import Nutrition from "./pages/nutrition/Nutrition";
+import Nutrition from './pages/nutrition/nutrition';
+import NutritionGuard from "./pages/nutrition/NutritionGuard";
 
 export default function App() {
   return (
@@ -69,6 +70,7 @@ function MainLayout() {
     "/food-recommendation",
     "/mypage",
     "/report/nutrition",
+    "/nutrition-guard",
   ];
 
   const showLogo = logoShownRoutes.includes(pathname);
@@ -83,6 +85,7 @@ function MainLayout() {
     "/order-completed",
     "/eating-mate",
     "/eating-mate/end",
+    "/nutrition-guard",
     //delivery-feedback
     "/delivery-feedback/forwarding/no-issue",
     "/delivery-feedback/forwarding/issue",
@@ -142,12 +145,17 @@ function MainLayout() {
     "/health-feedback/feeling-check": { step: 2, total: 3 },
     "/health-feedback/forwarding": { step: 3, total: 3 },
 
+    /*menu-research*/
+    "/menu-research/voice": { step: 0, total: 0 },
+    "/menu-research/text": { step: 0, total: 0 },
+    
     /*menu-search*/
     "/menu-search/voice": { step: 0, total: 0 },
     "/menu-search/text": { step: 0, total: 0 },
 
     /*nutrition*/
     "/report/nutrition": { step: 0, total: 0 },
+    "/nutrition-guard": { step: 0, total: 0 },
 
     /*eating-mate*/
     "/eating-mate": { step: 0, total: 0 },
@@ -209,6 +217,7 @@ function MainLayout() {
           <Route path="/menu-search/text" element={<MenuText />} />
           {/*nutrition*/}
           <Route path='/report/nutrition' element={<Nutrition />} />
+          <Route path='/nutrition-guard' element={<NutritionGuard />} />
           {/*eating-mate*/}
           <Route path="/eating-mate" element={<EatingMate />} />
           <Route path="/eating-mate/end" element={<TalkingEnd />} />

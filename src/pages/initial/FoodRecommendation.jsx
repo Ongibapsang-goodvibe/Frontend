@@ -20,7 +20,7 @@ export default function FoodRecommendation() {
 
     return (
         <>
-        <div className='Wrapper-black'>
+        <div className='Wrapper-food-recom'>
             <div className='fr'>이런 음식은 되도록</div>
             <div className='fr'>추천드리지 않을게요.</div>
 

@@ -24,7 +24,7 @@ export default function CurrentOrder() {
     };
 
     return (
-        <div className='Wrapper-black'>
+        <div className='Wrapper-current'>
             <div className='result-name'>최근 주문한 음식</div>
             <div className='current-header'>
                 <span>음식을</span>
@@ -40,7 +40,7 @@ export default function CurrentOrder() {
                     isSelected={selectedIdx === idx}
                     onClick={() => handleClick(idx)}
                 />
-                ))}
+            ))}
         </div>
 
         </div>

@@ -12,14 +12,15 @@ export default function SearchResult() {
         { imgSrc: "/food1.svg", name: "콩나물 순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
         { imgSrc: "/food2.svg", name: "순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
         { imgSrc: "/food1.svg", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
+        { imgSrc: "/food1.svg", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
     ];
 
     return (
-        <div className='Wrapper-black'>
+        <div className='Wrapper-search-result'>
             <div className='result-name'>주문할 음식을 눌러 <br /> 선택하세요.</div>
             
             <div className='search-result-scroll'>
-            <div className='result-list'>
+            <>
                 {menuList.map((menu, idx) => (
                     <MenuCard
                         key={idx}
@@ -28,7 +29,7 @@ export default function SearchResult() {
                         onClick={() => setSelectedIdx(idx)}
                     />
                 ))}
-            </div>
+            </>
             </div>
 
             <div className='button'>

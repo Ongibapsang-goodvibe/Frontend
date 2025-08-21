@@ -22,7 +22,7 @@ const UI = {
     status: <>바비가 기다리는 중 …</>,
     button: "돌아가기",
     btnClass: "neutral", // 회색
-    img: "/WaitingBarbi.png",
+    img: "/images/WaitingBarbi.png",
   },
   [STATES.LISTENING]: {
     heading: (
@@ -33,7 +33,7 @@ const UI = {
     status: <>바비가 듣는 중 …</>,
     button: "대화 종료하기",
     btnClass: "warn", // 주황
-    img: "/ListeningBarbi.png",
+    img: "/images/ListeningBarbi.png",
   },
   [STATES.THINKING]: {
     heading: (
@@ -44,7 +44,7 @@ const UI = {
     status: <>바비가 생각하는 중 …</>,
     button: "대화 종료하기",
     btnClass: "warn",
-    img: "/ThinkingBarbi.png",
+    img: "/images/ThinkingBarbi.png",
   },
   [STATES.SPEAKING]: {
     heading: (
@@ -55,7 +55,7 @@ const UI = {
     status: <>바비가 말하는 중 …</>,
     button: "대화 종료하기",
     btnClass: "warn",
-    img: "/TalkingBarbi.png",
+    img: "/images/TalkingBarbi.png",
   },
 };
 

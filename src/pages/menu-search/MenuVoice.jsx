@@ -252,7 +252,7 @@ const MenuVoice = () => {
           onClick={onMainButtonClick}
           disabled={clicked || (phase === "processing" && loading)}
         >
-          <img src="/VoiceMic.svg" alt="마이크" />
+          <img src="/icons/VoiceMic.svg" alt="마이크" />
         </MainButton>
 
         {/* ✅ 하단 안내 문구 */}

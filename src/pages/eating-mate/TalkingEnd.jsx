@@ -11,7 +11,7 @@ const TalkingEnd = () => {
                 <h1>즐거운 대화였어요!<br />
                 다음에 또 만나요.</h1>
 
-                <img src="/ByeBarbi.png" alt="인사하는 너구리" />
+                <img src="/images/ByeBarbi.png" alt="인사하는 너구리" />
 
                 <Button
                     type="button"

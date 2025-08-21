@@ -203,6 +203,8 @@ const SearchButton = styled.button`
   color: #000;
   font-size: 2rem;
   font-weight: 700;
+
+  cursor: pointer;
 `;
 
 const BackButton = styled.button`
@@ -218,4 +220,6 @@ const BackButton = styled.button`
   color: #fff;
   font-size: 2rem;
   font-weight: 700;
+
+  cursor: pointer;
 `;

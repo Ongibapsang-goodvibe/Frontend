@@ -196,7 +196,7 @@ const Voice = () => {
     if (phase === "done") {
       return (
         <BottomActions>
-          <SubButton className="no" onClick={onNotMatch}>아니에요</SubButton>
+          <SubButton onClick={onNotMatch}>아니에요</SubButton>
           <SubButton className="yes" onClick={onMatch}>맞아요</SubButton>
         </BottomActions>
       );

@@ -48,12 +48,14 @@ import EatingMate from "./pages/eating-mate/EatingMate";
 import TalkingEnd from "./pages/eating-mate/TalkingEnd";
 //nutrition
 import Nutrition from './pages/nutrition/nutrition';
-import NutritionGuard from "./pages/nutrition/NutritionGuard";
 //voice-rec
 import DeliveryVoice from "./pages/voice-rec/DeliveryVoice";
 import FoodSatVoice from "./pages/voice-rec/FoodSatVoice";
 import FoodComVoice from "./pages/voice-rec/FoodComVoice";
 import HealthVoice from "./pages/voice-rec/HealthVoice";
+import HealthReport from "./pages/guardian-report/HealthReport";
+//guardian-report
+import GuardianReport from "./pages/guardian-report/GuardianReport";
 
 export default function App() {
   return (
@@ -76,6 +78,7 @@ function MainLayout() {
     "/mypage",
     "/report/nutrition",
     "/guard/report/nutrition",
+    "/guard/report",
   ];
 
   const showLogo = logoShownRoutes.includes(pathname);
@@ -98,6 +101,8 @@ function MainLayout() {
     "/food-feedback/forwarding",
     //health-feedback
     "/health-feedback/forwarding",
+    //guardian-report
+    "/guard/report",
   ];
 
   const showBottom = !hiddenRoutes.includes(pathname);
@@ -156,7 +161,6 @@ function MainLayout() {
 
     /*nutrition*/
     "/report/nutrition": { step: 0, total: 0 },
-    "/guard/report/nutrition": { step: 0, total: 0 },
 
     /*eating-mate*/
     "/eating-mate": { step: 0, total: 0 },
@@ -167,6 +171,7 @@ function MainLayout() {
     "/food-feedback/satisfaction/voice": { step: 0, total: 0 },
     "/food-feedback/complaint/voice": { step: 0, total: 0 },
     "/health-feedback/health-check/voice": { step: 0, total: 0 },
+    "/guard/report": { step: 0, total: 0 },
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
@@ -224,7 +229,6 @@ function MainLayout() {
           <Route path="/menu/search/text" element={<MenuText />} />
           {/*nutrition*/}
           <Route path='/report/nutrition' element={<Nutrition />} />
-          <Route path='/guard/report/nutrition' element={<NutritionGuard />} />
           {/*eating-mate*/}
           <Route path="/eating-mate" element={<EatingMate />} />
           <Route path="/eating-mate/end" element={<TalkingEnd />} />
@@ -233,6 +237,8 @@ function MainLayout() {
           <Route path="/food-feedback/satisfaction/voice" element={<FoodSatVoice />} />
           <Route path="/food-feedback/complaint/voice" element={<FoodComVoice />} />
           <Route path="/health-feedback/health-check/voice" element={<HealthVoice />} />
+          {/*guardian-report*/}
+          <Route path="/guard/report" element={<GuardianReport />} />
         </Routes>
       </main>
 

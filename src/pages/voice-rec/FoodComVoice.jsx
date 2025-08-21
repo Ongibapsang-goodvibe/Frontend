@@ -10,7 +10,7 @@ const EmGray   = styled.span` color: #8A8A8A; `;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ====== 컴포넌트 ====== */
-const DeliveryVoice = () => {
+const FoodComVoice = () => {
   const navigate = useNavigate();
 
   const SR =
@@ -141,7 +141,11 @@ const DeliveryVoice = () => {
   };
 
   const goBack = () => {
-      navigate("/delivery-feedback/complaint");
+    if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate("/food-feedback/check");
+    }
   };
 
   const onNotMatch = () => {
@@ -151,7 +155,7 @@ const DeliveryVoice = () => {
   const onMatch = () => {
     // ❌TODO: API 연동 자리 + 경로수정
     console.log("[TO-BE-SENT] recognizedText:", recognizedText);
-    navigate("/delivery-feedback/forwarding/issue");
+    navigate("/food-feedback/forwarding");
   };
 
   // 상태별 문구/버튼 색
@@ -231,7 +235,7 @@ const DeliveryVoice = () => {
   );
 };
 
-export default DeliveryVoice;
+export default FoodComVoice;
 
 /* ====== 스타일 ====== */
 const Wrapper = styled.div`

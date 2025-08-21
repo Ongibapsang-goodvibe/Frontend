@@ -51,6 +51,9 @@ import Nutrition from './pages/nutrition/nutrition';
 import NutritionGuard from "./pages/nutrition/NutritionGuard";
 //voice-rec
 import DeliveryVoice from "./pages/voice-rec/DeliveryVoice";
+import FoodSatVoice from "./pages/voice-rec/FoodSatVoice";
+import FoodComVoice from "./pages/voice-rec/FoodComVoice";
+import HealthVoice from "./pages/voice-rec/HealthVoice";
 
 export default function App() {
   return (
@@ -161,6 +164,9 @@ function MainLayout() {
 
     /*voice-rec*/
     "/delivery-feedback/complaint/voice": { step: 0, total: 0 },
+    "/food-feedback/satisfaction/voice": { step: 0, total: 0 },
+    "/food-feedback/complaint/voice": { step: 0, total: 0 },
+    "/health-feedback/health-check/voice": { step: 0, total: 0 },
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
@@ -222,8 +228,11 @@ function MainLayout() {
           {/*eating-mate*/}
           <Route path="/eating-mate" element={<EatingMate />} />
           <Route path="/eating-mate/end" element={<TalkingEnd />} />
-          {/*voice*/}
+          {/*voice-rec*/}
           <Route path="/delivery-feedback/complaint/voice" element={<DeliveryVoice />} />
+          <Route path="/food-feedback/satisfaction/voice" element={<FoodSatVoice />} />
+          <Route path="/food-feedback/complaint/voice" element={<FoodComVoice />} />
+          <Route path="/health-feedback/health-check/voice" element={<HealthVoice />} />
         </Routes>
       </main>
 

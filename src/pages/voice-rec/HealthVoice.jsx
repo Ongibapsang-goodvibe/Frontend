@@ -10,7 +10,7 @@ const EmGray   = styled.span` color: #8A8A8A; `;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ====== 컴포넌트 ====== */
-const DeliveryVoice = () => {
+const HealthVoice = () => {
   const navigate = useNavigate();
 
   const SR =
@@ -141,7 +141,7 @@ const DeliveryVoice = () => {
   };
 
   const goBack = () => {
-      navigate("/delivery-feedback/complaint");
+      navigate("/health-feedback/health-check");
   };
 
   const onNotMatch = () => {
@@ -151,7 +151,7 @@ const DeliveryVoice = () => {
   const onMatch = () => {
     // ❌TODO: API 연동 자리 + 경로수정
     console.log("[TO-BE-SENT] recognizedText:", recognizedText);
-    navigate("/delivery-feedback/forwarding/issue");
+    navigate("/health-feedback/feeling-check");
   };
 
   // 상태별 문구/버튼 색
@@ -159,7 +159,7 @@ const DeliveryVoice = () => {
     switch (phase) {
       case "listening":
         return {
-          title: <>어떤 문제가 있나요?</>,
+          title: <>어디가<br />불편하세요?</>,
           top: 
             <>
               할 말이 끝나면<br/>
@@ -175,7 +175,7 @@ const DeliveryVoice = () => {
         };
       case "noVoice":
         return {
-          title: <>어떤 문제가 있나요?</>,
+          title: <>어디가<br />불편하세요?</>,
           top: <>인식되지 않음</>,
           btnClass: "neutral",
         };
@@ -209,7 +209,7 @@ const DeliveryVoice = () => {
   };
 
   return (
-    <Wrapper $phase={phase}>
+    <Wrapper>
       <h1>{title}</h1>
 
       <Content>
@@ -231,7 +231,7 @@ const DeliveryVoice = () => {
   );
 };
 
-export default DeliveryVoice;
+export default HealthVoice;
 
 /* ====== 스타일 ====== */
 const Wrapper = styled.div`
@@ -241,8 +241,8 @@ const Wrapper = styled.div`
   align-items: center;
 
   h1 {
-    margin-top: ${({ $phase }) => ($phase === "done" ? "1.88rem" : "3.75rem")};
-    margin-bottom: ${({ $phase }) => ($phase === "done" ? "2.62rem" : "4.75rem")};
+    margin-top: 1.88rem;
+    margin-bottom: 2.62rem;
     color: #fff;
     font-size: 2.5rem;
     font-weight: 700;

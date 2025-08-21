@@ -17,7 +17,7 @@ const DeliveryComplaint = () => {
 
         if (selected === 4) {
         // 4번(말로 할게요) 선택 시 음성 인식 페이지로 이동
-        navigate('/voice-recognition');
+        navigate('/delivery-feedback/complaint/voice');
         return;
         }
         

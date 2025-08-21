@@ -51,7 +51,7 @@ function MyPageButton({ text, style, onClick }) {
     return (
         <button className='mypage-btn' style={style} onClick={onClick}>
             <div className='mypage-content' style={style}>{text}</div>
-            <img src="/mypage.svg" width={6} alt="icon" />
+            <img src="/icons/mypage.svg" width={6} alt="icon" />
         </button>
     );
 }

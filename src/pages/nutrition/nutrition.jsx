@@ -22,7 +22,7 @@ export default function Nutrition() {
                 <div className='nu-con1'>
                     <div className='nutrition-id'>김영철</div>
                     <div className='nutrition-id1'>님의 영양 보고서</div>
-                    <img src='/nutrition.png' width={65}></img>
+                    <img src='/images/nutrition.png' width={65}></img>
                 </div>
 
                 <div className='nu-con2'>
@@ -40,15 +40,15 @@ export default function Nutrition() {
                     </div>
                     <div className='nu-macro'>
                         <div className='nu-menu-carbohydrate'>
-                            <img src="/bluecircle.svg" width={16} alt="carbs"/>
+                            <img src="/icons/bluecircle.svg" width={16} alt="carbs"/>
                             <div className='nu-menu-detail-text'>탄수화물</div>
                         </div>
                         <div className='nu-menu-protein'>
-                            <img src="/orangecircle.svg" width={16} alt="protein"/>
+                            <img src="/icons/orangecircle.svg" width={16} alt="protein"/>
                             <div className='nu-menu-detail-text'>단백질</div>
                         </div>
                         <div className='nu-menu-fat'>
-                            <img src="/yellowcircle.svg" width={16} alt="fat"/>
+                            <img src="/icons/yellowcircle.svg" width={16} alt="fat"/>
                             <div className='nu-menu-detail-text'>지방</div>
                         </div>
                     </div>

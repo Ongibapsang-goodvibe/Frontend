@@ -65,11 +65,10 @@
     font-weight: 700;
 }
 
-.favicon {
+.bobby-order-request {
     width: 300px;
     height: 450px;
-    position: absolute;
-    bottom: 124px;
+    margin-bottom: 37px;
 }
 
 .cancel {

@@ -9,10 +9,10 @@ export default function SearchResult() {
     const [selectedIdx, setSelectedIdx] = useState(null);
 
     const menuList = [
-        { imgSrc: "/food1.svg", name: "콩나물 순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
-        { imgSrc: "/food2.svg", name: "순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
-        { imgSrc: "/food1.svg", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
-        { imgSrc: "/food1.svg", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
+        { imgSrc: "/images/food1.png", name: "콩나물 순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
+        { imgSrc: "/images/food2.png", name: "순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
+        { imgSrc: "/images/food1.png", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
+        { imgSrc: "/images/food1.png", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
     ];
 
     return (

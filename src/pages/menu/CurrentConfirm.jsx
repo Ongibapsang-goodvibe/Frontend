@@ -22,7 +22,7 @@ export default function CurrentConfirm() {
                 <div className='current-restaurant' style={{ color: "#252525", fontSize: 20, fontWeight: 600 }}>맛나식당</div>
 
                 <div className='current-confirm-img'>
-                    <img src='/food1.svg'></img>
+                    <img src='/images/food1.png'></img>
                 </div>
 
                 <div className='menu-delivery-card' style={{ backgroundColor: "#424242", height: 47 }}>

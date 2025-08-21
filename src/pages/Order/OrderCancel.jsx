@@ -16,8 +16,8 @@ export default function OrderCancel() {
                 </div>
             </div>
             <div className='octext5'>다음에 다시 만나요.</div>
-            <div className='bobby-oc'>
-                <img src="/order-cancel.svg"></img>
+            <div className='bobby-order-cancel'>
+                <img src="/images/order-cancel.png"></img>
             </div>
         </div>
         </>

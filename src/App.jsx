@@ -49,8 +49,8 @@ import TalkingEnd from "./pages/eating-mate/TalkingEnd";
 //nutrition
 import Nutrition from './pages/nutrition/nutrition';
 import NutritionGuard from "./pages/nutrition/NutritionGuard";
-//voice
-import Voice from "./pages/Voice";
+//voice-rec
+import DeliveryVoice from "./pages/voice-rec/DeliveryVoice";
 
 export default function App() {
   return (
@@ -159,8 +159,8 @@ function MainLayout() {
     "/eating-mate": { step: 0, total: 0 },
     "/eating-mate/end": { step: 0, total: 0 },
 
-    /*voice*/
-    "/voice": { step: 0, total: 0 },
+    /*voice-rec*/
+    "/delivery-feedback/complaint/voice": { step: 0, total: 0 },
   };
 
   const progress = progressMap[pathname] || { step: 0, total: 0 };
@@ -223,7 +223,7 @@ function MainLayout() {
           <Route path="/eating-mate" element={<EatingMate />} />
           <Route path="/eating-mate/end" element={<TalkingEnd />} />
           {/*voice*/}
-          <Route path="/voice" element={<Voice />} />
+          <Route path="/delivery-feedback/complaint/voice" element={<DeliveryVoice />} />
         </Routes>
       </main>
 

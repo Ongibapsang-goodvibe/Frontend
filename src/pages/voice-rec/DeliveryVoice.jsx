@@ -10,7 +10,7 @@ const EmGray   = styled.span` color: #8A8A8A; `;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* ====== 컴포넌트 ====== */
-const Voice = () => {
+const DeliveryVoice = () => {
   const navigate = useNavigate();
 
   const SR =
@@ -141,11 +141,11 @@ const Voice = () => {
   };
 
   const goBack = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate("/"); // ❌경로 수정
-    }
+    //if (window.history.length > 1) {
+    //  navigate(-1);
+    //} else {
+      navigate("/delivery-feedback/complaint");
+    //}
   };
 
   const onNotMatch = () => {
@@ -155,14 +155,15 @@ const Voice = () => {
   const onMatch = () => {
     // ❌TODO: API 연동 자리 + 경로수정
     console.log("[TO-BE-SENT] recognizedText:", recognizedText);
-    navigate("/next-page");
+    navigate("/delivery-feedback/forwarding/issue");
   };
 
   // 상태별 문구/버튼 색
-  const { top, btnClass } = (() => {
+  const { title, top, btnClass } = (() => {
     switch (phase) {
       case "listening":
         return {
+          title: <>어떤 문제가<br />있는지 말해주세요.</>,
           top: 
             <>
               할 말이 끝나면<br/>
@@ -172,11 +173,13 @@ const Voice = () => {
         };
       case "done":
         return {
+          title: <>이렇게<br />말씀하셨나요?</>,
           top: <>{recognizedText}</>,
           btnClass: "neutral",
         };
       case "noVoice":
         return {
+          title: <>어떤 문제가<br />있는지 말해주세요.</>,
           top: <>인식되지 않음</>,
           btnClass: "neutral",
         };
@@ -211,10 +214,7 @@ const Voice = () => {
 
   return (
     <Wrapper>
-      <h1>
-        어떤 문제가
-        <br />있는지 말해주세요.
-      </h1>
+      <h1>{title}</h1>
 
       <Content>
         <div className="space">
@@ -226,7 +226,7 @@ const Voice = () => {
           onClick={onMicClick}
           disabled={clicked}
         >
-          <img src="/VoiceMic.svg" alt="마이크" />
+          <img src="/VoiceMic.svg" alt="마이크" /> {/* ❌ 이미지 경로 수정 필요 */}
         </MainButton>
 
         {renderBottomArea()}
@@ -235,7 +235,7 @@ const Voice = () => {
   );
 };
 
-export default Voice;
+export default DeliveryVoice;
 
 /* ====== 스타일 ====== */
 const Wrapper = styled.div`

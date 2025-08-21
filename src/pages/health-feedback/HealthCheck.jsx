@@ -12,7 +12,7 @@ const HealthCheck = () => {
             // 여기에 서버 전송 / API 호출 로직
           navigate('/health-feedback/feeling-check');
         }
-        if (selected === 'no') navigate('/health-feedback/feeling-check'); // 추후 음성인식 화면으로 변경
+        if (selected === 'no') navigate('/health-feedback/health-check/voice');
     };
 
     return(

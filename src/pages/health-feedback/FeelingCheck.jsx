@@ -78,11 +78,7 @@ const HealthCheck = () => {
                         type="button"
                         className="back"
                         onClick={() => {
-                          if (window.history.length > 1) {
-                            navigate(-1);
-                          } else {
                             navigate('/health-feedback/health-check');
-                          }
                         }}
                     >
                         <span>돌아가기</span>

@@ -98,7 +98,7 @@ export default function Payment() {
         </div>
 
         <div className='pmbt'>
-                <button className="pay-button" onClick={() => {navigate("/order-request")}}>9,400원 결제하기</button>
+                <button className="pay-button" onClick={() => {navigate("/order/request")}}>9,400원 결제하기</button>
         </div>
 
     </div>

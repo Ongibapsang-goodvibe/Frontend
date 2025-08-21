@@ -19,7 +19,7 @@ export default function CurrentOrder() {
     const handleClick = (idx) => {
         setSelectedIdx(idx);
         setTimeout(() => {
-            navigate("/current-confirm");
+            navigate("/menu/current-order/check");
         }, 2000);
     };
 

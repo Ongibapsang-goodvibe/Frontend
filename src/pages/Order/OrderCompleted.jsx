@@ -8,7 +8,7 @@ export default function OrderCompleted() {
     
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate("/home", { state: { from: "ordercompleted" }});
+            navigate("/home", { state: { from: "orderCompleted" }});
         }, 3000);
 
         return () => clearTimeout(timer);

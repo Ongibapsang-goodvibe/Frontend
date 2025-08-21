@@ -26,7 +26,7 @@ const FoodComplaint = () => {
             console.log(selectedOption.label);
             // 여기에 서버 전송 / API 호출 로직
         }
-        navigate('/food-forwarding');
+        navigate('/food-feedback/forwarding');
     };
 
     return(
@@ -82,7 +82,7 @@ const FoodComplaint = () => {
                     <Button
                         type="button"
                         className="back"
-                        onClick={() => navigate('/food-check')}
+                        onClick={() => navigate('/food-feedback/check')}
                     >
                         <span>돌아가기</span>
                     </Button>
@@ -129,6 +129,8 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  gap: 1rem;
   cursor: pointer;
 
   svg { flex-shrink: 0; }

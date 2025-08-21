@@ -20,7 +20,7 @@ const HealthCheck = () => {
             console.log(selectedOption.label);
             // 여기에 서버 전송 / API 호출 로직
         }
-        navigate('/health-forwarding');
+        navigate('/health-feedback/forwarding');
     };
 
     return(
@@ -33,7 +33,7 @@ const HealthCheck = () => {
                     className={selected === 1 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(1)}
                 >
-                  <img src="BlueEmoji.svg"/>
+                  <img src="/BlueEmoji.svg"/>
                   <span>최고예요!</span>
                 </Button>
 
@@ -42,7 +42,7 @@ const HealthCheck = () => {
                     className={selected === 2 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(2)}
                 >
-                  <img src="GreenEmoji.svg"/>
+                  <img src="/GreenEmoji.svg"/>
                   <span>괜찮아요</span>
                 </Button>
 
@@ -51,7 +51,7 @@ const HealthCheck = () => {
                     className={selected === 3 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(3)}
                 >
-                  <img src="YellowEmoji.svg"/>
+                  <img src="/YellowEmoji.svg"/>
                   <span>그냥 그래요</span>
                 </Button>
 
@@ -60,7 +60,7 @@ const HealthCheck = () => {
                     className={selected === 4 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(4)}
                 >
-                  <img src="OrangeEmoji.svg"/>
+                  <img src="/OrangeEmoji.svg"/>
                   <span>안 좋아요</span>
                 </Button>
 
@@ -69,7 +69,7 @@ const HealthCheck = () => {
                     className={selected === 5 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(5)}
                 >
-                  <img src="RedEmoji.svg"/>
+                  <img src="/RedEmoji.svg"/>
                   <span>나빠요</span>
                 </Button>
 
@@ -81,7 +81,7 @@ const HealthCheck = () => {
                           if (window.history.length > 1) {
                             navigate(-1);
                           } else {
-                            navigate('/health-check');
+                            navigate('/health-feedback/health-check');
                           }
                         }}
                     >

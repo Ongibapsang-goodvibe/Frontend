@@ -44,11 +44,11 @@ export default function Home() {
             </div>
             
             <div className='Home-container2'>
-                <button className='type' onClick={() => navigate("/menu-research/text")}>
+                <button className='type' onClick={() => navigate("/menu-search/text")}>
                     <img src="/type.svg" style={{ pointerEvents: "none" }} width={20}></img>
                     <span className='home-type' style={{ pointerEvents: "none" }}>글자로 검색</span>
                 </button>
-                <button className='voice' onClick={() => navigate("/menu-research/voice")}>
+                <button className='voice' onClick={() => navigate("/menu-search/voice")}>
                     <img src="/mic.svg" style={{ pointerEvents: "none" }} width={20}></img>
                     <span className='home-voice' style={{ pointerEvents: "none" }}>음성으로 검색</span>
                 </button>

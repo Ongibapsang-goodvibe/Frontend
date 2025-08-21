@@ -7,8 +7,8 @@ const FoodCheck = () => {
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const handleDone = () => {
-        if (selected === 'yes') navigate('/food-satisfaction');
-        if (selected === 'no') navigate('/food-complaint');
+        if (selected === 'yes') navigate('/food-feedback/satisfaction');
+        if (selected === 'no') navigate('/food-feedback/complaint');
     };
 
     return(
@@ -21,7 +21,7 @@ const FoodCheck = () => {
                     onClick={() => setSelected('yes')}
                 >
                     <span>잘 먹었어요</span>
-                    <img src="BlueEmoji.svg"/>
+                    <img src="/BlueEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -29,7 +29,7 @@ const FoodCheck = () => {
                     onClick={() => setSelected('no')}
                 >
                     <span>별로였어요</span>
-                    <img src="RedEmoji.svg"/>
+                    <img src="/RedEmoji.svg"/>
                 </Button>
                 <Button
                     type="button"
@@ -86,16 +86,12 @@ const Button = styled.button`
   &.normal.active {
     background: #fff;
     color: #000;
-
-    svg path {
-      fill: #000; /* active일 때 변경 */
-    }
   }
 
   &.done{
     border-radius: 0.75rem;
     height: 4.5rem;
-    margin-top: 3.44rem;
+    margin-top: 2.5rem;
 
     background: var(--main-color);
     color: #000;

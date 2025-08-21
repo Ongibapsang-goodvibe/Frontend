@@ -10,13 +10,13 @@ const FoodForwarding = () => {
             <Wrapper>
                 <h1>남겨주신 답변을<br />
                 <span>후기</span>로 남겼어요.</h1>
-                <img src="HappyImage.png" alt="행복한 너구리" />
+                <img src="/HappyImage.png" alt="행복한 너구리" />
                 <Button
                     type="button"
                     className="health-check"
-                    onClick={()=>{navigate('/health-check')}}
+                    onClick={()=>{navigate('/health-feedback/health-check')}}
                 >
-                    <span>건강 확인하러 가기</span>
+                    <span>건강 기록하러 가기</span>
                 </Button>
             </Wrapper>
         </>

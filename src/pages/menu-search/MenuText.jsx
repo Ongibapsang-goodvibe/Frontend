@@ -174,21 +174,17 @@ const Input = styled.input`
   border: none;
   outline: none;
   background: #FFF;
-  font-size: 1.5rem;
+
   font-weight: 500;
+  font-size: 1.5rem;
+  
 
   &:focus::placeholder {
     color: transparent; /* 포커스될 때 placeholder 색을 투명으로 */
   }
 
   &::placeholder {
-    font-size: 1.5rem;
     color: rgba(0, 0, 0, 0.25);
-  }
-
-  &:focus {
-    font-size: 2rem;
-    border-color: #000;
   }
 `;
 

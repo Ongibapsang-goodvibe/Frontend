@@ -11,7 +11,7 @@ const NoIssue = () => {
                 <h1>맛있게 드시고<br />
                 몸도 마음도<br />
                 <span>든든</span>해지세요!</h1>
-                <img src="EatingImage.png" alt="기뻐하는 너구리" />
+                <img src="/EatingImage.png" alt="기뻐하는 너구리" />
             </Wrapper>
         </>
     );

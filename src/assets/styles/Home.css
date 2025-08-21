@@ -58,6 +58,7 @@ font-weight: 600;
     height: 278px;
     overflow: hidden;
     position: relative;
+    pointer-events: none;  /* 클릭 이벤트 통과 */
 }
 
 .bobby-home {

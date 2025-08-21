@@ -25,7 +25,6 @@ const MenuText = () => {
       // (선택) 3) 인증이 필요한 API라면, 로그인 시 저장한 토큰을 꺼내서 Authorization 헤더에 넣는다.
       // 토큰이 필요 없다면 아래 두 줄을 제거해도 됨.
       const token = localStorage.getItem("accessToken");
-
       // 4) 검색 API 호출 (POST /api/restaurants/search)
       // - headers: JSON 전송을 위해 Content-Type 지정
       // - Authorization: 토큰이 있을 때만 동적으로 추가
@@ -66,7 +65,7 @@ const MenuText = () => {
         // 8-1) 결과가 1개 이상이면 검색 결과 페이지로 이동
         // - state로 결과/검색어/단계를 함께 전달(브라우저 새고고침 시 state는 사라질 수 있음)
         // - 결과 페이지에서 useLocation().state로 접근 가능
-        navigate("/search-result", {
+        navigate("/menu/search/result", {
           state: { results: list, q: text, stage: data.stage || "menu" },
         });
       } else {

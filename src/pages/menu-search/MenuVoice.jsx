@@ -46,7 +46,7 @@ const MenuVoice = () => {
   /** ✅ API URL: 무조건 VITE_API_BASE 기반 (상대경로 X, 절대 URL 강제) */
   const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/+$/, "");
   const SEARCH_URL = `${API_BASE}/api/restaurants/search/`; // 검색 API
-  const RESULTS_URL = "/restaurants/results"; // 검색결과 페이지 경로 (프엔 라우팅)
+  const RESULTS_URL = "/menu/search/result"; // 검색결과 페이지 경로 (프엔 라우팅)
 
   useEffect(() => {
     if (!SR) return;

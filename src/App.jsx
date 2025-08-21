@@ -49,8 +49,7 @@ import TalkingEnd from "./pages/eating-mate/TalkingEnd";
 //nutrition
 import Nutrition from './pages/nutrition/nutrition';
 import NutritionGuard from "./pages/nutrition/NutritionGuard";
-import Nutrition from "./pages/nutrition/Nutrition";
-//Voice(음성인식 확인용 페이지, 추후 삭제 예정)
+//voice
 import Voice from "./pages/Voice";
 
 export default function App() {
@@ -159,7 +158,8 @@ function MainLayout() {
     /*eating-mate*/
     "/eating-mate": { step: 0, total: 0 },
     "/eating-mate/end": { step: 0, total: 0 },
-    /*Voice 추후 삭제 예정*/
+
+    /*voice*/
     "/voice": { step: 0, total: 0 },
   };
 
@@ -222,7 +222,7 @@ function MainLayout() {
           {/*eating-mate*/}
           <Route path="/eating-mate" element={<EatingMate />} />
           <Route path="/eating-mate/end" element={<TalkingEnd />} />
-          {/*Voice 추후 삭제 예정*/}
+          {/*voice*/}
           <Route path="/voice" element={<Voice />} />
         </Routes>
       </main>

@@ -38,7 +38,7 @@ export default function SearchResult() {
                 </button>
                 <button
                     className='choose'
-                    onClick={() => navigate("/payment")}
+                    onClick={() => navigate("/order/payment")}
                     disabled={selectedIdx === null}
                 >
                     <div className='choosetext'>선택완료</div>
@@ -63,7 +63,7 @@ function MenuCard({ imgSrc, name, price, restaurant, fee, deliveryTime, isSelect
                     <div className='menu-review-nick' style={{ color: isSelected ? "#252525" : "#FFF" }}>{name}</div>
                     <div className='menu-nick-price'>
                         <div className='menu-price'  style={{ color: isSelected ? "#252525" : "#FFF" }}>{price}</div>
-                        <button className='menu-review' onClick={(e) => { e.stopPropagation(); navigate("/review"); }}>후기보기</button>
+                        <button className='menu-review' onClick={(e) => { e.stopPropagation(); navigate("/menu/review"); }}>후기보기</button>
                     </div>
                     <div className='menu-restaurant'  style={{ color: isSelected ? "#252525" : "#FFF" }}>{restaurant}</div>
                 </div>

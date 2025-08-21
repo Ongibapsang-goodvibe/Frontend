@@ -4,7 +4,7 @@ import { useState } from 'react';
 import "../../assets/styles/SearchResult.css";
 import "../../assets/styles/CurrentOrder.css";
 
-export default function CurrentConfirm() {
+export default function CurrentCheck() {
     const navigate = useNavigate();
 
     return (
@@ -44,7 +44,7 @@ export default function CurrentConfirm() {
                 </button>
                 <button
                     className='choose'
-                    onClick={() => navigate("/payment")}
+                    onClick={() => navigate("/order/payment")}
                 >
                     <div className='choosetext'>네</div>
                 </button>

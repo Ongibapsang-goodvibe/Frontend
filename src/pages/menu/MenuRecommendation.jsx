@@ -42,7 +42,7 @@ export default function MenuRecommentadion() {
                 </button>
                 <button
                     className='choose'
-                    onClick={() => navigate("/search-result")}
+                    onClick={() => navigate("/menu/search/result")}
                     disabled={selectedIdx === null}
                 >
                     <div className='choosetext'>선택완료</div>

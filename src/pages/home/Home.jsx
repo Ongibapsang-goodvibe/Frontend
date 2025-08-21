@@ -11,7 +11,7 @@ export default function Home() {
 
     {/*login: <SectionLoigin /> 이슈포워딩 페이지*/}
     const sectionMap = {
-        ordercompleted: <SectionWait />,
+        orderCompleted: <SectionWait />,
     };
 
     const defaultSection = <SectionDefault />;
@@ -44,11 +44,11 @@ export default function Home() {
             </div>
             
             <div className='Home-container2'>
-                <button className='type' onClick={() => navigate("/menu-search/text")}>
+                <button className='type' onClick={() => navigate("/menu/search/text")}>
                     <img src="/icons/type.svg" style={{ pointerEvents: "none" }} width={20}></img>
                     <span className='home-type' style={{ pointerEvents: "none" }}>글자로 검색</span>
                 </button>
-                <button className='voice' onClick={() => navigate("/menu-search/voice")}>
+                <button className='voice' onClick={() => navigate("/menu/search/voice")}>
                     <img src="/icons/mic.svg" style={{ pointerEvents: "none" }} width={20}></img>
                     <span className='home-voice' style={{ pointerEvents: "none" }}>음성으로 검색</span>
                 </button>
@@ -81,8 +81,8 @@ export default function Home() {
                 </div>
             </div>
             <div className='home-button'>
-                <button className='home-recent' onClick={() => navigate("/current-order")}>최근 주문</button>
-                <button className='home-recom' onClick={() => navigate("/menu-recommendation")}>✨ 음식 추천받기</button>
+                <button className='home-recent' onClick={() => navigate("/menu/current-order")}>최근 주문</button>
+                <button className='home-recom' onClick={() => navigate("/menu/recommendation")}>✨ 음식 추천받기</button>
             </div>
         </>
     );
@@ -117,7 +117,7 @@ function SectionDelivery() {
         <>
         <div className='bobby-comment'>
             <div className='bobby-ment'>배달 잘 받으셨나요?</div>
-            <button className='bobby-button'>
+            <button className='bobby-button' onClick={() => navigate("/delivery-feedback/check")}>
                 <div className='answer-text'>눌러서 답하기</div>
                 <img src='/icons/ment.svg' width={6}></img>
             </button>
@@ -134,7 +134,7 @@ function SectionMeal() {
         <>
         <div className='bobby-comment'>
             <div className='bobby-ment'>식사 잘 하셨나요?</div>
-            <button className='bobby-button'>
+            <button className='bobby-button' onClick={() => navigate("/food-feedback/check")}>
                 <div className='answer-text'>눌러서 답하기</div>
                 <img src='/icons/ment.svg' width={6}></img>
             </button>

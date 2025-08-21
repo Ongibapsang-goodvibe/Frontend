@@ -3,7 +3,7 @@ import '../../assets/styles/LandingPage.css';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function LandingPage1() {
+export default function LandingPageWhite() {
     const navigate = useNavigate();
 
     useEffect(() => {

@@ -11,7 +11,7 @@ export default function OrderRequest() {
 
     const startTimer = () => {
         timerRef.current = setTimeout(() => {
-            navigate("/order-completed");
+            navigate("/order/completed");
         }, 5000);
     };
 
@@ -64,7 +64,7 @@ export default function OrderRequest() {
                             <button className='no' onClick={handleCloseModal}>
                                 <div className='nobt'>아니요</div>
                             </button>
-                            <button className='yes' onClick={() => {navigate("/order-cancel")}}>
+                            <button className='yes' onClick={() => {navigate("/order/cancel")}}>
                                 <div className='yesbt'>네</div>
                             </button>
                         </div>

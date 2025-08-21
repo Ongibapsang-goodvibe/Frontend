@@ -11,17 +11,17 @@ import MyPage from "./pages/mypage/MyPage";
 //menu
 import SearchResult from "./pages/menu/SearchResult";
 import CurrentOrder from './pages/menu/CurrentOrder';
-import CurrentConfirm from './pages/menu/CurrentConfirm';
+import CurrentCheck from './pages/menu/CurrentCheck';
 import MenuRecommendation from './pages/menu/MenuRecommendation';
 //Order
 import OrderRequest from './pages/order/OrderRequest';
 import OrderCompleted from './pages/order/OrderCompleted';
 import OrderCancel from './pages/order/OrderCancel';
 //initial
-import LandingPage from './pages/initial/LandingPage';
-import LandingPage1 from './pages/initial/LandingPage1';
+import LandingPageBlack from './pages/initial/LandingPageBlack';
+import LandingPageWhite from './pages/initial/LandingPageWhite';
 import HealthStatus from './pages/initial/HealthStatus';
-import FoodRecommendation from './pages/initial/FoodRecommendation';
+import HealthResult from './pages/initial/HealthResult';
 //Payment
 import Payment from './pages/payment/Payment';
 //Review
@@ -67,25 +67,25 @@ function MainLayout() {
   // LogoBar
   const logoShownRoutes = [
     "/health-status",
-    "/food-recommendation",
+    "/health-status/result",
     "/mypage",
     "/report/nutrition",
-    "/nutrition-guard",
+    "/guard/report/nutrition",
   ];
 
   const showLogo = logoShownRoutes.includes(pathname);
 
   //BottomBar
   const hiddenRoutes = [
-    "/landing-page",
-    "/landing-page1",
+    "/landing-page/Black",
+    "/landing-page/White",
     "/health-status",
-    "/food-recommendation",
-    "/order-request",
-    "/order-completed",
+    "/health-status/result",
+    "/order/request",
+    "/order/completed",
     "/eating-mate",
     "/eating-mate/end",
-    "/nutrition-guard",
+    "/guard/report/nutrition",
     //delivery-feedback
     "/delivery-feedback/forwarding/no-issue",
     "/delivery-feedback/forwarding/issue",
@@ -106,27 +106,27 @@ function MainLayout() {
     "/mypage": { step: 0, total: 0},
 
     /*menu*/
-    "/search-result": { step: 1, total: 2 },
-    "/current-order": { step: 1, total: 3 },
-    "/current-confirm": { step: 2, total: 3 },
-    "/menu-recommendation": { step: 0, total: 0 },
+    "/menu/search/result": { step: 1, total: 2 },
+    "/menu/current-order": { step: 1, total: 3 },
+    "/menu/current-order/check": { step: 2, total: 3 },
+    "/menu/recommendation": { step: 0, total: 0 },
 
     /*order*/
-    "/order-completed": { step: 0, total: 0 },
-    "/order-request": { step: 0, total: 0 },
-    "/order-cancel": { step: 0, total: 0 },
+    "/order/completed": { step: 0, total: 0 },
+    "/order/request": { step: 0, total: 0 },
+    "/order/cancel": { step: 0, total: 0 },
 
     /*initial*/
-    "/landing-page": { step: 0, total: 0 },
-    "/landing-page1": { step: 0, total: 0 },
+    "/landing-page/Black": { step: 0, total: 0 },
+    "/landing-page/White": { step: 0, total: 0 },
     "/health-status": { step: 0, total: 0 },
-    "/food-recommendation": { step: 0, total: 0 },
+    "/health-status/result": { step: 0, total: 0 },
 
     /*Payment*/
-    "/payment": { step: 2, total: 2 },
+    "/order/payment": { step: 2, total: 2 },
 
     /*Review */
-    "/review": { step: 0, total: 0 },
+    "/menu/review": { step: 0, total: 0 },
 
     /*delivery-feedback*/
     "/delivery-feedback/check": { step: 1, total: 2 },
@@ -151,7 +151,7 @@ function MainLayout() {
 
     /*nutrition*/
     "/report/nutrition": { step: 0, total: 0 },
-    "/nutrition-guard": { step: 0, total: 0 },
+    "/guard/report/nutrition": { step: 0, total: 0 },
 
     /*eating-mate*/
     "/eating-mate": { step: 0, total: 0 },
@@ -177,23 +177,23 @@ function MainLayout() {
           {/*mypage*/}
           <Route path='/mypage' element={<MyPage />} />
           {/*menu*/}
-          <Route path='/search-result' element={<SearchResult />} />
-          <Route path='/current-order' element={<CurrentOrder />} />
-          <Route path='/current-confirm' element={<CurrentConfirm />} />
-          <Route path='/menu-recommendation' element={<MenuRecommendation />} />
+          <Route path='/menu/search/result' element={<SearchResult />} />
+          <Route path='/menu/current-order' element={<CurrentOrder />} />
+          <Route path='/menu/current-order/check' element={<CurrentCheck />} />
+          <Route path='/menu/recommendation' element={<MenuRecommendation />} />
           {/*order*/}
-          <Route path="/order-request" element={<OrderRequest />} />
-          <Route path="/order-completed" element={<OrderCompleted />} />
-          <Route path="/order-cancel" element={<OrderCancel />} />
+          <Route path="/order/request" element={<OrderRequest />} />
+          <Route path="/order/completed" element={<OrderCompleted />} />
+          <Route path="/order/cancel" element={<OrderCancel />} />
           {/*initial*/}
-          <Route path='/landing-page' element={<LandingPage />} />
-          <Route path='/landing-page1' element={<LandingPage1 />} />
+          <Route path='/landing-page/black' element={<LandingPageBlack />} />
+          <Route path='/landing-page/white' element={<LandingPageWhite />} />
           <Route path='/health-status' element={<HealthStatus />} />
-          <Route path='/food-recommendation' element={<FoodRecommendation />} />
+          <Route path='/health-status/result' element={<HealthResult />} />
           {/*payment*/}
-          <Route path='/payment' element={<Payment />} />
+          <Route path='/order/payment' element={<Payment />} />
           {/*review*/}
-          <Route path='/review' element={<Review />} />
+          <Route path='/menu/review' element={<Review />} />
           {/*delivery-feedback*/}
           <Route path="/delivery-feedback/check" element={<DeliveryCheck />} />
           <Route path="/delivery-feedback/complaint" element={<DeliveryComplaint />} />
@@ -213,7 +213,7 @@ function MainLayout() {
           <Route path="/menu-search/text" element={<MenuText />} />
           {/*nutrition*/}
           <Route path='/report/nutrition' element={<Nutrition />} />
-          <Route path='/nutrition-guard' element={<NutritionGuard />} />
+          <Route path='/guard/report/nutrition' element={<NutritionGuard />} />
           {/*eating-mate*/}
           <Route path="/eating-mate" element={<EatingMate />} />
           <Route path="/eating-mate/end" element={<TalkingEnd />} />

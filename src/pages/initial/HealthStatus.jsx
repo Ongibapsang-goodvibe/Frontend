@@ -27,7 +27,7 @@ export default function HealthStatus() {
             throw new Error('전송 실패');
         }
 
-        navigate("/food-recommendation", { state: { selected: active } });
+        navigate("/health-status/result", { state: { selected: active } });
 
     } catch (error) {
         console.error(error);

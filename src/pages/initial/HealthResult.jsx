@@ -3,7 +3,7 @@ import '../../assets/styles/FoodRecommendation.css';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-export default function FoodRecommendation() {
+export default function HealthResult() {
     const navigate = useNavigate();
     const locatoin = useLocation();
     const selected = locatoin.state?.selected || [];

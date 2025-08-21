@@ -46,8 +46,8 @@ export default function OrderRequest() {
                 <div className='c3'>취소할 수 없어요.</div>
             </div>
 
-            <div className='favicon'>
-                <img src="/order-request.svg"></img>
+            <div className='bobby-order-request'>
+                <img src="/images/order-request.png"></img>
             </div>
 
             <button className='cancel' onClick={handleOpenModal}>

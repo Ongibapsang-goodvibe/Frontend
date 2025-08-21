@@ -25,7 +25,7 @@ export default function Review({ carbs, protein, fat }) {
         <div className='review-scroll'>
 
             <MenuCard
-                imgSrc="/food1.svg"
+                imgSrc="/images/food1.png"
                 tag="지방 위주 식사"
                 name="순두부국"
                 carbsPercent={50}
@@ -116,17 +116,17 @@ function MenuCard({ imgSrc, tag, name, carbsPercent, proteinPercent, fatPercent 
                 </div>
 
                 <div className='menu-carbohydrate'>
-                    <img src="/bluecircle.svg" width={10} alt="carbs"/>
+                    <img src="/icons/bluecircle.svg" width={10} alt="carbs"/>
                     <div className='menu-detail-text'>탄수화물</div>
                     <div className='menu-detail-percent'>{carbsPercent}%</div>
                 </div>
                 <div className='menu-protein'>
-                    <img src="/orangecircle.svg" width={10} alt="protein"/>
+                    <img src="/icons/orangecircle.svg" width={10} alt="protein"/>
                     <div className='menu-detail-text'>단백질</div>
                     <div className='menu-detail-percent'>{proteinPercent}%</div>
                 </div>
                 <div className='menu-fat'>
-                    <img src="/yellowcircle.svg" width={10} alt="fat"/>
+                    <img src="/icons/yellowcircle.svg" width={10} alt="fat"/>
                     <div className='menu-detail-text'>지방</div>
                     <div className='menu-detail-percent'>{fatPercent}%</div>
                 </div>

@@ -24,8 +24,8 @@ export default function OrderCompleted() {
                 <div className='t3'>도착예정시간 : </div>
                 <div className='t3'>12시 30분</div>
             </div>
-            <div className='bobby-oc'>
-                <img src="./order-completed.svg"></img>
+            <div className='bobby-order-com'>
+                <img src="/images/order-completed.png"></img>
             </div>
         </div>
         </>

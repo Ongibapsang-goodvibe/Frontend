@@ -1,6 +1,6 @@
 import "../../assets/styles/payment.css";
-import UP from "../../../public/up.svg";
-import DOWN from "../../../public/down.svg";
+import UP from "../../../public/icons/up.svg";
+import DOWN from "../../../public/icons/down.svg";
 
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ export default function Payment() {
             <h2 className="order-title">주문하기</h2>
 
             <div className='input-pm'>
-                <img src='./eat.svg' width={24} ></img>
+                <img src='/icons/eat.svg' width={24} ></img>
                 <div className='pm3'>사장님</div>
                 <div className='pm4'>께 </div>
                 <div className='pm3'>따로 부탁</div>
@@ -31,7 +31,7 @@ export default function Payment() {
             />
 
             <div className='input-pm'>
-                <img src='./delivery_dining.svg' width={24} ></img>
+                <img src='/icons/delivery_dining.svg' width={24} ></img>
                 <div className='pm3'>배달 기사</div>
                 <div className='pm4'>님께 </div>
                 <div className='pm3'>따로 부탁</div>

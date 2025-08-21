@@ -10,9 +10,9 @@ export default function MenuRecommentadion() {
     const [selectedIdx, setSelectedIdx] = useState(null);
 
     const menuRecomList = [
-        { imgSrc: "/food1.svg", tag: "지방 위주 식사", name: "콩나물 순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
-        { imgSrc: "/food2.svg", tag: "단백질 위주", name: "순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
-        { imgSrc: "/food1.svg", tag: "균형잡힌", name: "두부조림", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
+        { imgSrc: "/images/food1.png", tag: "지방 위주 식사", name: "콩나물 순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
+        { imgSrc: "/images/food2.png", tag: "단백질 위주", name: "순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
+        { imgSrc: "/images/food1.png", tag: "균형잡힌", name: "두부조림", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
     ];
 
     return (
@@ -75,17 +75,17 @@ function MenuRecomCard({ imgSrc, tag, name, carbsPercent, proteinPercent, fatPer
                 </div>
 
                 <div className='menu-carbohydrate'>
-                    <img src="/bluecircle.svg" width={10} alt="carbs"/>
+                    <img src="/icons/bluecircle.svg" width={10} alt="carbs"/>
                     <div className='menu-detail-text' style={{ color: isSelected ? "#252525" : "#FFF" }}>탄수화물</div>
                     <div className='menu-detail-percent'>{carbsPercent}%</div>
                 </div>
                 <div className='menu-protein'>
-                    <img src="/orangecircle.svg" width={10} alt="protein"/>
+                    <img src="/icons/orangecircle.svg" width={10} alt="protein"/>
                     <div className='menu-detail-text' style={{ color: isSelected ? "#252525" : "#FFF" }}>단백질</div>
                     <div className='menu-detail-percent'>{proteinPercent}%</div>
                 </div>
                 <div className='menu-fat'>
-                    <img src="/yellowcircle.svg" width={10} alt="fat"/>
+                    <img src="/icons/yellowcircle.svg" width={10} alt="fat"/>
                     <div className='menu-detail-text' style={{ color: isSelected ? "#252525" : "#FFF" }}>지방</div>
                     <div className='menu-detail-percent'>{fatPercent}%</div>
                 </div>

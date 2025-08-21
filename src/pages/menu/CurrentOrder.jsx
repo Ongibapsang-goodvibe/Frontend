@@ -8,10 +8,10 @@ export default function CurrentOrder() {
     const navigate = useNavigate();
     
     const currentList = [
-        { imgSrc: "/food1.svg", date: "8월 17일 (일)", name: "콩나물 순두부국", restaurant: "맛나식당" },
-        { imgSrc: "/food2.svg", date: "8월 12일 (화)", name: "순두부국", restaurant: "맛나식당" },
-        { imgSrc: "/food1.svg", date: "8월 8일 (금)", name: "두부조림", restaurant: "맛나식당" },
-        { imgSrc: "/food1.svg", date: "8월 8일 (금)", name: "두부조림", restaurant: "맛나식당" },
+        { imgSrc: "/images/food1.png", date: "8월 17일 (일)", name: "콩나물 순두부국", restaurant: "맛나식당" },
+        { imgSrc: "/images/food2.png", date: "8월 12일 (화)", name: "순두부국", restaurant: "맛나식당" },
+        { imgSrc: "/images/food1.png", date: "8월 8일 (금)", name: "두부조림", restaurant: "맛나식당" },
+        { imgSrc: "/images/food1.png", date: "8월 8일 (금)", name: "두부조림", restaurant: "맛나식당" },
     ];
 
     const [selectedIdx, setSelectedIdx] = useState(null);

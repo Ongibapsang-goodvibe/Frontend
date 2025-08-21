@@ -10,7 +10,7 @@ const FoodForwarding = () => {
             <Wrapper>
                 <h1>남겨주신 답변을<br />
                 <span>후기</span>로 남겼어요.</h1>
-                <img src="/HappyImage.png" alt="행복한 너구리" />
+                <img src="/images/HappyImage.png" alt="행복한 너구리" />
                 <Button
                     type="button"
                     className="health-check"

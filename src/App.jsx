@@ -146,8 +146,8 @@ function MainLayout() {
     "/health-feedback/forwarding": { step: 3, total: 3 },
 
     /*menu-search*/
-    "/menu-search/voice": { step: 0, total: 0 },
-    "/menu-search/text": { step: 0, total: 0 },
+    "/menu/search/voice": { step: 0, total: 0 },
+    "/menu/search/text": { step: 0, total: 0 },
 
     /*nutrition*/
     "/report/nutrition": { step: 0, total: 0 },
@@ -209,8 +209,8 @@ function MainLayout() {
           <Route path="/health-feedback/feeling-check" element={<FeelingCheck />} />
           <Route path="/health-feedback/forwarding" element={<HealthForwarding />} />
           {/*menu-search*/}
-          <Route path="/menu-search/voice" element={<MenuVoice />} />
-          <Route path="/menu-search/text" element={<MenuText />} />
+          <Route path="/menu/search/voice" element={<MenuVoice />} />
+          <Route path="/menu/search/text" element={<MenuText />} />
           {/*nutrition*/}
           <Route path='/report/nutrition' element={<Nutrition />} />
           <Route path='/guard/report/nutrition' element={<NutritionGuard />} />

@@ -2,6 +2,9 @@ import { useState } from "react";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/+$/, "");
+const SEARCH_URL = `${API_BASE}/api/restaurants/search/`;
+
 const MenuText = () => {
   const navigate = useNavigate();
   const [text, setText] = useState("");
@@ -14,6 +17,7 @@ const MenuText = () => {
    *
    * 로딩/에러 전용 UI는 사용하지 않음.
    */
+
   const handleSearch = async () => {
     // 1) 입력값이 비어 있거나 공백뿐이면 API 호출하지 않음 (불필요한 트래픽 방지)
     if (!text.trim()) return;
@@ -30,7 +34,7 @@ const MenuText = () => {
       // - headers: JSON 전송을 위해 Content-Type 지정
       // - Authorization: 토큰이 있을 때만 동적으로 추가
       // - body: API 스펙대로 { text, limit } 전송
-      const res = await fetch("/api/restaurants/search", {
+      const res = await fetch(SEARCH_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,10 +46,13 @@ const MenuText = () => {
       // 5) 응답 코드 검사
       // - 2xx가 아니면(res.ok === false) 실패로 간주하고 "결과 없음" 처리
       // - (선택) 백엔드가 204 No Content를 줄 수 있다면, JSON 파싱 전에 별도 처리하는 게 안전
-      //   if (res.status === 204) { setShowResult(true); return; }
-      if (!res.ok) {
-        setShowResult(true);
-        return;
+      if (res.status === 204) { 
+        setShowResult(true); 
+        return; 
+      }
+      if (!res.ok) { 
+        setShowResult(true); 
+        return; 
       }
 
       // 6) 응답 본문(JSON) 파싱
@@ -66,17 +73,17 @@ const MenuText = () => {
         // 8-1) 결과가 1개 이상이면 검색 결과 페이지로 이동
         // - state로 결과/검색어/단계를 함께 전달(브라우저 새고고침 시 state는 사라질 수 있음)
         // - 결과 페이지에서 useLocation().state로 접근 가능
-        navigate("/search-result", {
+        navigate("/menu/search/result", {
           state: { results: list, q: text, stage: data.stage || "menu" },
         });
       } else {
         // 8-2) 결과가 0개면 "검색결과가 없어요" 안내 노출
         setShowResult(true);
       }
-    } catch (err) {
+    } catch (e) {
       // 9) 네트워크 오류, JSON 파싱 오류 등 예외 상황
       //    요구사항상 에러 UI는 따로 쓰지 않으므로 "결과 없음"으로 통일
-      console.error(err);
+      console.error(e);
       setShowResult(true);
     }
   };
@@ -203,6 +210,8 @@ const SearchButton = styled.button`
   color: #000;
   font-size: 2rem;
   font-weight: 700;
+
+  cursor: pointer;
 `;
 
 const BackButton = styled.button`
@@ -218,4 +227,6 @@ const BackButton = styled.button`
   color: #fff;
   font-size: 2rem;
   font-weight: 700;
+
+  cursor: pointer;
 `;

@@ -5,7 +5,7 @@ const LogoBar = () => {
 
   return (
     <Wrapper>
-        <img src="/LogoBar.svg" alt="온기밥상"/>
+        <img src="/icons/LogoBar.svg" alt="온기밥상"/>
     </Wrapper>
   );
 };

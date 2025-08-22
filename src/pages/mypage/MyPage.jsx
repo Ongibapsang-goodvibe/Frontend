@@ -10,25 +10,25 @@ export default function MyPage() {
 
             <div className='mypage-container'>
                 <div className='mypage-container2'>
-                    <div className='mypage-text1'>등록 정보</div>
+                    <div className='mypage-text1'>개인 정보</div>
                     <MyPageButton text="전화번호 변경" />
                     <MyPageButton text="주소 변경" />
-                    <MyPageButton text="보호자 계정 연결 설정" />
+                    <MyPageButton text="질환 정보 수정" onClick={() => navigate("/health-status")} />
                 </div>
             </div>
 
             <div className='mypage-container'>
                 <div className='mypage-container2'>
-                    <div className='mypage-text'>질환</div>
-                    <MyPageButton text="질환 수정하기" onClick={() => navigate("/health-status")}/>
+                    <div className='mypage-text'>보호자 설정</div>
+                    <MyPageButton text="보호자 등록/해제" />
                 </div>
             </div>
 
             <div className='mypage-container'>
                 <div className='mypage-container2'>
                     <div className='mypage-text'>고객지원</div>
-                    <MyPageButton text="로그아웃" />
                     <MyPageButton text="이용약관" />
+                    <MyPageButton text="로그아웃" />
                     <MyPageButton 
                         text="탈퇴하기"
                         style={{

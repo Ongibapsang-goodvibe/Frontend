@@ -8,7 +8,7 @@ export default function LandingPageBlack() {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate("/landing-page/White");
+            navigate("/login");
         }, 3000);
 
         return () => clearTimeout(timer);

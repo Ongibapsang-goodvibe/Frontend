@@ -1,12 +1,14 @@
 import "../../assets/styles/Review.css";
 
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 export default function Review({ carbs, protein, fat }) {
     const navigate = useNavigate();
+    const [reviewComments, setReviewComments] = useState([]);
 
     const total = carbs + protein + fat;
-
     const carbsPercent = Math.round((carbs / total) * 100);
     const proteinPercent = Math.round((protein / total) * 100);
     const fatPercent = Math.round((fat / total) * 100);

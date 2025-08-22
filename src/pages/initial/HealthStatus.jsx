@@ -4,11 +4,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../../api';
 
 export default function HealthStatus() {
+    
     const navigate = useNavigate();
     const location = useLocation();
 
     const { editMode, currentDiseases } = location.state || {};
-    const [active, setActive ] = useState(editMode ? currentDiseases : []);
+    const [active, setActive ] = useState(editMode ? currentDiseases.map(Number) : []);
+
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const labels = [
         { id: 1, label: "당뇨" },
@@ -29,19 +32,27 @@ export default function HealthStatus() {
     };
 
     const handleSubmit = async () => {
-        const user_id = 2;
+        if (!user?.id) {
+            alert("로그인이 필요합니다.");
+            navigate("/login");
+            return;
+        }
+
         try {
             const response = editMode
-                ? await api.patch(`/api/accounts/${user_id}/disease/`, {
-                    id: user_id,
+                ? await api.patch(`/api/accounts/${user.id}/disease/`, {
+                    id: user.id,
                     disease_id: active.map(Number),
                 })
-                : await api.put(`/api/accounts/${user_id}/disease/`, {
-                    id: user_id,
+                : await api.put(`/api/accounts/${user.id}/disease/`, {
+                    id: user.id,
                     disease_id: active.map(Number),
                 });
 
             if (response.status === 200) {
+                const updateUser = { ...user, disease_id: active.map(Number )};
+                localStorage.setItem("user", JSON.stringify(updateUser));
+
                 navigate("/health-status/result", { state: { selected: active } });
             }
         } catch (error) {

@@ -194,7 +194,7 @@ function MainLayout() {
       <main className="app-container">
         <Routes>
           {/* 기본 진입 시 home으로 이동 */}
-          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/" element={<Navigate to="/landing-page/black" replace />} />
           {/*home*/}
           <Route path="/home" element={<Home />} />
           {/*login*/}

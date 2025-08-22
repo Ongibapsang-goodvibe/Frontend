@@ -1,9 +1,34 @@
 import "../../assets/styles/mypage.css";
 
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import api from "../../api";
 
 export default function MyPage() {
     const navigate = useNavigate();
+    const [user, setUser] = useState({
+        id: 2,
+        disease_id: [1, 2],
+    });
+
+    /*
+    useEffect(() => {
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        setUser(storedUser);
+    }, []);
+    */
+
+    const handleEditDisease = () => {
+        const user_id = 2;
+        navigate("/health-status", {
+            state: {
+                editMode: true,
+                id: user_id,
+                currentDiseases: user.disease_id
+            }
+        });
+    };
+
     return (
         <div className='Wrapper-mypage'>
             <div className='mypage-header'>내 정보</div>
@@ -13,7 +38,7 @@ export default function MyPage() {
                     <div className='mypage-text1'>개인 정보</div>
                     <MyPageButton text="전화번호 변경" />
                     <MyPageButton text="주소 변경" />
-                    <MyPageButton text="질환 정보 수정" onClick={() => navigate("/health-status")} />
+                    <MyPageButton text="질환 정보 수정" onClick={handleEditDisease} />
                 </div>
             </div>
 

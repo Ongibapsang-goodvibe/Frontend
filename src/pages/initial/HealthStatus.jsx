@@ -1,40 +1,15 @@
 import '../../assets/styles/HealthStatus.css';
-
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import api from '../../api';
 
 export default function HealthStatus() {
-    const [active, setActive ] = useState([]);
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const userId = 3;
-    
-    const handleSubmit = async () => {
-    try {
-        const response = await fetch(
-            `${import.meta.env.VITE_API_BASE}/api/accounts/${userId}/disease/`,
-            {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "disease_id": active
-            }),
-        });
+    const { editMode, currentDiseases } = location.state || {};
+    const [active, setActive ] = useState(editMode ? currentDiseases : []);
 
-        if (!response.ok) {
-            throw new Error('전송 실패');
-        }
-
-        navigate("/health-status/result", { state: { selected: active } });
-
-    } catch (error) {
-        console.error(error);
-        alert('질병 선택 정보를 전송하는데 실패했습니다.');
-    }
-};
-    
     const labels = [
         { id: 1, label: "당뇨" },
         { id: 2, label: "콩팥(신장) 질환" },
@@ -51,6 +26,28 @@ export default function HealthStatus() {
                 ? prev.filter((btnId) => btnId !== id)
                 : [...prev, id]
         );
+    };
+
+    const handleSubmit = async () => {
+        const user_id = 2;
+        try {
+            const response = editMode
+                ? await api.patch(`/api/accounts/${user_id}/disease/`, {
+                    id: user_id,
+                    disease_id: active.map(Number),
+                })
+                : await api.put(`/api/accounts/${user_id}/disease/`, {
+                    id: user_id,
+                    disease_id: active.map(Number),
+                });
+
+            if (response.status === 200) {
+                navigate("/health-status/result", { state: { selected: active } });
+            }
+        } catch (error) {
+            console.error(error);
+            alert('질병 선택 정보를 전송하는데 실패했습니다.');
+        }
     };
     
     return (
@@ -76,8 +73,8 @@ export default function HealthStatus() {
             </div>
 
             <div className='hsbutton'>
-                <button className='hsreturn' onClick={() => {navigate("/home")}}>
-                    <div className='hsreturntext'>건너뛰기</div>
+                <button className='hsreturn' onClick={() => {navigate(editMode ? "/mypage" : "/home")}}>
+                    <div className='hsreturntext'>{editMode ? "취소" : "건너뛰기"}</div>
                 </button>
                 <button className='hschoose' onClick={handleSubmit}>
                     <div className='hschoosetext'>선택완료</div>

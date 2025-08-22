@@ -6,6 +6,8 @@ import BottomBar from "./components/BottomBar";
 
 //Home
 import Home from "./pages/home/Home";
+//Login
+import Login from "./pages/login/Login";
 //mypage
 import MyPage from "./pages/mypage/MyPage";
 //menu
@@ -73,6 +75,7 @@ function MainLayout() {
 
   // LogoBar
   const logoShownRoutes = [
+    "/login",
     "/health-status",
     "/health-status/result",
     "/mypage",
@@ -85,6 +88,7 @@ function MainLayout() {
 
   //BottomBar
   const hiddenRoutes = [
+    "/login",
     "/landing-page/Black",
     "/landing-page/White",
     "/health-status",
@@ -111,6 +115,9 @@ function MainLayout() {
   const progressMap = {
     /*home*/
     "/home": { step: 0, total: 0 },
+
+    /*login*/
+    "/login": { step: 0, total: 0 },
 
     /*mypage*/
     "/mypage": { step: 0, total: 0},
@@ -190,6 +197,8 @@ function MainLayout() {
           <Route path="/" element={<Navigate to="/home" replace />} />
           {/*home*/}
           <Route path="/home" element={<Home />} />
+          {/*login*/}
+          <Route path="/login" element={<Login />} />
           {/*mypage*/}
           <Route path='/mypage' element={<MyPage />} />
           {/*menu*/}

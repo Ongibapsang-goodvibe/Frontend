@@ -144,6 +144,10 @@ const HealthVoice = () => {
       navigate("/health-feedback/health-check");
   };
 
+  const goJump = () => {
+      navigate("/health-feedback/feeling-check");
+  };
+
   const onNotMatch = () => {
     startListening();
   };
@@ -203,8 +207,9 @@ const HealthVoice = () => {
     // listening 중
     return (
       <BottomActions>
-        <SubButton className="back" onClick={goBack}>돌아가기</SubButton>
-      </BottomActions>
+          <SubButton onClick={goBack}>돌아가기</SubButton>
+          <SubButton className="jump" onClick={goJump}>건너뛰기</SubButton>
+        </BottomActions>
     );
   };
 
@@ -345,6 +350,10 @@ const SubButton = styled.button`
   color: #FFF;
   cursor: pointer;
 
-  &.back { width: 20rem; }
+  &.jump {
+    border: 3px solid #5D5D5D;
+    background: #FFF;
+    color: #5D5D5D;
+  }
   &.yes { background: var(--main-color); color: #000; }
 `;

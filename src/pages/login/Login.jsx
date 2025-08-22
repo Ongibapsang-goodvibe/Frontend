@@ -43,7 +43,7 @@ const Login = () => {
 
         // 4) 유저 정보 저장
         if (data?.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("user", data.user);
         }
 
         // 5) 이동

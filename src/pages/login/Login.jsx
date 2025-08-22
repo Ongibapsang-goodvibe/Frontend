@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 // VITE_API_BASE 기반으로 API URL 강제
 const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/+$/, "");
@@ -15,66 +16,63 @@ const Login = () => {
 
 
     const handleSubmit = async (e) => {
-    e.preventDefault(); // 엔터/버튼 제출 시 새로고침 방지
+      e.preventDefault(); // 엔터/버튼 제출 시 새로고침 방지
 
-    // 1) 프론트 유효성 검사
-    if (!name.trim()) {
+      // 1) 프론트 유효성 검사
+      if (!name.trim()) {
         setErrorPhase("nameEmpty");
         return;
-    }
-    if (password.length !== 6 || !/^\d+$/.test(password)) {
+      }
+      if (password.length !== 6 || !/^\d+$/.test(password)) {
         setErrorPhase("pwInvalid");
         return;
-    }
+      }
 
-    setErrorPhase(""); // 에러 초기화
+      setErrorPhase(""); // 에러 초기화
 
-    try {
-        // 2) 백엔드 요청
-        const res = await fetch(LOGIN_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, password }),
-        });
+      try {
+        // 2) 백엔드 요청 (axios)
+        const res = await axios.post(LOGIN_URL, { name, password });
 
-        // 3) 응답 처리
-        if (!res.ok) {
-        if (res.status === 400) {
-            const data = await res.json().catch(() => ({}));
-            if (Array.isArray(data?.non_field_errors)) {
-            setErrorPhase("loginFail"); // "이름 또는 비밀번호가 올바르지 않습니다."
-            } else if (data?.name?.length) {
-            setErrorPhase("nameEmpty");
-            } else if (data?.password?.length) {
-            setErrorPhase("pwInvalid");
-            } else {
-            setErrorPhase("loginFail");
-            }
-        } else {
-            setErrorPhase("serverError");
-        }
-        return;
-        }
+        const data = res.data;
 
-        const data = await res.json();
-
-        // 4-1) 토큰 저장
+        // 3) 토큰 저장
         if (data?.token) {
-          localStorage.setItem("accessToken", data.token);
+          localStorage.setItem("token", data.token);
         }
-        
-        // 4-2) 유저 정보 저장
+
+        // 4) 유저 정보 저장
         if (data?.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
+          localStorage.setItem("user", data.user);
         }
 
         // 5) 이동
         navigate("/landing-page/white");
-    } catch (err) {
-        console.error(err);
-        setErrorPhase("serverError");
-    }
-};
+      } catch (err) {
+        // axios는 400/500도 catch로 들어옴
+        if (err.response) {
+          const { status, data } = err.response;
+
+          if (status === 400) {
+            if (Array.isArray(data?.non_field_errors)) {
+              setErrorPhase("loginFail");
+            } else if (data?.name?.length) {
+              setErrorPhase("nameEmpty");
+            } else if (data?.password?.length) {
+              setErrorPhase("pwInvalid");
+            } else {
+              setErrorPhase("loginFail");
+            }
+          } else {
+            setErrorPhase("serverError");
+          }
+        } else {
+          // 네트워크 에러 같은 경우
+          console.error(err);
+          setErrorPhase("serverError");
+        }
+      }
+    };
 
 const errorMessage = (() => {
     switch (errorPhase) {

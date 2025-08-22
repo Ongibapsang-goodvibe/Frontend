@@ -12,7 +12,6 @@ const Login = () => {
     const [password, setPassword] = useState("");
     // errorPhase: 에러 종류를 구분하는 state
     const [errorPhase, setErrorPhase] = useState("");
-    const [loading, setLoading] = useState(false);
 
 
     const handleSubmit = async (e) => {
@@ -29,7 +28,6 @@ const Login = () => {
     }
 
     setErrorPhase(""); // 에러 초기화
-    setLoading(true);
 
     try {
         // 2) 백엔드 요청
@@ -69,35 +67,33 @@ const Login = () => {
         }
 
         // 5) 이동
-        navigate("/home");
+        navigate("/landing-page/white");
     } catch (err) {
         console.error(err);
         setErrorPhase("serverError");
-    } finally {
-        setLoading(false);
     }
-    };
+};
 
-    const errorMessage = (() => {
-        switch (errorPhase) {
-            case "nameEmpty":
-                return (<h3>이름을 입력해주세요.</h3>);
+const errorMessage = (() => {
+    switch (errorPhase) {
+        case "nameEmpty":
+            return (<h3>이름을 입력해주세요.</h3>);
 
-            case "pwInvalid":
-                return (<h3>비밀번호는 숫자 6자리여야 합니다.</h3>);
+        case "pwInvalid":
+            return (<h3>비밀번호는 숫자 6자리여야 합니다.</h3>);
 
-            case "loginFail":
-                return (<h3>비밀번호가 올바르지 않습니다.<br />다시 확인해주세요.</h3>);
+        case "loginFail":
+            return (<h3>비밀번호가 올바르지 않습니다.<br />다시 확인해주세요.</h3>);
 
-            case "serverError":
-                return (<h3>서버와 연결할 수 없습니다.</h3>);
+        case "serverError":
+            return (<h3>서버와 연결할 수 없습니다.</h3>);
 
-            default:
-                return null;
-        }
-    })();
+        default:
+            return null;
+    }
+})();
   
-  return(
+return(
     <Wrapper>
       <h1>
           로그인

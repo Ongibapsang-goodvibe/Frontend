@@ -58,12 +58,14 @@ const Login = () => {
 
         const data = await res.json();
 
-        // 4) 토큰 & 이름 저장
+        // 4-1) 토큰 저장
         if (data?.token) {
-            localStorage.setItem("accessToken", data.token);
+          localStorage.setItem("accessToken", data.token);
         }
-        if (data?.user?.name) {
-            localStorage.setItem("username", data.user.name); // 이름만 저장
+        
+        // 4-2) 유저 정보 저장
+        if (data?.user) {
+          localStorage.setItem("user", JSON.stringify(data.user));
         }
 
         // 5) 이동

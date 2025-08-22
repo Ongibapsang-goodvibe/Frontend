@@ -1,6 +1,9 @@
 .Wrapper-nutrition {
-    width: 393px;
-    height: 721px;
+    width: 100%;
+    max-width: 393px;     /* 디자인 기준 폭 */
+    /* height: 721px;  고정 높이는 스크롤/바운스 원인 -> 제거 */
+    margin: 0 auto;       /* ← 가로 가운데 정렬 핵심 */
+    
     display: flex;
     flex-direction: column;
     background-color: #252525;
@@ -11,8 +14,7 @@
 .bg {
 align-items: center;
 position: absolute;
-left: 12px;
-width: 100%;
+width: calc(100% - 24px);
 height: 50%;
 }
 
@@ -65,6 +67,7 @@ display: flex;
 width: 176px;
 height: 30px;
 padding: 8px 13px;
+margin-left: 0.38rem;
 justify-content: center;
 align-items: center;
 gap: 16px;
@@ -80,7 +83,9 @@ font-weight: 600;
 .nu-con1 {
 display: flex;
 flex-direction: row;
-align-items: center;
+align-items: flex-end;
+
+margin-left: 0.38rem;
 }
 
 .nutrition-id {
@@ -218,69 +223,5 @@ margin-right: 10px;
 .nu-menu-detail-text {
 color: #5D5D5D;
 font-size: 16px;
-font-weight: 500;
-}
-
-.Wrapper-nu-guard {
-    width: 393px;
-    height: 798px;
-    display: flex;
-    flex-direction: column;
-    background-color: #252525;
-    position: relative;
-    align-items: center;
-    padding-bottom: 25px;
-    overflow-x: hidden;
-}
-
-.nu-guard-scroll {
-width: 393px;
-height: 721px;
-overflow-y: auto;
-overflow-x: hidden;
-}
-
-.guard {
-width: 393px;
-height: 77px;
-color: #252525;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-
-.guard-2 {
-width: 369px;
-display: flex;
-height: 40px;
-justify-content: flex-start;
-align-items: center;
-border-radius: 10px;
-border: none;
-background-color: #424242;
-}
-
-.guard-1 {
-display: flex;
-height: 40px;
-width: 184px;
-justify-content: center;
-align-items: center;
-gap: 10px;
-border-radius: 10px;
-border: none;
-background: #FFF;
-
-color: #252525;
-text-align: center;
-font-size: 15px;
-font-weight: 500;
-}
-
-.guard-2-text {
-margin-left: 59px;
-color: #FFF;
-text-align: center;
-font-size: 15px;
 font-weight: 500;
 }

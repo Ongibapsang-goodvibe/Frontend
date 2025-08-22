@@ -89,8 +89,8 @@ function MainLayout() {
   //BottomBar
   const hiddenRoutes = [
     "/login",
-    "/landing-page/Black",
-    "/landing-page/White",
+    "/landing-page/black",
+    "/landing-page/white",
     "/health-status",
     "/health-status/result",
     "/order/request",
@@ -134,8 +134,8 @@ function MainLayout() {
     "/order/cancel": { step: 0, total: 0 },
 
     /*initial*/
-    "/landing-page/Black": { step: 0, total: 0 },
-    "/landing-page/White": { step: 0, total: 0 },
+    "/landing-page/black": { step: 0, total: 0 },
+    "/landing-page/white": { step: 0, total: 0 },
     "/health-status": { step: 0, total: 0 },
     "/health-status/result": { step: 0, total: 0 },
 

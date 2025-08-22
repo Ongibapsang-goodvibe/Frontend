@@ -29,6 +29,16 @@ export default function MyPage() {
         });
     };
 
+    const handleLogout = async () => {
+        try {
+            await api.post(`/api/accounts/logout/`);
+            localStorage.removeItem("user");
+            navigate("/landing-page/Black");
+        } catch (error) {
+            console.error("로그아웃 실패:", error);
+        }
+    };
+
     return (
         <div className='Wrapper-mypage'>
             <div className='mypage-header'>내 정보</div>
@@ -53,7 +63,7 @@ export default function MyPage() {
                 <div className='mypage-container2'>
                     <div className='mypage-text'>고객지원</div>
                     <MyPageButton text="이용약관" />
-                    <MyPageButton text="로그아웃" />
+                    <MyPageButton text="로그아웃" onClick={handleLogout} />
                     <MyPageButton 
                         text="탈퇴하기"
                         style={{

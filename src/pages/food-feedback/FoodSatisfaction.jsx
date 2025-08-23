@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FoodSatisfaction = () => {
     const navigate = useNavigate();
+    const { orderId } = useParams();
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
-    const options = [
-    { id: 1, label: '좋아하는 음식이에요' },
-    { id: 2, label: '간이 딱 맞아요' },
-    { id: 3, label: '속이 편해요' },
-    ];
-
     const handleDone = () => {
-        const selectedOption = options.find(opt => opt.id === selected);
+        if (!orderId || !selected) return;
 
-        if (selected === 4) {
+        if (selected === 10) {
         // 4번(말로 할게요) 선택 시 음성 인식 페이지로 이동
-        navigate('/food-feedback/satisfaction/voice');
+        navigate(`/food-feedback/satisfaction/voice/${orderId}`);
         return;
         }
         
-        if (selectedOption) {
-            console.log(selectedOption.label);
-            // 여기에 서버 전송 / API 호출 로직
-        }
-        navigate('/food-feedback/forwarding');
+        navigate(`/food-feedback/forwarding/${orderId}`, {
+            state: {
+                initial_label: 'GOOD',
+                source: 'BUTTON',
+                option: selected,
+            },
+        });
     };
 
     return(
@@ -59,8 +56,8 @@ const FoodSatisfaction = () => {
 
                 <Button
                     type="button"
-                    className={selected === 4 ? 'normal active' : 'normal'}
-                    onClick={() => setSelected(4)}
+                    className={selected === 10 ? 'normal active' : 'normal'}
+                    onClick={() => setSelected(10)}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="36" viewBox="0 0 22 36" fill="none">
                         <path d="M4.40002 7.00032C4.40002 5.24991 5.09538 3.57119 6.33312 2.33346C7.57086 1.09574 9.2496 0.400391 11 0.400391C12.7505 0.400391 14.4292 1.09574 15.6669 2.33346C16.9047 3.57119 17.6 5.24991 17.6 7.00032V18.0002C17.6 19.7506 16.9047 21.4293 15.6669 22.6671C14.4292 23.9048 12.7505 24.6001 11 24.6001C9.2496 24.6001 7.57086 23.9048 6.33312 22.6671C5.09538 21.4293 4.40002 19.7506 4.40002 18.0002V7.00032Z" fill="white"/>
@@ -73,7 +70,7 @@ const FoodSatisfaction = () => {
                     <Button
                         type="button"
                         className="back"
-                        onClick={() => navigate('/food-feedback/check')}
+                        onClick={() => navigate(`/food-feedback/check/${orderId}`)}
                     >
                         <span>돌아가기</span>
                     </Button>

@@ -11,46 +11,6 @@ export default function CurrentOrder() {
     const navigate = useNavigate();
     const [currentList, setCurrentList] = useState([]);
     const [selectedIdx, setSelectedIdx] = useState(null);
-/*
-    useEffect(() => {
-    const dummy = [
-        {
-            menu_name: "김치찌개",
-            restaurant_name: "명지 장수오리",
-            time: "2025-08-22T14:01:59.877125+09:00",
-            image_url: "/images/food1.png"
-        },
-        {
-            menu_name: "순두부찌개",
-            restaurant_name: "짬뽕주의",
-            time: "2025-08-22T14:02:08.404836+09:00",
-            image_url: "/images/food2.png"
-        },
-        {
-            menu_name: "순두부찌개",
-            restaurant_name: "짬뽕주의",
-            time: "2025-08-22T14:02:08.404836+09:00",
-            image_url: "/images/food2.png"
-        },
-        {
-            menu_name: "순두부찌개",
-            restaurant_name: "짬뽕주의",
-            time: "2025-08-22T14:02:08.404836+09:00",
-            image_url: "/images/food2.png"
-        }
-    ];
-    setCurrentList(dummy.map(order => {
-        const date = new Date(order.time);
-        const week = ["일", "월", "화", "수", "목", "금", "토"];
-        return {
-            imgSrc: order.image_url,
-            date: `${date.getMonth()+1}월 ${date.getDate()}일 (${week[date.getDay()]})`,
-            name: order.menu_name,
-            restaurant: order.restaurant_name
-        };
-    }));
-}, []);
-*/
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -103,7 +63,8 @@ export default function CurrentOrder() {
 
     const handleClick = (idx) => {
         setSelectedIdx(idx);
-        navigate("/menu/current-order/check");
+        const selectedMenu = currentList[idx];
+        navigate("/menu/current-order/check", { state: { menu: selectedMenu } });
     };
 
     return (

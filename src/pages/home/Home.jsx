@@ -4,18 +4,19 @@ import { useState, useEffect } from 'react';
 import api from '../../api';
 
 export default function Home() {
-    console.log(console.log("토큰:", localStorage.getItem("token")));
+    console.log("토큰:", localStorage.getItem("token"));
     const location = useLocation();
     const from = location.state?.from; // 이전 페이지 정보
     const navigate = useNavigate();
     
     // 사용자 정보 상태
-    const [user, setUser] = useState({ name: "손", district_name: "" });
+    const [user, setUser] = useState({ username: "", district_name: "" });
     const [section, setSection] = useState(from || 'default');
 
     // API로 사용자 정보 가져오기
     useEffect(() => {
-        api.get('/accounts/user/')  // DRF 뷰셋 URL
+        console.log("토큰:", localStorage.getItem("token"));
+        api.get('/api/accounts/user/')  // DRF 뷰셋 URL
             .then(res => {
                 setUser(res.data);
                 console.log("유저 정보:", res.data);
@@ -34,7 +35,7 @@ export default function Home() {
     // 카테고리 클릭
     const handleCategoryClick = (categoryValue) => {
         console.log("선택된 카테고리:", categoryValue);
-        navigate(`/search/result?category=${categoryValue}`);
+        navigate(`/menu/search/result?category=${categoryValue}`);
     }
 
     // 섹션 맵
@@ -93,7 +94,7 @@ function SectionDefault({ user }) {
     return (
         <>
             <div className='q'>
-                <div className='nickname'>{user.name}</div>
+                <div className='nickname'>{user.username}</div>
                 <div className='q1'>님, 오늘은</div>
             </div>
             <div className='q1'>무엇을 드시고 싶으세요?</div>

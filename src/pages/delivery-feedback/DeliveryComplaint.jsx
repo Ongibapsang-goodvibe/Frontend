@@ -24,7 +24,6 @@ const DeliveryComplaint = () => {
             state: {
                 source: 'BUTTON',
                 option: selected,
-                text: '',
             },
         });
     };

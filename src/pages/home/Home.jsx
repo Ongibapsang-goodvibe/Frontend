@@ -6,8 +6,9 @@ import api from '../../api';
 export default function Home() {
     console.log("토큰:", localStorage.getItem("token"));
     const location = useLocation();
-    const from = location.state?.from; // 이전 페이지 정보
     const navigate = useNavigate();
+
+    const { from, deliveryTime } = location.state || {};
     
     // 사용자 정보 상태
     const [user, setUser] = useState({ username: "", district_name: "" });
@@ -41,7 +42,7 @@ export default function Home() {
     // 섹션 맵
     const sectionMap = {
         default: <SectionDefault user={user} />,
-        wait: <SectionWait />,
+        wait: <SectionWait deliveryTime={deliveryTime || 30} />,
         delivery: <SectionDelivery navigate={navigate} />,
     };
 
@@ -102,11 +103,11 @@ function SectionDefault({ user }) {
     );
 }
 
-function SectionWait() {
+function SectionWait({ deliveryTime }) {
     return (
         <>
             <div className='q'>
-                <div className='nickname'>약 30분 뒤</div>
+                <div className='nickname'>약 {deliveryTime}분 뒤</div>
                 <div className='q1'>에</div>
             </div>
             <div className='q1'>음식이 도착합니다.</div>

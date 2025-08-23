@@ -110,6 +110,17 @@ padding: 20px;
 cursor: pointer;
 }
 
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 9999;
+}
+
 .payment-section {
     margin-top: 8px;
     width: 393px;

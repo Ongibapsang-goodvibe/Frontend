@@ -2,18 +2,31 @@ import "../../assets/styles/Review.css";
 import "../../assets/styles/SearchResult.css";
 
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import api from '../../api';
 
 export default function MenuRecommentadion() {
     const navigate = useNavigate();
 
+    const [menuRecomList, setMenuRecomList] = useState([]);
     const [selectedIdx, setSelectedIdx] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    const menuRecomList = [
-        { imgSrc: "/images/food1.png", tag: "지방 위주 식사", name: "콩나물 순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
-        { imgSrc: "/images/food2.png", tag: "단백질 위주", name: "순두부국", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
-        { imgSrc: "/images/food1.png", tag: "균형잡힌", name: "두부조림", carbsPercent: "50", proteinPercent: "30", fatPercent: "20" },
-    ];
+    useEffect(() => {
+        setLoading(true);
+        api.get("/api/orders/recommend/")
+            .then(res => {
+                setMenuRecomList(res.data.recommended);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error("추천 메뉴 로드 실패:", err);
+                setLoading(false);
+            });
+    }, []);
+
+    if (loading) return <div>로딩 중...</div>;
+    if (!menuRecomList.length) return <div>추천 메뉴가 없습니다.</div>;
 
     return (
         <>
@@ -28,8 +41,8 @@ export default function MenuRecommentadion() {
             <div className='menu-recom-scroll'>
                 {menuRecomList.map((menu, idx) => (
                     <MenuRecomCard
-                        key={idx}
-                        {...menu}
+                        key={menu.menu_id}
+                        menu={menu}
                         isSelected={selectedIdx === idx}
                         onClick={() => setSelectedIdx(idx)}
                     />
@@ -42,7 +55,7 @@ export default function MenuRecommentadion() {
                 </button>
                 <button
                     className='choose'
-                    onClick={() => navigate("/menu/search/result")}
+                    onClick={() => navigate("/menu/search/result", { state: { menu: menuRecomList[selectedIdx] } })}
                     disabled={selectedIdx === null}
                 >
                     <div className='choosetext'>선택완료</div>
@@ -53,7 +66,22 @@ export default function MenuRecommentadion() {
     );
 }
 
-function MenuRecomCard({ imgSrc, tag, name, carbsPercent, proteinPercent, fatPercent, isSelected, onClick }) {
+function getMacroTag(macro) {
+    const { CARB, PROTEIN, FAT } = macro;
+    if (!CARB && !PROTEIN && !FAT) return "균형잡힌"; // 값 없는 경우
+
+    if (Math.max(CARB, PROTEIN, FAT) - Math.min(CARB, PROTEIN, FAT) <= 20) return "균형잡힌";
+    if (FAT >= PROTEIN && FAT >= CARB) return "지방 위주 식사";
+    if (PROTEIN >= FAT && PROTEIN >= CARB) return "단백질 위주";
+    return "균형잡힌";
+}
+
+function MenuRecomCard({ menu, isSelected, onClick }) {
+    const tag = getMacroTag(menu.macro_percent || { CARB: 0, PROTEIN: 0, FAT: 0 });
+    const carbsPercent = menu.macro_percent?.CARB || 0;
+    const proteinPercent = menu.macro_percent?.PROTEIN || 0;
+    const fatPercent = menu.macro_percent?.FAT || 0;
+
     return (
         <div 
             className={`menu-recom-card ${isSelected ? "selected" : ""}`} 
@@ -61,12 +89,12 @@ function MenuRecomCard({ imgSrc, tag, name, carbsPercent, proteinPercent, fatPer
             style={{ backgroundColor: isSelected ? "#FFF" : "" }}
         >
             <div className="menu-pic">
-                <img src={imgSrc} alt={name} />
+                <img src={menu.image_url || "/images/default-menu.png"} alt={menu.menu_name} />
                 {isSelected && <div className="overlay">선택됨</div>}
             </div>
             <div className='menu-detail'>
                 <div className={`menu-tag tag-${tag.replace(/\s+/g, "")}`}>{tag}</div>
-                <div className='menu-nick' style={{ color: isSelected ? "#252525" : "#FFF" }}>{name}</div>
+                <div className='menu-nick' style={{ color: isSelected ? "#252525" : "#FFF" }}>{menu.menu_name}</div>
 
                 <div className="macro-bar">
                     <div className="carbs" style={{ width: `${carbsPercent}%` }} />

@@ -180,7 +180,7 @@ function MainLayout() {
           {/*payment*/}
           <Route path='/order/payment' element={<Payment />} />
           {/*review*/}
-          <Route path='/menu/review' element={<Review />} />
+          <Route path='/menu/review/:menu_id' element={<Review />} />
           {/*delivery-feedback*/}
           <Route path="/delivery-feedback/check/:orderId" element={<DeliveryCheck />} />
           <Route path="/delivery-feedback/complaint/:orderId" element={<DeliveryComplaint />} />

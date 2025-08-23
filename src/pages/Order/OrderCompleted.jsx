@@ -1,15 +1,18 @@
 import "../../assets/styles/OrderCompleted.css";
 
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function OrderCompleted() {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const { order, totalPayment, deliveryTime } = location.state || {};
     
     useEffect(() => {
         const timer = setTimeout(() => {
-            navigate("/home", { state: { from: "orderCompleted" }});
-        }, 3000);
+            navigate("/home", { state: { from: "wait", deliveryTime: deliveryTime || 30 } });
+        }, 5000);
 
         return () => clearTimeout(timer);
     }, [navigate]);
@@ -18,7 +21,7 @@ export default function OrderCompleted() {
         <>
         <div className='Wrapper'>
             <div className='och'>주문완료</div>
-            <div className='t1'>약 30분 뒤</div>
+            <div className='t1'>약 {deliveryTime}분 뒤</div>
             <div className='t2'>도착 예정</div>
             <div className='time'>
                 <div className='t3'>도착예정시간 : </div>

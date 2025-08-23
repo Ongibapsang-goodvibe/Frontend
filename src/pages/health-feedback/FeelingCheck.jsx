@@ -1,26 +1,23 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 const HealthCheck = () => {
     const navigate = useNavigate();
+    const { orderId } = useParams();
+    const { state } = useLocation();
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
-    const options = [
-    { id: 1, label: '최고예요!' },
-    { id: 2, label: '괜찮아요' },
-    { id: 3, label: '그냥 그래요' },
-    { id: 4, label: '안 좋아요' },
-    { id: 5, label: '나빠요' },
-    ];
-
     const handleDone = () => {
-        const selectedOption = options.find(opt => opt.id === selected);        
-        if (selectedOption) {
-            console.log(selectedOption.label);
-            // 여기에 서버 전송 / API 호출 로직
-        }
-        navigate('/health-feedback/forwarding');
+        if (!orderId || !selected) return;   
+        
+        navigate(`/health-feedback/forwarding/${orderId}`, {
+            state: {
+                initial_label: state.initial_label,
+                text: state.text,
+                option: selected,
+            },
+        });
     };
 
     return(
@@ -78,7 +75,7 @@ const HealthCheck = () => {
                         type="button"
                         className="back"
                         onClick={() => {
-                            navigate('/health-feedback/health-check');
+                            navigate(`/health-feedback/health-check/${orderId}`);
                         }}
                     >
                         <span>돌아가기</span>

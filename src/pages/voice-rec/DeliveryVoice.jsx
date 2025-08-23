@@ -6,6 +6,9 @@ import { useNavigate, useParams } from "react-router-dom";
 const EmOrange = styled.span` color: #FF8040; `;
 const EmGray   = styled.span` color: #8A8A8A; `;
 
+/* ====== 유틸 ====== */
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 /* ====== 컴포넌트 ====== */
 const DeliveryVoice = () => {
   const navigate = useNavigate();
@@ -20,7 +23,6 @@ const DeliveryVoice = () => {
   /**
    * phase 상태
    * - listening: 인식 중(주황 버튼, 파형 애니메)
-   * - stopping: 사용자가 버튼을 눌러 stop 지시(즉시 회색으로 전환, onend에서 결과 확정)
    * - done: 인식 결과 확정(회색)
    * - noVoice: 인식 실패/권한 거부 등(회색)
    */
@@ -99,9 +101,6 @@ const DeliveryVoice = () => {
           setPhase("done");
         }
         stoppedByClickRef.current = false; // 다음 라운드 대비 리셋
-      } else {
-        // 자동 종료(침묵 등)
-        setPhase("idle");
       }
     };
 
@@ -164,25 +163,34 @@ const DeliveryVoice = () => {
     );
   };
 
-  // 마이크 버튼: 상태별 동작
-  const onMicClick = () => {
+  // 마이크 버튼
+  const onMicClick = async () => {
     if (clicked) return;
-
-    if (phase !== "listening") {
-      // 회색 버튼(결과/실패/중간)일 때 → 새 라운드 시작
-      setClicked(true);
-      // 새 라운드 시작 시 상태/버퍼 초기화는 onstart에서 수행됨
-      startListening();
-      setClicked(false);
-      return;
-    }
-
-    // listening(주황) 중 → stop 요청만 하고 확정은 onend에서 처리
     setClicked(true);
-    stoppedByClickRef.current = true; // onend에서 "사용자 클릭 종료"로 분기
-    setPhase("stopping");             // 즉시 회색으로 전환(중간 상태)
-    try { recogRef.current?.stop(); } catch {}
-    setClicked(false);
+
+    try {
+      if (phase !== "listening") {
+        // 새 라운드 시작
+        startListening();
+      } else {
+        // 현재 듣는 중이면 stop → 결과 확정
+        recogRef.current?.stop();
+        await sleep(180);
+
+        const captured = (finalRef.current || interimText || "").trim();
+        if (isInvalidRecognized(captured)) {
+          setRecognizedText("");
+          setInterimText("");
+          setPhase("noVoice");
+        } else {
+          setRecognizedText(captured);
+          setInterimText("");
+          setPhase("done");
+        }
+      }
+    } finally {
+      setClicked(false);
+    }
   };
 
   const goBack = () => {
@@ -220,12 +228,6 @@ const DeliveryVoice = () => {
             </>
           ),
           btnClass: "warn", // 주황
-        };
-      case "stopping":
-        return {
-          title: <>처리 중…</>,
-          top: <>잠시만 기다려 주세요</>,
-          btnClass: "neutral", // 회색(중간 상태)
         };
       case "done":
         return {
@@ -269,7 +271,7 @@ const DeliveryVoice = () => {
         </BottomActions>
       );
     }
-    // listening/stopping 중
+    // listening 중
     return (
       <BottomActions>
         <SubButton className="back" onClick={goBack}>

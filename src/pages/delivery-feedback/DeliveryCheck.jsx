@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DeliveryCheck = () => {
     const navigate = useNavigate();
+    const { orderId } = useParams();
+
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const handleDone = () => {
-        if (selected === 'yes') navigate('/delivery-feedback/forwarding/no-issue');
-        if (selected === 'no') navigate('/delivery-feedback/complaint');
+      if (!orderId) {
+        console.warn('orderId가 없습니다. 라우트 파라미터로 전달하세요.');
+        return;
+      }
+
+      if (selected === 'yes') {
+        navigate(`/delivery-feedback/forwarding/no-issue/${orderId}`);
+      }
+      if (selected === 'no') {
+        navigate(`/delivery-feedback/complaint/${orderId}`);
+      }
     };
 
     return(

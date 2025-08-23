@@ -1,5 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
-import styled from "styled-components"; 
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, matchPath } from "react-router-dom";
 import LogoBar from "./components/LogoBar";
 import ProgressBar from "./components/ProgressBar";
 import BottomBar from "./components/BottomBar";
@@ -73,20 +72,23 @@ function MainLayout() {
   // 끝 슬래시 제거 (예: '/receipt-check/' -> '/receipt-check')
   const pathname = location.pathname.replace(/\/+$/, "") || "/";
 
-  // LogoBar
+  // 패턴 매칭 유틸
+  const isMatch = (patterns, path) =>
+    patterns.some((p) => !!matchPath({ path: p, end: true }, path));
+
+  // LogoBar (패턴 기반)
   const logoShownRoutes = [
     "/login",
     "/health-status",
     "/health-status/result",
     "/mypage",
     "/report/nutrition",
-    "/guard/report/nutrition",
     "/guard/report",
   ];
 
-  const showLogo = logoShownRoutes.includes(pathname);
+  const showLogo = isMatch(logoShownRoutes, pathname);
 
-  //BottomBar
+  //BottomBar (패턴 기반)
   const hiddenRoutes = [
     "/login",
     "/landing-page/black",
@@ -97,97 +99,57 @@ function MainLayout() {
     "/order/completed",
     "/eating-mate",
     "/eating-mate/end",
-    "/guard/report/nutrition",
     //delivery-feedback
-    "/delivery-feedback/forwarding/no-issue",
-    "/delivery-feedback/forwarding/issue",
+    "/delivery-feedback/forwarding/no-issue/:orderId",
+    "/delivery-feedback/forwarding/issue/:orderId",
     //food-feedback
-    "/food-feedback/forwarding",
+    "/food-feedback/forwarding/:orderId",
     //health-feedback
-    "/health-feedback/forwarding",
+    "/health-feedback/forwarding/:orderId",
     //guardian-report
     "/guard/report",
   ];
 
-  const showBottom = !hiddenRoutes.includes(pathname);
+  const showBottom = !isMatch(hiddenRoutes, pathname);
 
-  //ProgressBar 라우트별 progress 값
-  const progressMap = {
-    /*home*/
-    "/home": { step: 0, total: 0 },
+  // 1) ProgressBar 라우트별 정의 (ProgressBar "보여줄" 경로만 작성)
+  const progressDefs = [
+    /* menu */
+    { pattern: "/menu/search/result", value: { step: 1, total: 2 } },
+    { pattern: "/menu/current-order", value: { step: 1, total: 3 } },
+    { pattern: "/menu/current-order/check", value: { step: 2, total: 3 } },
 
-    /*login*/
-    "/login": { step: 0, total: 0 },
+    /* payment */
+    { pattern: "/order/payment", value: { step: 2, total: 2 } },
 
-    /*mypage*/
-    "/mypage": { step: 0, total: 0},
+    /* delivery-feedback */
+    { pattern: "/delivery-feedback/check/:orderId", value: { step: 1, total: 2 } },
+    { pattern: "/delivery-feedback/complaint/:orderId", value: { step: 3, total: 4 } },
+    { pattern: "/delivery-feedback/forwarding/no-issue/:orderId", value: { step: 2, total: 2 } },
+    { pattern: "/delivery-feedback/forwarding/issue/:orderId", value: { step: 4, total: 4 } },
 
-    /*menu*/
-    "/menu/search/result": { step: 1, total: 2 },
-    "/menu/current-order": { step: 1, total: 3 },
-    "/menu/current-order/check": { step: 2, total: 3 },
-    "/menu/recommendation": { step: 0, total: 0 },
+    /* food-feedback */
+    { pattern: "/food-feedback/check/:orderId", value: { step: 1, total: 3 } },
+    { pattern: "/food-feedback/satisfaction/:orderId", value: { step: 2, total: 3 } },
+    { pattern: "/food-feedback/complaint/:orderId", value: { step: 2, total: 3 } },
+    { pattern: "/food-feedback/forwarding/:orderId", value: { step: 3, total: 3 } },
 
-    /*order*/
-    "/order/completed": { step: 0, total: 0 },
-    "/order/request": { step: 0, total: 0 },
-    "/order/cancel": { step: 0, total: 0 },
+    /* health-feedback */
+    { pattern: "/health-feedback/health-check/:orderId", value: { step: 1, total: 3 } },
+    { pattern: "/health-feedback/feeling-check/:orderId", value: { step: 2, total: 3 } },
+    { pattern: "/health-feedback/forwarding/:orderId", value: { step: 3, total: 3 } },
+  ];
 
-    /*initial*/
-    "/landing-page/black": { step: 0, total: 0 },
-    "/landing-page/white": { step: 0, total: 0 },
-    "/health-status": { step: 0, total: 0 },
-    "/health-status/result": { step: 0, total: 0 },
+  // 2) 현재 경로에 매칭되는 progress 찾기 (없으면 undefined)
+  const matched = progressDefs.find(d => isMatch([d.pattern], pathname));
+  const progress = matched?.value;
 
-    /*Payment*/
-    "/order/payment": { step: 2, total: 2 },
-
-    /*Review */
-    "/menu/review": { step: 0, total: 0 },
-
-    /*delivery-feedback*/
-    "/delivery-feedback/check": { step: 1, total: 2 },
-    "/delivery-feedback/complaint": { step: 3, total: 4 },
-    "/delivery-feedback/forwarding/no-issue": { step: 2, total: 2 },
-    "/delivery-feedback/forwarding/issue": { step: 4, total: 4 },
-
-    /*food-feedback*/
-    "/food-feedback/check": { step: 1, total: 3 },
-    "/food-feedback/satisfaction": { step: 2, total: 3 },
-    "/food-feedback/complaint": { step: 2, total: 3 },
-    "/food-feedback/forwarding": { step: 3, total: 3 },
-
-    /*health-feedback*/
-    "/health-feedback/health-check": { step: 1, total: 3 },
-    "/health-feedback/feeling-check": { step: 2, total: 3 },
-    "/health-feedback/forwarding": { step: 3, total: 3 },
-
-    /*menu-search*/
-    "/menu/search/voice": { step: 0, total: 0 },
-    "/menu/search/text": { step: 0, total: 0 },
-
-    /*nutrition*/
-    "/report/nutrition": { step: 0, total: 0 },
-
-    /*eating-mate*/
-    "/eating-mate": { step: 0, total: 0 },
-    "/eating-mate/end": { step: 0, total: 0 },
-
-    /*voice-rec*/
-    "/delivery-feedback/complaint/voice": { step: 0, total: 0 },
-    "/food-feedback/satisfaction/voice": { step: 0, total: 0 },
-    "/food-feedback/complaint/voice": { step: 0, total: 0 },
-    "/health-feedback/health-check/voice": { step: 0, total: 0 },
-    "/guard/report": { step: 0, total: 0 },
-  };
-
-  const progress = progressMap[pathname] || { step: 0, total: 0 };
 
   return (
     <>
-      {/* 1행: LogoBar (있을 때만) */}
+      {/* 1행: LogoBar+ProgressBar (있을 때만) */}
       <div className="top-slot">
-        {showLogo ? <LogoBar /> : <ProgressBar progress={progress} />}
+        {showLogo ? <LogoBar /> : (progress && progress.total > 0 && <ProgressBar progress={progress} />)}
       </div>
 
       {/* 2행: Content (스크롤 영역) */}
@@ -220,19 +182,19 @@ function MainLayout() {
           {/*review*/}
           <Route path='/menu/review' element={<Review />} />
           {/*delivery-feedback*/}
-          <Route path="/delivery-feedback/check" element={<DeliveryCheck />} />
-          <Route path="/delivery-feedback/complaint" element={<DeliveryComplaint />} />
-          <Route path="/delivery-feedback/forwarding/no-issue" element={<NoIssue />} />
-          <Route path="/delivery-feedback/forwarding/issue" element={<IssueForwarding />} />
+          <Route path="/delivery-feedback/check/:orderId" element={<DeliveryCheck />} />
+          <Route path="/delivery-feedback/complaint/:orderId" element={<DeliveryComplaint />} />
+          <Route path="/delivery-feedback/forwarding/no-issue/:orderId" element={<NoIssue />} />
+          <Route path="/delivery-feedback/forwarding/issue/:orderId" element={<IssueForwarding />} />
           {/*food-feedback*/}
-          <Route path="/food-feedback/check" element={<FoodCheck />} />
-          <Route path="/food-feedback/satisfaction" element={<FoodSatisfaction />} />
-          <Route path="/food-feedback/complaint" element={<FoodComplaint />} />
-          <Route path="/food-feedback/forwarding" element={<FoodForwarding />} />
+          <Route path="/food-feedback/check/:orderId" element={<FoodCheck />} />
+          <Route path="/food-feedback/satisfaction/:orderId" element={<FoodSatisfaction />} />
+          <Route path="/food-feedback/complaint/:orderId" element={<FoodComplaint />} />
+          <Route path="/food-feedback/forwarding/:orderId" element={<FoodForwarding />} />
           {/*health-feedback*/}
-          <Route path="/health-feedback/health-check" element={<HealthCheck />} />
-          <Route path="/health-feedback/feeling-check" element={<FeelingCheck />} />
-          <Route path="/health-feedback/forwarding" element={<HealthForwarding />} />
+          <Route path="/health-feedback/health-check/:orderId" element={<HealthCheck />} />
+          <Route path="/health-feedback/feeling-check/:orderId" element={<FeelingCheck />} />
+          <Route path="/health-feedback/forwarding/:orderId" element={<HealthForwarding />} />
           {/*menu-search*/}
           <Route path="/menu/search/voice" element={<MenuVoice />} />
           <Route path="/menu/search/text" element={<MenuText />} />
@@ -242,10 +204,10 @@ function MainLayout() {
           <Route path="/eating-mate" element={<EatingMate />} />
           <Route path="/eating-mate/end" element={<TalkingEnd />} />
           {/*voice-rec*/}
-          <Route path="/delivery-feedback/complaint/voice" element={<DeliveryVoice />} />
-          <Route path="/food-feedback/satisfaction/voice" element={<FoodSatVoice />} />
-          <Route path="/food-feedback/complaint/voice" element={<FoodComVoice />} />
-          <Route path="/health-feedback/health-check/voice" element={<HealthVoice />} />
+          <Route path="/delivery-feedback/complaint/voice/:orderId" element={<DeliveryVoice />} />
+          <Route path="/food-feedback/satisfaction/voice/:orderId" element={<FoodSatVoice />} />
+          <Route path="/food-feedback/complaint/voice/:orderId" element={<FoodComVoice />} />
+          <Route path="/health-feedback/health-check/voice/:orderId" element={<HealthVoice />} />
           {/*guardian-report*/}
           <Route path="/guard/report" element={<GuardianReport />} />
         </Routes>

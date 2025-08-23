@@ -6,11 +6,11 @@ const api = axios.create({
 
 // 요청할 때 매번 localStorage에서 토큰 가져오기
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("token");
     if (token) {
         config.headers.Authorization = `Token ${token}`;
     }
     return config;
 });
 
-export default api;
+export default api; 

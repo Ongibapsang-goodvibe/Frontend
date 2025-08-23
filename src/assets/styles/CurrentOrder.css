@@ -40,10 +40,13 @@ margin-bottom: 3px;
 color: #FFF;
 font-size: 36px;
 font-weight: 500;
+width: 160px;
+text-align: left;
+line-height: 1.1
 }
 
 .current-scroll {
-padding-top: 105px;
+padding-top: 10px;
 width: 350px;
 height: 630px;
 overflow-y: auto;
@@ -51,7 +54,6 @@ scrollbar-width: 3px;
 display: flex;
 flex-direction: column;
 align-items: center;
-justify-content: center;
 gap: 17px;
 }
 

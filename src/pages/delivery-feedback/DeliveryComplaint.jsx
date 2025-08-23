@@ -1,31 +1,32 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+
+// 서버 DB pk와 반드시 일치하도록 고정
+// const LABELS = { 2: '너무 늦게 왔어요', 3: '음식이 샜어요', 4: '음식이 다 안 왔어요' };
 
 const DeliveryComplaint = () => {
     const navigate = useNavigate();
-    const [selected, setSelected] = useState(null); // 'yes' | 'no'
-
-    const options = [
-    { id: 1, label: '너무 늦게 왔어요' },
-    { id: 2, label: '음식이 샜어요' },
-    { id: 3, label: '음식이 다 안 왔어요' },
-    ];
+    const { orderId } = useParams(); 
+    const [selected, setSelected] = useState(null); // number | null
 
     const handleDone = () => {
-        const selectedOption = options.find(opt => opt.id === selected);
+        if (!orderId || !selected) return;
 
-        if (selected === 4) {
-        // 4번(말로 할게요) 선택 시 음성 인식 페이지로 이동
-        navigate('/delivery-feedback/complaint/voice');
-        return;
+        // 말로 할게요 선택 → 음성 인식 페이지로 이동 (저장은 IssueForwarding에서)
+        if (selected === 5) {
+            navigate(`/delivery-feedback/complaint/voice/${orderId}`);
+            return;
         }
-        
-        if (selectedOption) {
-            console.log(selectedOption.label);
-            // 여기에 서버 전송 / API 호출 로직
-        }
-        navigate('/delivery-feedback/forwarding/issue');
+
+        // 2,3,4 버튼 선택 → 저장은 IssueForwarding에서 수행
+        navigate(`/delivery-feedback/forwarding/issue/${orderId}`, {
+            state: {
+                source: 'BUTTON',
+                option: selected,
+                text: '',
+            },
+        });
     };
 
     return(
@@ -35,18 +36,10 @@ const DeliveryComplaint = () => {
 
                 <Button 
                     type="button"
-                    className={selected === 1 ? 'normal active' : 'normal'}
-                    onClick={() => setSelected(1)}
-                >
-                    <span>너무 늦게 왔어요</span>
-                </Button>
-
-                <Button
-                    type="button"
                     className={selected === 2 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(2)}
                 >
-                    <span>음식이 샜어요</span>
+                    <span>너무 늦게 왔어요</span>
                 </Button>
 
                 <Button
@@ -54,13 +47,21 @@ const DeliveryComplaint = () => {
                     className={selected === 3 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(3)}
                 >
-                    <span>음식이 다 안 왔어요</span>
+                    <span>음식이 샜어요</span>
                 </Button>
 
                 <Button
                     type="button"
                     className={selected === 4 ? 'normal active' : 'normal'}
                     onClick={() => setSelected(4)}
+                >
+                    <span>음식이 다 안 왔어요</span>
+                </Button>
+
+                <Button
+                    type="button"
+                    className={selected === 5 ? 'normal active' : 'normal'}
+                    onClick={() => setSelected(5)}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="36" viewBox="0 0 22 36" fill="none">
                         <path d="M4.40002 7.00032C4.40002 5.24991 5.09538 3.57119 6.33312 2.33346C7.57086 1.09574 9.2496 0.400391 11 0.400391C12.7505 0.400391 14.4292 1.09574 15.6669 2.33346C16.9047 3.57119 17.6 5.24991 17.6 7.00032V18.0002C17.6 19.7506 16.9047 21.4293 15.6669 22.6671C14.4292 23.9048 12.7505 24.6001 11 24.6001C9.2496 24.6001 7.57086 23.9048 6.33312 22.6671C5.09538 21.4293 4.40002 19.7506 4.40002 18.0002V7.00032Z" fill="white"/>
@@ -73,7 +74,7 @@ const DeliveryComplaint = () => {
                     <Button
                         type="button"
                         className="back"
-                        onClick={() => navigate('/delivery-feedback/check')}
+                        onClick={() => navigate(`/delivery-feedback/check/${orderId}`)}
                     >
                         <span>돌아가기</span>
                     </Button>

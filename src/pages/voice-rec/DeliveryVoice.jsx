@@ -1,35 +1,47 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 /* 강조 텍스트 */
 const EmOrange = styled.span` color: #FF8040; `;
 const EmGray   = styled.span` color: #8A8A8A; `;
 
-/* ====== 유틸 ====== */
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 /* ====== 컴포넌트 ====== */
 const DeliveryVoice = () => {
   const navigate = useNavigate();
+  const { orderId } = useParams();
 
+  // 브라우저 SpeechRecognition 객체
   const SR =
     typeof window !== "undefined"
       ? window.SpeechRecognition || window.webkitSpeechRecognition
       : null;
 
-  // phase: listening(인식중), done(완료), noVoice(실패)
+  /**
+   * phase 상태
+   * - listening: 인식 중(주황 버튼, 파형 애니메)
+   * - stopping: 사용자가 버튼을 눌러 stop 지시(즉시 회색으로 전환, onend에서 결과 확정)
+   * - done: 인식 결과 확정(회색)
+   * - noVoice: 인식 실패/권한 거부 등(회색)
+   */
   const [phase, setPhase] = useState("listening");
   const [recognizedText, setRecognizedText] = useState("");
   const [interimText, setInterimText] = useState("");
   const [clicked, setClicked] = useState(false);
 
-  const recogRef = useRef(null);
-  const stopperRef = useRef(null);
-  const finalRef = useRef("");
-  const endedRef = useRef(false);
-  const initializedRef = useRef(false);
+  // refs
+  const recogRef = useRef(null);         // SpeechRecognition 인스턴스
+  const finalRef = useRef("");           // 누적 최종 텍스트
+  const interimRef = useRef("");         // 최신 interim 텍스트
+  const initializedRef = useRef(false);  // 초기화 1회 보장
+  const stoppedByClickRef = useRef(false); // 버튼으로 stop했는지 플래그
 
+  // orderId 유효성
+  useEffect(() => {
+    if (!orderId) navigate("/home");
+  }, [orderId, navigate]);
+
+  // SR 초기화 및 이벤트 바인딩
   useEffect(() => {
     if (!SR) return;
     if (initializedRef.current) return;
@@ -38,21 +50,20 @@ const DeliveryVoice = () => {
     const r = new SR();
     r.lang = "ko-KR";
     r.interimResults = true;
-    r.continuous = false;
+    r.continuous = true; // 사용자가 멈출 때까지 계속 듣기
     r.maxAlternatives = 1;
 
+    // 마이크 시작될 때마다 기본 상태/변수 초기화
     r.onstart = () => {
       finalRef.current = "";
-      endedRef.current = false;
+      interimRef.current = "";
       setRecognizedText("");
       setInterimText("");
-      setPhase("listening");
-      clearTimeout(stopperRef.current);
-      stopperRef.current = setTimeout(() => r.stop(), 8000);
+      setPhase("listening"); // 주황 버튼
     };
 
+    // 인식 결과 콜백: final은 누적, interim은 ref/상태로 보관
     r.onresult = (evt) => {
-      if (endedRef.current) return;
       let interim = "";
       for (let i = evt.resultIndex; i < evt.results.length; i++) {
         const phrase = evt.results[i][0].transcript;
@@ -62,45 +73,87 @@ const DeliveryVoice = () => {
           interim += phrase;
         }
       }
+      interimRef.current = interim;
       setInterimText(interim);
     };
 
+    // 에러: 권한 거부/장치 문제 등
     r.onerror = (e) => {
       console.error("SpeechRecognition error:", e);
-      setPhase("noVoice");
       setRecognizedText("");
       setInterimText("");
+      setPhase("noVoice"); // 회색
     };
 
+    // 종료: 버튼으로 멈춘 경우만 결과 확정
     r.onend = () => {
-      clearTimeout(stopperRef.current);
-      setTimeout(() => { endedRef.current = true; }, 50);
+      if (stoppedByClickRef.current) {
+        const captured = (finalRef.current || interimRef.current || "").trim();
+        if (!captured || isInvalidRecognized(captured)) {
+          setRecognizedText("");
+          setInterimText("");
+          setPhase("noVoice");
+        } else {
+          setRecognizedText(captured);
+          setInterimText("");
+          setPhase("done");
+        }
+        stoppedByClickRef.current = false; // 다음 라운드 대비 리셋
+      } else {
+        // 자동 종료(침묵 등)
+        setPhase("idle");
+      }
     };
 
     recogRef.current = r;
-    startListening();
 
+    // 권한 확인/요청 후 자동 시작
+    (async () => {
+      try {
+        const canQuery = !!(navigator.permissions?.query);
+        let state = "prompt";
+        if (canQuery) {
+          const perm = await navigator.permissions.query({ name: "microphone" });
+          state = perm.state; // 'granted' | 'denied' | 'prompt'
+        }
+        if (state === "denied") {
+          setPhase("noVoice");
+          return;
+        }
+        if (state !== "granted") {
+          // 권한 요청
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stream.getTracks().forEach((t) => t.stop());
+        }
+        startListening();
+      } catch (err) {
+        console.error("Mic permission error:", err);
+        setPhase("noVoice");
+      }
+    })();
+
+    // 언마운트 시 안전 종료
     return () => {
-      clearTimeout(stopperRef.current);
       try { r.stop(); } catch {}
     };
   }, [SR]);
 
+  // 인식 시작
   const startListening = () => {
     if (!SR) {
       alert("이 브라우저는 음성 인식을 지원하지 않습니다. (Chrome 권장)");
       return;
     }
-    setPhase("listening");
-    setRecognizedText("");
-    setInterimText("");
-    endedRef.current = false;
-    try { recogRef.current?.start(); } catch {}
+    try {
+      recogRef.current?.start();
+    } catch (e) {
+      console.warn(e);
+    }
   };
 
+  // 무효 문구 필터(placeholder 등)
   const isInvalidRecognized = (t) => {
-    if (!t) return true;
-    const s = String(t).replace(/\s+/g, "").replace(/\u2026/g, "...").toLowerCase();
+    const s = String(t || "").replace(/\s+/g, "").replace(/\u2026/g, "...").toLowerCase();
     return (
       !s ||
       s.includes("인식중") ||
@@ -111,47 +164,47 @@ const DeliveryVoice = () => {
     );
   };
 
-  // ✅ 마이크 버튼 동작: 상태별 분기
-  const onMicClick = async () => {
+  // 마이크 버튼: 상태별 동작
+  const onMicClick = () => {
     if (clicked) return;
 
-    // listening이 아니면(= 회색 버튼일 때) → 다시 인식 시작
     if (phase !== "listening") {
-        startListening();
-        return;
+      // 회색 버튼(결과/실패/중간)일 때 → 새 라운드 시작
+      setClicked(true);
+      // 새 라운드 시작 시 상태/버퍼 초기화는 onstart에서 수행됨
+      startListening();
+      setClicked(false);
+      return;
     }
 
-    // listening 중이면 → stop 해서 결과 확정
+    // listening(주황) 중 → stop 요청만 하고 확정은 onend에서 처리
     setClicked(true);
+    stoppedByClickRef.current = true; // onend에서 "사용자 클릭 종료"로 분기
+    setPhase("stopping");             // 즉시 회색으로 전환(중간 상태)
     try { recogRef.current?.stop(); } catch {}
-    await sleep(180);
-
-    const captured = (finalRef.current || interimText || "").trim();
-    if (isInvalidRecognized(captured)) {
-        setRecognizedText("");
-        setInterimText("");
-        setPhase("noVoice");
-    } else {
-        setRecognizedText(captured);
-        setInterimText("");
-        setPhase("done");
-    }
-
     setClicked(false);
   };
 
   const goBack = () => {
-      navigate("/delivery-feedback/complaint");
+    navigate(`/delivery-feedback/complaint/${orderId}`);
   };
 
   const onNotMatch = () => {
+    // 결과가 마음에 안 들면 재시작
+    setRecognizedText("");
+    setInterimText("");
     startListening();
   };
 
   const onMatch = () => {
-    // ❌TODO: API 연동 자리 + 경로수정
-    console.log("[TO-BE-SENT] recognizedText:", recognizedText);
-    navigate("/delivery-feedback/forwarding/issue");
+    // 다음 화면으로 이동 + 음성 텍스트 전달
+    const text = (recognizedText || interimText || "").trim();
+    navigate(`/delivery-feedback/forwarding/issue/${orderId}`, {
+      state: {
+        source: "VOICE",
+        text,
+      },
+    });
   };
 
   // 상태별 문구/버튼 색
@@ -160,16 +213,28 @@ const DeliveryVoice = () => {
       case "listening":
         return {
           title: <>어떤 문제가 있나요?</>,
-          top: 
+          top: (
             <>
-              할 말이 끝나면<br/>
+              할 말이 끝나면<br />
               <EmOrange>주황색 버튼</EmOrange>을 누르세요.
-            </>,
-          btnClass: "warn",
+            </>
+          ),
+          btnClass: "warn", // 주황
+        };
+      case "stopping":
+        return {
+          title: <>처리 중…</>,
+          top: <>잠시만 기다려 주세요</>,
+          btnClass: "neutral", // 회색(중간 상태)
         };
       case "done":
         return {
-          title: <>이렇게<br />말씀하셨나요?</>,
+          title: (
+            <>
+              이렇게
+              <br />말씀하셨나요?
+            </>
+          ),
           top: <>{recognizedText}</>,
           btnClass: "neutral",
         };
@@ -188,7 +253,9 @@ const DeliveryVoice = () => {
     if (phase === "noVoice") {
       return (
         <BottomText>
-          다시 시도하려면<br/><EmGray>회색 버튼</EmGray>을 누르세요.
+          다시 시도하려면
+          <br />
+          <EmGray>회색 버튼</EmGray>을 누르세요.
         </BottomText>
       );
     }
@@ -196,14 +263,18 @@ const DeliveryVoice = () => {
       return (
         <BottomActions>
           <SubButton onClick={onNotMatch}>아니에요</SubButton>
-          <SubButton className="yes" onClick={onMatch}>맞아요</SubButton>
+          <SubButton className="yes" onClick={onMatch}>
+            맞아요
+          </SubButton>
         </BottomActions>
       );
     }
-    // listening 중
+    // listening/stopping 중
     return (
       <BottomActions>
-        <SubButton className="back" onClick={goBack}>돌아가기</SubButton>
+        <SubButton className="back" onClick={goBack}>
+          돌아가기
+        </SubButton>
       </BottomActions>
     );
   };
@@ -217,11 +288,7 @@ const DeliveryVoice = () => {
           <TopText>{top}</TopText>
         </div>
 
-        <MainButton
-          className={btnClass}
-          onClick={onMicClick}
-          disabled={clicked}
-        >
+        <MainButton className={btnClass} onClick={onMicClick} disabled={clicked}>
           <img src="/icons/VoiceMic.svg" alt="마이크" />
         </MainButton>
 
@@ -300,14 +367,15 @@ const MainButton = styled.button`
   border: none;
   cursor: pointer;
 
-  &.warn { background: var(--main-color); }
-  &.neutral { background: #b2b2b2; }
+  &.warn { background: var(--main-color); }   /* 주황 */
+  &.neutral { background: #b2b2b2; }          /* 회색 */
 
   &:disabled {
     opacity: 0.7;
     cursor: not-allowed;
   }
 
+  /* listening(주황)에서만 파동 애니메이션 */
   &.warn::before {
     content: "";
     position: absolute;
@@ -318,6 +386,7 @@ const MainButton = styled.button`
     animation: ${ringSpread} 1.2s ease-in-out infinite;
   }
 
+  /* 회색 상태(중간/완료/실패)는 애니 없음 */
   &.neutral::before,
   &.warn:disabled::before {
     animation: none;
@@ -346,5 +415,5 @@ const SubButton = styled.button`
   cursor: pointer;
 
   &.back { width: 20rem; }
-  &.yes { background: var(--main-color); color: #000; }
+  &.yes  { background: var(--main-color); color: #000; }
 `;

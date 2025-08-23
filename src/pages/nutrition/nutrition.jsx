@@ -1,6 +1,39 @@
 import "../../assets/styles/Nutrition.css";
+import { useEffect, useState } from 'react';
+import api from "../../api";
+
+const nutrientMap = { CARB: "탄수화물", PROTEIN: "단백질", FAT: "지방" };
 
 export default function Nutrition() {
+    const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const [username, setUsername] = useState();
+
+    useEffect(() => {
+        api.get(`/api/accounts/user/`)
+            .then(res => {
+                console.log("username:", res.data.username);
+                setUsername(res.data.username);
+            })
+            .catch(err => console.error("유저 이름 로드 실패:", err));
+    }, []);
+
+    useEffect(() => {
+        api.get("/api/healthcare/n_report/currentweek/")
+            .then(res => setData(res.data))
+            .catch(err => console.error(err))
+            .finally(() => setLoading(false));
+    }, []);
+
+    if (loading) return <div>로딩중...</div>;
+    if (!data) return <div>데이터가 없습니다.</div>;
+
+    const firstDisease = Object.keys(data)[0];
+    const diseaseData = data[firstDisease];
+    const nutrientPercent = diseaseData.analysis.nutrient_percent;
+    const mainNutrient = Object.entries(nutrientPercent).reduce((a, b) => a[1] > b[1] ? a : b)[0];
+
     return (
         <div className='Wrapper-nutrition'>
             <div className='bg top'></div>
@@ -9,8 +42,14 @@ export default function Nutrition() {
                 <div className='nu-analysis'>질환 맞춤 분석</div>
 
                 <div className='nutrition-card-list'>
-                    <NutritionCard />
-                    <NutritionCard />
+                    {Object.keys(data).map(disease => (
+                        <NutritionCard
+                            key={disease}
+                            disease={disease}
+                            aiFeedback={data[disease].ai_feedback}
+                        />
+                    ))}
+                    
                 </div>
 
                 <div className='nu-text3'>*실제 영양상태와의 차이가 있을 수 있습니다.</div>
@@ -18,9 +57,12 @@ export default function Nutrition() {
             </div>
 
             <div className='nutrition-container'>
-                <div className='nutrition-date'>8월 4일 - 8월 10일</div>
+                <div className='nutrition-date'>
+                    {`${new Date(diseaseData.analysis.period_start).getMonth() + 1}월 ${new Date(diseaseData.analysis.period_start).getDate()}일 `} - 
+                    {` ${new Date(diseaseData.analysis.period_end).getMonth() + 1}월 ${new Date(diseaseData.analysis.period_end).getDate()}일`}
+                </div>
                 <div className='nu-con1'>
-                    <div className='nutrition-id'>김영철</div>
+                    <div className='nutrition-id'>{username}</div>
                     <div className='nutrition-id1'>님의 영양 보고서</div>
                     <img src='/images/nutrition.png' width={65}></img>
                 </div>
@@ -28,15 +70,15 @@ export default function Nutrition() {
                 <div className='nu-con2'>
                     <div className='nu-text'>
                         <div className='nu-text1'>이번 주는</div>
-                        <div className='nu-text2' style={{ fontWeight: 700 }}>탄수화물</div>
+                        <div className='nu-text2' style={{ fontWeight: 700 }}>{nutrientMap[mainNutrient]}</div>
                         <div className='nu-text1'>위주의</div>
                     </div>
                     <div className='nu-text1'>식사를 하셨네요.</div>
                     
                     <div className="nu-macro-bar">
-                        <div className="nu-carbs" style={{ width: "60%" }} />
-                        <div className="nu-protein" style={{ width: "20%" }} />
-                        <div className="nu-fat" style={{ width: "20%" }} />
+                        <div className="nu-carbs" style={{ width: `${nutrientPercent.CARB}%` }} />
+                        <div className="nu-protein" style={{ width: `${nutrientPercent.PROTEIN}%` }} />
+                        <div className="nu-fat" style={{ width: `${nutrientPercent.FAT}%` }} />
                     </div>
                     <div className='nu-macro'>
                         <div className='nu-menu-carbohydrate'>
@@ -61,13 +103,13 @@ export default function Nutrition() {
     );
 }
 
-function NutritionCard() {
+function NutritionCard({ disease, aiFeedback }) {
     return (
         <>
         <div className='nutrition-card'>
-            <div className='nutrition-name'>당뇨</div>
+            <div className='nutrition-name'>{disease}</div>
             <div className='nutrition-comment'>탄수화물과 당분 조절이 필요해요.</div>
-            <div className='nutrition-warn'>⚠️ 탄수화물 섭취가 많으면 혈당관리가 어려워요. 고기, 튀김 같은 기름진 음식을 줄이고, 삶거나 찐 요리를 드셔보세요!</div>
+            <div className='nutrition-warn'>⚠️ {aiFeedback}</div>
             <div className='nutrition-good'>✓ 나머지는 다 잘하고 계세요.</div>
         </div>
         </>

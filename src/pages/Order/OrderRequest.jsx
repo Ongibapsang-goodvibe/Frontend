@@ -1,17 +1,22 @@
 import "../../assets/styles/OrderRequest.css";
 
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
 
+import api from '../../api';
+
 export default function OrderRequest() {
-    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
+
     const timerRef = useRef(null);
+    const [isOpen, setIsOpen] = useState(false);
+    const { order, totalPayment, deliveryTime } = location.state || {};
 
     const startTimer = () => {
         timerRef.current = setTimeout(() => {
-            navigate("/order/completed");
+            navigate("/order/completed", { state: { order, totalPayment, deliveryTime } });
         }, 5000);
     };
 
@@ -29,6 +34,19 @@ export default function OrderRequest() {
     const handleCloseModal = () => {
         setIsOpen(false);
         startTimer();
+    };
+
+    const handleCancelOrder = () => {
+    if (!order?.id) return; // order id 없으면 종료
+    api.delete(`/api/orders/delete/${order.id}`)
+        .then(res => {
+            // 성공 시 취소 완료 페이지로 이동
+            console.log("주문 취소 완료:", res.data);
+            navigate("/order/cancel");
+        })
+        .catch(err => {
+            console.error("주문 취소 실패:", err);
+        });
     };
 
     return (
@@ -64,7 +82,7 @@ export default function OrderRequest() {
                             <button className='no' onClick={handleCloseModal}>
                                 <div className='nobt'>아니요</div>
                             </button>
-                            <button className='yes' onClick={() => {navigate("/order/cancel")}}>
+                            <button className='yes' onClick={handleCancelOrder}>
                                 <div className='yesbt'>네</div>
                             </button>
                         </div>

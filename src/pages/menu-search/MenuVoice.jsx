@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import api from '../../api';
 
   /* 상태별 UI 문구 / 버튼 라벨 / 버튼 색상 클래스 */
   const EmOrange = styled.span` color: #FF8040; `;
@@ -14,11 +15,6 @@ const pickResults = (data) => {
   if (!data) return [];
   if (Array.isArray(data)) return data;
   return data.cards || data.results || data.items || data.data || [];
-};
-const getAccessToken = () => {
-  // 로그인 없이 진행한다면 빈 값 반환
-  if (typeof window === "undefined") return "";
-  return window.__ACCESS_TOKEN__ || localStorage.getItem("accessToken") || "";
 };
 
 /* ====== 컴포넌트 ====== */
@@ -43,17 +39,12 @@ const MenuVoice = () => {
   const endedRef = useRef(false); // 인식 종료 플래그
   const initializedRef = useRef(false); // 중복 초기화 방지
 
-  /** ✅ API URL: 무조건 VITE_API_BASE 기반 (상대경로 X, 절대 URL 강제) */
-  const API_BASE = (import.meta.env.VITE_API_BASE || "").replace(/\/+$/, "");
-  const SEARCH_URL = `${API_BASE}/api/restaurants/search/`; // 검색 API
-  const RESULTS_URL = "/menu/search/result"; // 검색결과 페이지 경로 (프엔 라우팅)
-
   useEffect(() => {
     if (!SR) return;
     if (initializedRef.current) return;
     initializedRef.current = true;
 
-    // ✅ 음성인식 객체 생성
+    // 음성인식 객체 생성
     const r = new SR();
     r.lang = "ko-KR";
     r.interimResults = true;
@@ -92,10 +83,39 @@ const MenuVoice = () => {
     r.onend = () => {
       clearTimeout(stopperRef.current);
       setTimeout(() => { endedRef.current = true; }, 50);
+      // 자동 종료되면 곧바로 검색 트리거
+      // (이미 stop()된 상태라 stopListeningAndSearch 내부의 stop()은 try-catch로 무시됨)
+      stopListeningAndSearch();
     };
 
     recogRef.current = r;
-    startListening();
+    // 권한 확인/요청 후 자동 시작
+    (async () => {
+      try {
+        const canQuery = !!(navigator.permissions?.query);
+        let state = 'prompt';
+        if (canQuery) {
+          const perm = await navigator.permissions.query({ name: 'microphone' });
+          state = perm.state; // 'granted' | 'denied' | 'prompt'
+        }
+        if (state === 'denied') {
+          setPhase('noVoice');
+          setDisplayText('마이크 권한이 필요합니다. 주소창 오른쪽에서 허용해 주세요.');
+          return;
+        }
+        if (state !== 'granted') {
+          // 권한 요청
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          stream.getTracks().forEach(t => t.stop());
+        }
+        startListening();
+      } catch (err) {
+        console.error('Mic permission error:', err);
+        setPhase('noVoice');
+        setDisplayText('마이크 권한이 필요합니다.');
+      }
+    })();
+
 
     return () => {
       clearTimeout(stopperRef.current);
@@ -103,7 +123,7 @@ const MenuVoice = () => {
     };
   }, [SR]);
 
-  // ✅ 음성 인식 시작
+  // 음성 인식 시작
   const startListening = () => {
     if (!SR) {
       alert("이 브라우저는 음성 인식을 지원하지 않습니다. (Chrome 권장)");
@@ -116,7 +136,7 @@ const MenuVoice = () => {
     recogRef.current?.start();
   };
 
-  // ✅ 인식된 텍스트가 유효한지 검사
+  // 인식된 텍스트가 유효한지 검사
   const isInvalidRecognized = (t) => {
     if (!t) return true;
     const s = String(t).replace(/\s+/g, "").replace(/\u2026/g, "...").toLowerCase();
@@ -130,7 +150,7 @@ const MenuVoice = () => {
     );
   };
 
-  // ✅ 음성 인식 종료 + 검색 API 호출
+  //  음성 인식 종료 + 검색 API 호출
   const stopListeningAndSearch = async () => {
     try { recogRef.current?.stop(); } catch {}
     await sleep(180);
@@ -146,37 +166,25 @@ const MenuVoice = () => {
     setPhase("processing");
     setLoading(true);
 
+    let timeoutId;
     try {
-      const token = getAccessToken();
       const ac = new AbortController();
-      const timeoutId = setTimeout(() => ac.abort(), 10000); // 10초 타임아웃
+      timeoutId = setTimeout(() => ac.abort(), 10000); // 10초 타임아웃
 
-      // ✅ POST 요청 (검색 API)
-      const res = await fetch(SEARCH_URL, {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}), // 토큰 있으면 헤더 추가
-        },
-        body: JSON.stringify({ text: captured, limit: 10 }),
-        signal: ac.signal,
-      });
+      // POST 요청 (검색 API)
+      const res = await api.post('/api/restaurants/search/', { text: captured, limit: 10 }, {signal: ac.signal});
 
-      clearTimeout(timeoutId);
-
-      if (res.status === 401 || res.status === 403 || res.status === 204 || res.status >= 500) {
+      if (res.status === 204) {
         setPhase("noResult");
         return;
       }
-      if (!res.ok) throw new Error("HTTP " + res.status);
 
-      const data = await res.json();
+      const data = res.data;
       const list = pickResults(data);
 
       if (Array.isArray(list) && list.length > 0) {
-        // ✅ 검색 결과 페이지로 이동 (프엔 라우팅)
-        navigate(`${RESULTS_URL}?q=${encodeURIComponent(captured)}&source=voice`);
+        // 검색 결과 페이지로 이동 (프엔 라우팅)
+        navigate(`/menu/search/result?q=${encodeURIComponent(captured)}&source=voice`);
       } else {
         setPhase("noResult");
       }
@@ -184,22 +192,24 @@ const MenuVoice = () => {
       console.error("Search API error:", e);
       setPhase("noResult");
     } finally {
+      if (timeoutId) clearTimeout(timeoutId);
       setLoading(false);
     }
   };
 
-  // ✅ 버튼 클릭 핸들러
+  // 버튼 클릭 핸들러
   const onMainButtonClick = () => {
     if (clicked) return;
     if (phase === "listening") {
       setClicked(true);
-      Promise.resolve(stopListeningAndSearch()).finally(() => setClicked(false));
+      // 듣기 종료만 하고, 검색은 onend에서 자동 수행
+      try { recogRef.current?.stop(); } finally { setClicked(false); }
     } else {
       startListening();
     }
   };
 
-  // ✅ 상태별 UI 매핑
+  // 상태별 UI 매핑
   const { top, bottom, btnClass } = (() => {
     switch (phase) {
       case "listening":
@@ -246,7 +256,7 @@ const MenuVoice = () => {
           <TopText>{top}</TopText>
         </div>
 
-        {/* ✅ 마이크 버튼 */}
+        {/* 마이크 버튼 */}
         <MainButton
           className={btnClass}
           onClick={onMainButtonClick}
@@ -255,7 +265,7 @@ const MenuVoice = () => {
           <img src="/icons/VoiceMic.svg" alt="마이크" />
         </MainButton>
 
-        {/* ✅ 하단 안내 문구 */}
+        {/* 하단 안내 문구 */}
         {bottom && <BottomText className={isWarn ? "warn" : ""}>{bottom}</BottomText>}
       </Content>
     </Wrapper>

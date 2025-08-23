@@ -1,9 +1,38 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import api from '../../api';
+
+const REVIEWS_URL = '/api/deliveryreview/logs/';
 
 const NoIssue = () => {
-    const navigate = useNavigate();
+    const { orderId } = useParams();
+    const postedRef = useRef(false);
+
+    useEffect(() => {
+      if (!orderId) {
+        console.warn('orderId가 없습니다.');
+        return;
+      }
+      if (postedRef.current) return;
+      postedRef.current = true;
+
+      (async () => {
+        try {
+          await api.post(REVIEWS_URL, {
+            initial_label: 'GOOD',
+            source: 'BUTTON',
+            order: Number(orderId),
+            option: 1,
+            option_label: '',
+            text: '',
+          });
+        } catch (e) {
+          console.error('GOOD 리뷰 저장 실패:', e);
+        }
+      })();
+    }, [orderId]);
+
 
     return(
         <>

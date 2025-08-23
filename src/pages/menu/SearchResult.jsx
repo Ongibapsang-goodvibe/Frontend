@@ -2,15 +2,40 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import "../../assets/styles/Review.css";
 import "../../assets/styles/SearchResult.css";
+import api from "../../api";
 
 export default function SearchResult() {
     const navigate = useNavigate();
+    const location = useLocation();
+
     const params = new URLSearchParams(location.search);
     const category = params.get("category");
 
     const [menuList, setMenuList] = useState([]);
-
+    const [loading, setLoading] = useState(true);
     const [selectedIdx, setSelectedIdx] = useState(null);
+
+    useEffect(() => {
+        if(!category) return;
+        
+
+        setLoading(true);
+        console.log("category 값:", category);
+        
+        api.get(`/api/restaurants/menus/?initial_label=${String(category)}`)
+            .then(res => {
+                console.log("응답 데이터:", res.data);
+                setMenuList(res.data.cards || []);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error('메뉴 리스트 로드 실패:', err);
+                setLoading(false);
+            });
+    }, [category]);
+
+    if (loading) return <div>로딩 중...</div>;
+    if (!menuList.length) return <div>메뉴가 없습니다.</div>;
 
     return (
         <div className='Wrapper-search-result'>
@@ -20,8 +45,13 @@ export default function SearchResult() {
             <>
                 {menuList.map((menu, idx) => (
                     <MenuCard
-                        key={idx}
-                        {...menu}
+                        key={menu.menu_id}
+                        imgSrc={menu.image_url || "/images/default-menu.png"}
+                        name={menu.menu_name}
+                        price={menu.price}
+                        restaurant={menu.restaurant_name}
+                        fee={menu.delivery_fee}
+                        deliveryTime="30분"
                         isSelected={selectedIdx === idx}
                         onClick={() => setSelectedIdx(idx)}
                     />
@@ -35,7 +65,7 @@ export default function SearchResult() {
                 </button>
                 <button
                     className='choose'
-                    onClick={() => navigate("/order/payment")}
+                    onClick={() => navigate("/order/payment", { state: { menu: menuList[selectedIdx] } })}
                     disabled={selectedIdx === null}
                 >
                     <div className='choosetext'>선택완료</div>

@@ -70,7 +70,7 @@ const FoodForwarding = () => {
                 <Button
                     type="button"
                     className="health-check"
-                    onClick={()=>{navigate('/health-feedback/health-check')}}
+                    onClick={()=>{navigate(`/health-feedback/health-check/${orderId}`)}}
                 >
                     <span>건강 기록하러 가기</span>
                 </Button>

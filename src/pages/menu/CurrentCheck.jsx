@@ -19,7 +19,7 @@ export default function CurrentCheck() {
             <div className='current-confirm-box'>
                 <div className='menu-current-nick' style={{ color: "#252525" }}>순두부국</div>
                 <div className='menu-price'  style={{ color: "#252525", fontSize: 32, fontWeight: 600 }}>7,900원</div>
-                <div className='current-restaurant' style={{ color: "#252525", fontSize: 20, fontWeight: 600 }}>맛나식당</div>
+                <div className='current-restaurant' style={{ color: "#252525", fontSize: 20, fontWeight: 600, textAlign: "center" }}>맛나식당</div>
 
                 <div className='current-confirm-img'>
                     <img src='/images/food1.png'></img>

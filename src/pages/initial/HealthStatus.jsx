@@ -9,9 +9,17 @@ export default function HealthStatus() {
     const location = useLocation();
 
     const { editMode, currentDiseases } = location.state || {};
-    const [active, setActive ] = useState(editMode ? currentDiseases.map(Number) : []);
+    const [active, setActive] = useState(editMode ? currentDiseases.map(Number) : []);
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    // localStorage에서 user 가져오기
+    let storedUser = null;
+    try {
+        const userStr = localStorage.getItem("user");
+        storedUser = userStr ? JSON.parse(userStr) : null;
+    } catch (err) {
+        console.error("localStorage parsing error:", err);
+        storedUser = null;
+    }
 
     const labels = [
         { id: 1, label: "당뇨" },
@@ -32,7 +40,7 @@ export default function HealthStatus() {
     };
 
     const handleSubmit = async () => {
-        if (!user?.id) {
+        if (!storedUser?.id) {
             alert("로그인이 필요합니다.");
             navigate("/login");
             return;
@@ -40,17 +48,17 @@ export default function HealthStatus() {
 
         try {
             const response = editMode
-                ? await api.patch(`/api/accounts/${user.id}/disease/`, {
-                    id: user.id,
+                ? await api.patch(`/api/accounts/${storedUser.id}/disease/`, {
+                    id: storedUser.id,
                     disease_id: active.map(Number),
                 })
-                : await api.put(`/api/accounts/${user.id}/disease/`, {
-                    id: user.id,
+                : await api.put(`/api/accounts/${storedUser.id}/disease/`, {
+                    id: storedUser.id,
                     disease_id: active.map(Number),
                 });
 
             if (response.status === 200) {
-                const updateUser = { ...user, disease_id: active.map(Number )};
+                const updateUser = { ...storedUser, disease_id: active.map(Number) };
                 localStorage.setItem("user", JSON.stringify(updateUser));
 
                 navigate("/health-status/result", { state: { selected: active } });
@@ -60,16 +68,14 @@ export default function HealthStatus() {
             alert('질병 선택 정보를 전송하는데 실패했습니다.');
         }
     };
-    
+
     return (
-        <>
         <div className='Wrapper-health-status'>
             <div className='hsh'>다음 중 해당하는 것을</div>
             <div className='hs'>
                 <div className='hsh-orange'>모두</div>
                 <div className='hsh1'>선택해주세요.</div>
             </div>
-            
 
             <div className='bt-group'>
                 {labels.map((btn) => (
@@ -84,7 +90,7 @@ export default function HealthStatus() {
             </div>
 
             <div className='hsbutton'>
-                <button className='hsreturn' onClick={() => {navigate(editMode ? "/mypage" : "/home")}}>
+                <button className='hsreturn' onClick={() => { navigate(editMode ? "/mypage" : "/home") }}>
                     <div className='hsreturntext'>{editMode ? "취소" : "건너뛰기"}</div>
                 </button>
                 <button className='hschoose' onClick={handleSubmit}>
@@ -92,6 +98,5 @@ export default function HealthStatus() {
                 </button>
             </div>
         </div>
-        </>
     );
 }

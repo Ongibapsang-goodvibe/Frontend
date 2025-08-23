@@ -38,9 +38,14 @@ const Login = () => {
         
         // 3) 토큰 저장
         if (data?.token) {
-          localStorage.setItem("token", data.token);
+          const existingToken = localStorage.getItem("token");
+          if (!existingToken) {
+            localStorage.setItem("token", data.token);
+          } else {
+          // 기존 토큰 유지, 필요하면 갱신 여부 체크 가능
+          console.log("기존 토큰 유지:", existingToken);
+          }
         }
-
         // 4) 유저 정보 저장
         if (data?.user) {
           localStorage.setItem("user", JSON.stringify(data.user));

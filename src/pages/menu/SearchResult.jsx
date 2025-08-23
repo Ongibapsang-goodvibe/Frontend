@@ -1,19 +1,16 @@
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import "../../assets/styles/Review.css";
 import "../../assets/styles/SearchResult.css";
 
 export default function SearchResult() {
     const navigate = useNavigate();
+    const params = new URLSearchParams(location.search);
+    const category = params.get("category");
+
+    const [menuList, setMenuList] = useState([]);
 
     const [selectedIdx, setSelectedIdx] = useState(null);
-
-    const menuList = [
-        { imgSrc: "/images/food1.png", name: "콩나물 순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
-        { imgSrc: "/images/food2.png", name: "순두부국", price: "7,900원", restaurant: "맛나식당", fee: "1,000원", deliveryTime: "15분 ~ 30분" },
-        { imgSrc: "/images/food1.png", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
-        { imgSrc: "/images/food1.png", name: "두부조림", price: "43,000원", restaurant: "맛나식당", fee: "6,000원", deliveryTime: "20분 ~ 40분" },
-    ];
 
     return (
         <div className='Wrapper-search-result'>

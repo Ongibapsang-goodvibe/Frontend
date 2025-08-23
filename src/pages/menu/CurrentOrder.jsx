@@ -2,25 +2,108 @@ import "../../assets/styles/SearchResult.css";
 import "../../assets/styles/CurrentOrder.css";
 
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import api from "../../api";
 
 export default function CurrentOrder() {
-    const navigate = useNavigate();
-    
-    const currentList = [
-        { imgSrc: "/images/food1.png", date: "8월 17일 (일)", name: "콩나물 순두부국", restaurant: "맛나식당" },
-        { imgSrc: "/images/food2.png", date: "8월 12일 (화)", name: "순두부국", restaurant: "맛나식당" },
-        { imgSrc: "/images/food1.png", date: "8월 8일 (금)", name: "두부조림", restaurant: "맛나식당" },
-        { imgSrc: "/images/food1.png", date: "8월 8일 (금)", name: "두부조림", restaurant: "맛나식당" },
-    ];
 
+    console.log("토큰 확인:", localStorage.getItem("token"));
+    const navigate = useNavigate();
+    const [currentList, setCurrentList] = useState([]);
     const [selectedIdx, setSelectedIdx] = useState(null);
+/*
+    useEffect(() => {
+    const dummy = [
+        {
+            menu_name: "김치찌개",
+            restaurant_name: "명지 장수오리",
+            time: "2025-08-22T14:01:59.877125+09:00",
+            image_url: "/images/food1.png"
+        },
+        {
+            menu_name: "순두부찌개",
+            restaurant_name: "짬뽕주의",
+            time: "2025-08-22T14:02:08.404836+09:00",
+            image_url: "/images/food2.png"
+        },
+        {
+            menu_name: "순두부찌개",
+            restaurant_name: "짬뽕주의",
+            time: "2025-08-22T14:02:08.404836+09:00",
+            image_url: "/images/food2.png"
+        },
+        {
+            menu_name: "순두부찌개",
+            restaurant_name: "짬뽕주의",
+            time: "2025-08-22T14:02:08.404836+09:00",
+            image_url: "/images/food2.png"
+        }
+    ];
+    setCurrentList(dummy.map(order => {
+        const date = new Date(order.time);
+        const week = ["일", "월", "화", "수", "목", "금", "토"];
+        return {
+            imgSrc: order.image_url,
+            date: `${date.getMonth()+1}월 ${date.getDate()}일 (${week[date.getDay()]})`,
+            name: order.menu_name,
+            restaurant: order.restaurant_name
+        };
+    }));
+}, []);
+*/
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            alert("로그인이 필요합니다.");
+            navigate("/login");
+            return;
+        }
+
+        api.get(`api/orders/list/`)
+            .then((res) => {
+                console.log("백엔드 전체 응답:", res);
+                
+                const data = res.data;
+
+                // 데이터가 배열인지 확인
+                if (!data || typeof data !== "object") {
+                    console.error("백엔드 데이터가 배열/객체가 아님:", data);
+                    return;
+                }
+
+                const arr = Array.isArray(data) ? data : [data];
+                console.log("처리할 배열:", arr);
+                
+                const formatted = arr.map((order) => {
+                    const date = new Date(order.time);
+                    const month = date.getMonth() + 1;
+                    const day = date.getDate();
+                    const week = ["일", "월", "화", "수", "목", "금", "토"];
+                    const weekday = week[date.getDay()];
+
+                    return {
+                        imgSrc: order.image_url || "/images/food1.png",
+                        date: `${month}월 ${day}일 (${weekday})`,
+                        name: order.menu_name,
+                        restaurant: order.restaurant_name,
+                    };
+                });
+
+                setCurrentList(formatted);
+            })
+            .catch((err) => {
+                console.error("백엔드 요청 에러:", err);
+                if (err.response?.status === 401) {
+                    alert("로그인 정보가 만료되었습니다. 다시 로그인해주세요.");
+                    navigate("/login");
+                }
+            });
+    }, []);
 
     const handleClick = (idx) => {
         setSelectedIdx(idx);
-        setTimeout(() => {
-            navigate("/menu/current-order/check");
-        }, 2000);
+        navigate("/menu/current-order/check");
     };
 
     return (
@@ -32,29 +115,26 @@ export default function CurrentOrder() {
                 <span>가능</span>
             </div>
 
-        <div className='current-scroll'>
-            {currentList.map((menu, idx) => (
-                <CurrentCard
-                    key={idx}
-                    {...menu}
-                    isSelected={selectedIdx === idx}
-                    onClick={() => handleClick(idx)}
-                />
-            ))}
-        </div>
-
+            <div className='current-scroll'>
+                {currentList.map((menu, idx) => (
+                    <CurrentCard
+                        key={idx}
+                        {...menu}
+                        isSelected={selectedIdx === idx}
+                        onClick={() => handleClick(idx)}
+                    />
+                ))}
+            </div>
         </div>
     );
 }
 
 function CurrentCard({ imgSrc, date, name, restaurant, isSelected, onClick }) {
-
     return (
-        <>
         <div className={`menu-container ${isSelected ? "selected" : ""}`} onClick={onClick}>
             <div className='menu-card'>
                 <div className='menu-pic'>
-                    <img src={imgSrc} width={101} height={133}></img>
+                    <img src={imgSrc} width={101} height={133} alt={name} />
                 </div>
                 <div className='menu-review-detail'>
                     <div className='current-date' style={{ color: isSelected ? "#252525" : "#FFF" }}>{date}</div>
@@ -63,6 +143,5 @@ function CurrentCard({ imgSrc, date, name, restaurant, isSelected, onClick }) {
                 </div>
             </div>
         </div>
-        </>
     );
 }

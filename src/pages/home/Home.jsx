@@ -1,90 +1,85 @@
 import "../../assets/styles/Home.css";
-
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import api from '../../api';
 
 export default function Home() {
+    console.log(console.log("토큰:", localStorage.getItem("token")));
     const location = useLocation();
-    const from = location.state?.from;
+    const from = location.state?.from; // 이전 페이지 정보
     const navigate = useNavigate();
+    
+    // 사용자 정보 상태
+    const [user, setUser] = useState({ name: "손", district_name: "" });
+    const [section, setSection] = useState(from || 'default');
 
-    {/*login: <SectionLoigin /> 이슈포워딩 페이지*/}
-    const sectionMap = {
-        orderCompleted: <SectionWait />,
-    };
-
-    const defaultSection = <SectionDefault />;
-
-    const [currentSection, setCurrentSection] = useState(sectionMap[from] || defaultSection);
-
+    // API로 사용자 정보 가져오기
     useEffect(() => {
-        if (currentSection.type === SectionWait) {
-            const timer = setTimeout(() => {
-                setCurrentSection(<SectionDelivery />);
-            }, 5000);
+        api.get('/accounts/user/')  // DRF 뷰셋 URL
+            .then(res => {
+                setUser(res.data);
+                console.log("유저 정보:", res.data);
+            })
+            .catch(err => console.error("사용자 정보 로드 실패:", err));
+    }, []);
 
+    // 섹션 전환 (wait → delivery)
+    useEffect(() => {
+        if (section === 'wait') {
+            const timer = setTimeout(() => setSection('delivery'), 5000);
             return () => clearTimeout(timer);
         }
-    }, [currentSection]);
+    }, [section]);
 
+    // 카테고리 클릭
     const handleCategoryClick = (categoryValue) => {
         console.log("선택된 카테고리:", categoryValue);
         navigate(`/search/result?category=${categoryValue}`);
     }
 
+    // 섹션 맵
+    const sectionMap = {
+        default: <SectionDefault user={user} />,
+        wait: <SectionWait />,
+        delivery: <SectionDelivery navigate={navigate} />,
+    };
+
     return (
         <>
             <div className='Home-container1'>
-            <img src='/icons/homebar.svg'></img>
-            <div className='place'>
-                <img src="/icons/place1.svg" height={20} ></img>
-                <div className='pltext'>서대문구 대현동</div>
+                <img src='/icons/homebar.svg' alt="homebar" />
+                <div className='place'>
+                    <img src="/icons/place1.svg" height={20} alt="place"/>
+                    <div className='pltext'>서대문구 {user.district_name}</div>
+                </div>
+                <div className='Home-case'>{sectionMap[section]}</div>
+                <div className='home-box'>
+                    <img src="/images/home.png" className='bobby-home' alt="bobby"/>
+                </div>
             </div>
-            <div className='Home-case'>{currentSection}
-            </div>
-            <div className='home-box'>
-                <img src="/images/home.png" className='bobby-home'></img>
-            </div>
-            </div>
-            
+
             <div className='Home-container2'>
                 <button className='type' onClick={() => navigate("/menu/search/text")}>
-                    <img src="/icons/type.svg" style={{ pointerEvents: "none" }} width={20}></img>
+                    <img src="/icons/type.svg" style={{ pointerEvents: "none" }} width={20} alt="type"/>
                     <span className='home-type' style={{ pointerEvents: "none" }}>글자로 검색</span>
                 </button>
                 <button className='voice' onClick={() => navigate("/menu/search/voice")}>
-                    <img src="/icons/mic.svg" style={{ pointerEvents: "none" }} width={20}></img>
+                    <img src="/icons/mic.svg" style={{ pointerEvents: "none" }} width={20} alt="mic"/>
                     <span className='home-voice' style={{ pointerEvents: "none" }}>음성으로 검색</span>
                 </button>
             </div>
 
             <div className='Home-container3'>
-                <div className='home-menu'>
-                    <button className='menu-button' onClick={() => handleCategoryClick("0")}>
-                        <img src='/icons/menu1.svg' width={66}></img>
-                    </button>
-                    <div className='menu-name'>국 · 찌개</div>
-                </div>
-                <div className='home-menu'>
-                    <button className='menu-button' onClick={() => handleCategoryClick("1")}>
-                        <img src='/icons/menu2.svg' width={66}></img>
-                    </button>
-                    <div className='menu-name'>밥</div>
-                </div>
-                <div className='home-menu'>
-                    <button className='menu-button' onClick={() => handleCategoryClick("2")}>
-                        <img src='/icons/menu3.svg' width={66}></img>
-                    </button>
-                    <div className='menu-name'>죽</div>
-                </div>
-                <div className='home-menu'>
-                    <button className='menu-button' onClick={() => handleCategoryClick("3")}>
-                        <img src='/icons/menu4.svg' width={66}></img>
-                    </button>
-                    <div className='menu-name'>반찬</div>
-                </div>
+                {["국 · 찌개", "밥", "죽", "반찬"].map((name, idx) => (
+                    <div className='home-menu' key={idx}>
+                        <button className='menu-button' onClick={() => handleCategoryClick(`${idx}`)}>
+                            <img src={`/icons/menu${idx+1}.svg`} width={66} alt={name}/>
+                        </button>
+                        <div className='menu-name'>{name}</div>
+                    </div>
+                ))}
             </div>
+
             <div className='home-button'>
                 <button className='home-recent' onClick={() => navigate("/menu/current-order")}>최근 주문</button>
                 <button className='home-recom' onClick={() => navigate("/menu/recommendation")}>✨ 음식 추천받기</button>
@@ -93,14 +88,15 @@ export default function Home() {
     );
 }
 
-function SectionDefault() {
+// ========================= Sections =========================
+function SectionDefault({ user }) {
     return (
         <>
-        <div className='q'>
-            <div className='nickname'>영철</div>
-            <div className='q1'>님, 오늘은</div>
-        </div>
-        <div className='q1'>무엇을 드시고 싶으세요?</div>
+            <div className='q'>
+                <div className='nickname'>{user.name}</div>
+                <div className='q1'>님, 오늘은</div>
+            </div>
+            <div className='q1'>무엇을 드시고 싶으세요?</div>
         </>
     );
 }
@@ -108,45 +104,28 @@ function SectionDefault() {
 function SectionWait() {
     return (
         <>
-        <div className='q'>
-            <div className='nickname'>약 30분 뒤</div>
-            <div className='q1'>에</div>
-        </div>
-        <div className='q1'>음식이 도착합니다.</div>
+            <div className='q'>
+                <div className='nickname'>약 30분 뒤</div>
+                <div className='q1'>에</div>
+            </div>
+            <div className='q1'>음식이 도착합니다.</div>
         </>
     );
 }
 
-function SectionDelivery() {
+function SectionDelivery({ navigate }) {
     return (
         <>
-        <div className='bobby-comment'>
-            <div className='bobby-ment'>배달 잘 받으셨나요?</div>
-            <button className='bobby-button' onClick={() => navigate("/delivery-feedback/check")}>
-                <div className='answer-text'>눌러서 답하기</div>
-                <img src='/icons/ment.svg' width={6}></img>
-            </button>
-        </div>
-        <div className='polygon'>
-            <img src='/icons/polygon.svg' width={25.0264}></img>
-        </div>
-        </>
-    );
-}
-
-function SectionMeal() {
-    return (
-        <>
-        <div className='bobby-comment'>
-            <div className='bobby-ment'>식사 잘 하셨나요?</div>
-            <button className='bobby-button' onClick={() => navigate("/food-feedback/check")}>
-                <div className='answer-text'>눌러서 답하기</div>
-                <img src='/icons/ment.svg' width={6}></img>
-            </button>
-        </div>
-        <div className='polygon'>
-            <img src='/icons/polygon.svg' width={25.0264}></img>
-        </div>
+            <div className='bobby-comment'>
+                <div className='bobby-ment'>배달 잘 받으셨나요?</div>
+                <button className='bobby-button' onClick={() => navigate("/delivery-feedback/check")}>
+                    <div className='answer-text'>눌러서 답하기</div>
+                    <img src='/icons/ment.svg' width={6} alt="ment"/>
+                </button>
+            </div>
+            <div className='polygon'>
+                <img src='/icons/polygon.svg' width={25.0264} alt="polygon"/>
+            </div>
         </>
     );
 }

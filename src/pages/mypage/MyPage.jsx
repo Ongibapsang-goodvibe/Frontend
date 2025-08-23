@@ -21,7 +21,7 @@ export default function MyPage() {
         try {
             await api.post(`/api/accounts/logout/`);
             localStorage.removeItem("user");
-            localStorage.removeItem("accessToken");
+            localStorage.removeItem("token");
             navigate("/landing-page/black");
         } catch (error) {
             console.error("로그아웃 실패:", error);

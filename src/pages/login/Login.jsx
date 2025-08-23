@@ -35,6 +35,7 @@ const Login = () => {
         const res = await axios.post(LOGIN_URL, { name, password });
 
         const data = res.data;
+        
         // 3) 토큰 저장
         if (data?.token) {
           const existingToken = localStorage.getItem("token");
@@ -125,7 +126,6 @@ return(
 
         <SubmitButton
             type="submit"
-            onClick={handleSubmit}
         >
             입력완료
         </SubmitButton>

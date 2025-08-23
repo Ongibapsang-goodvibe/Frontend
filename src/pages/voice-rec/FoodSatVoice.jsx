@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
 /* 강조 텍스트 */
 const EmOrange = styled.span` color: #FF8040; `;
@@ -12,6 +12,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 /* ====== 컴포넌트 ====== */
 const FoodSatVoice = () => {
   const navigate = useNavigate();
+  const { orderId } = useParams();
 
   const SR =
     typeof window !== "undefined"
@@ -24,139 +25,191 @@ const FoodSatVoice = () => {
   const [interimText, setInterimText] = useState("");
   const [clicked, setClicked] = useState(false);
 
-  const recogRef = useRef(null);
-  const stopperRef = useRef(null);
-  const finalRef = useRef("");
-  const endedRef = useRef(false);
-  const initializedRef = useRef(false);
+  const recogRef = useRef(null);         // SpeechRecognition 인스턴스
+  const finalRef = useRef("");           // 누적 최종 텍스트
+  const interimRef = useRef("");         // 최신 interim 텍스트
+  const initializedRef = useRef(false);  // 초기화 1회 보장
+  const stoppedByClickRef = useRef(false); // 버튼으로 stop했는지 플래그
+
+  // orderId 유효성
+  useEffect(() => {
+    if (!orderId) navigate("/home");
+  }, [orderId, navigate]);
 
   useEffect(() => {
-    if (!SR) return;
-    if (initializedRef.current) return;
-    initializedRef.current = true;
-
-    const r = new SR();
-    r.lang = "ko-KR";
-    r.interimResults = true;
-    r.continuous = false;
-    r.maxAlternatives = 1;
-
-    r.onstart = () => {
-      finalRef.current = "";
-      endedRef.current = false;
-      setRecognizedText("");
-      setInterimText("");
-      setPhase("listening");
-      clearTimeout(stopperRef.current);
-      stopperRef.current = setTimeout(() => r.stop(), 8000);
-    };
-
-    r.onresult = (evt) => {
-      if (endedRef.current) return;
-      let interim = "";
-      for (let i = evt.resultIndex; i < evt.results.length; i++) {
-        const phrase = evt.results[i][0].transcript;
-        if (evt.results[i].isFinal) {
-          finalRef.current += phrase;
-        } else {
-          interim += phrase;
-        }
-      }
-      setInterimText(interim);
-    };
-
-    r.onerror = (e) => {
-      console.error("SpeechRecognition error:", e);
-      setPhase("noVoice");
-      setRecognizedText("");
-      setInterimText("");
-    };
-
-    r.onend = () => {
-      clearTimeout(stopperRef.current);
-      setTimeout(() => { endedRef.current = true; }, 50);
-    };
-
-    recogRef.current = r;
-    startListening();
-
-    return () => {
-      clearTimeout(stopperRef.current);
-      try { r.stop(); } catch {}
-    };
-  }, [SR]);
-
-  const startListening = () => {
-    if (!SR) {
-      alert("이 브라우저는 음성 인식을 지원하지 않습니다. (Chrome 권장)");
-      return;
-    }
-    setPhase("listening");
-    setRecognizedText("");
-    setInterimText("");
-    endedRef.current = false;
-    try { recogRef.current?.start(); } catch {}
-  };
-
-  const isInvalidRecognized = (t) => {
-    if (!t) return true;
-    const s = String(t).replace(/\s+/g, "").replace(/\u2026/g, "...").toLowerCase();
-    return (
-      !s ||
-      s.includes("인식중") ||
-      s.includes("인식실패") ||
-      s.includes("인식되지않음") ||
-      s.includes("listening") ||
-      s.includes("recognizing")
-    );
-  };
-
-  // ✅ 마이크 버튼 동작: 상태별 분기
-  const onMicClick = async () => {
-    if (clicked) return;
-
-    // listening이 아니면(= 회색 버튼일 때) → 다시 인식 시작
-    if (phase !== "listening") {
-        startListening();
-        return;
-    }
-
-    // listening 중이면 → stop 해서 결과 확정
-    setClicked(true);
-    try { recogRef.current?.stop(); } catch {}
-    await sleep(180);
-
-    const captured = (finalRef.current || interimText || "").trim();
-    if (isInvalidRecognized(captured)) {
+      if (!SR) return;
+      if (initializedRef.current) return;
+      initializedRef.current = true;
+  
+      const r = new SR();
+      r.lang = "ko-KR";
+      r.interimResults = true;
+      r.continuous = false;
+      r.maxAlternatives = 1;
+  
+      // 마이크 시작될 때마다 기본 상태/변수 초기화
+      r.onstart = () => {
+        finalRef.current = "";
+        interimRef.current = "";
         setRecognizedText("");
         setInterimText("");
-        setPhase("noVoice");
-    } else {
-        setRecognizedText(captured);
+        setPhase("listening"); // 주황 버튼
+      };
+  
+      r.onresult = (evt) => {
+        let interim = "";
+        for (let i = evt.resultIndex; i < evt.results.length; i++) {
+          const phrase = evt.results[i][0].transcript;
+          if (evt.results[i].isFinal) {
+            finalRef.current += phrase;
+          } else {
+            interim += phrase;
+          }
+        }
+        interimRef.current = interim;
+        setInterimText(interim);
+      };
+  
+      // 에러: 권한 거부/장치 문제 등
+      r.onerror = (e) => {
+        console.error("SpeechRecognition error:", e);
+        setRecognizedText("");
         setInterimText("");
-        setPhase("done");
-    }
-
-    setClicked(false);
-  };
-
-  const goBack = () => {
-    if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate("/food-feedback/check");
-    }
-  };
-
-  const onNotMatch = () => {
-    startListening();
-  };
-
-  const onMatch = () => {
-    // ❌TODO: API 연동 자리 + 경로수정
-    console.log("[TO-BE-SENT] recognizedText:", recognizedText);
-    navigate("/food-feedback/forwarding");
-  };
+        setPhase("noVoice"); // 회색
+      };
+  
+      // 종료: 버튼으로 멈춘 경우만 결과 확정
+      r.onend = () => {
+        if (stoppedByClickRef.current) {
+          const captured = (finalRef.current || interimRef.current || "").trim();
+          if (!captured || isInvalidRecognized(captured)) {
+            setRecognizedText("");
+            setInterimText("");
+            setPhase("noVoice");
+          } else {
+            setRecognizedText(captured);
+            setInterimText("");
+            setPhase("done");
+          }
+          stoppedByClickRef.current = false; // 다음 라운드 대비 리셋
+        }
+      };
+  
+      recogRef.current = r;
+  
+      // 권한 확인/요청 후 자동 시작
+      (async () => {
+        try {
+          const canQuery = !!(navigator.permissions?.query);
+          let state = "prompt";
+          if (canQuery) {
+            const perm = await navigator.permissions.query({ name: "microphone" });
+            state = perm.state; // 'granted' | 'denied' | 'prompt'
+          }
+          if (state === "denied") {
+            setPhase("noVoice");
+            return;
+          }
+          if (state !== "granted") {
+            // 권한 요청
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            stream.getTracks().forEach((t) => t.stop());
+          }
+          startListening();
+        } catch (err) {
+          console.error("Mic permission error:", err);
+          setPhase("noVoice");
+        }
+      })();
+  
+      // 언마운트 시 안전 종료
+      return () => {
+        try { r.stop(); } catch {}
+      };
+    }, [SR]);
+  
+    // 인식 시작
+    const startListening = () => {
+      if (!SR) {
+        alert("이 브라우저는 음성 인식을 지원하지 않습니다. (Chrome 권장)");
+        return;
+      }
+      try {
+        recogRef.current?.start();
+      } catch (e) {
+        console.warn(e);
+      }
+    };
+  
+    // 무효 문구 필터(placeholder 등)
+    const isInvalidRecognized = (t) => {
+      const s = String(t || "").replace(/\s+/g, "").replace(/\u2026/g, "...").toLowerCase();
+      return (
+        !s ||
+        s.includes("인식중") ||
+        s.includes("인식실패") ||
+        s.includes("인식되지않음") ||
+        s.includes("listening") ||
+        s.includes("recognizing")
+      );
+    };
+  
+    // 마이크 버튼
+    const onMicClick = async () => {
+      if (clicked) return;
+      setClicked(true);
+  
+      try {
+        if (phase !== "listening") {
+          // 새 라운드 시작
+          startListening();
+        } else {
+          // 현재 듣는 중이면 stop → 결과 확정
+          recogRef.current?.stop();
+          await sleep(180);
+  
+          const captured = (finalRef.current || interimText || "").trim();
+          if (isInvalidRecognized(captured)) {
+            setRecognizedText("");
+            setInterimText("");
+            setPhase("noVoice");
+          } else {
+            setRecognizedText(captured);
+            setInterimText("");
+            setPhase("done");
+          }
+        }
+      } finally {
+        setClicked(false);
+      }
+    };
+  
+    const goBack = () => {
+      if (window.history.length > 1) {
+        navigate(-1);
+      } else {
+        navigate(`/food-feedback/check/${orderId}`);
+      }
+    };
+  
+    const onNotMatch = () => {
+      // 결과가 마음에 안 들면 재시작
+      setRecognizedText("");
+      setInterimText("");
+      startListening();
+    };
+  
+    const onMatch = () => {
+      // 다음 화면으로 이동 + 음성 텍스트 전달
+      const text = (recognizedText || interimText || "").trim();
+      navigate(`/food-feedback/forwarding/${orderId}`, {
+        state: {
+          initial_label: 'GOOD',
+          source: 'VOICE',
+          text,
+        },
+      });
+    };
 
   // 상태별 문구/버튼 색
   const { title, top, btnClass } = (() => {

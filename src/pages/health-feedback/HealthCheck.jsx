@@ -1,18 +1,29 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const HealthCheck = () => {
     const navigate = useNavigate();
+    const { orderId } = useParams();
+
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const handleDone = () => {
-        if (selected === 'yes') {
-          console.log("아무 문제 없어요");
-            // 여기에 서버 전송 / API 호출 로직
-          navigate('/health-feedback/feeling-check');
-        }
-        if (selected === 'no') navigate('/health-feedback/health-check/voice');
+      if (!orderId) {
+        console.warn('orderId가 없습니다. 라우트 파라미터로 전달하세요.');
+        return;
+      }
+
+      if (selected === 'yes') {
+        navigate(`/health-feedback/feeling-check/${orderId}`, {
+            state: {
+                initial_label: 'GOOD',
+            },
+        });
+      }
+      if (selected === 'no') {
+        navigate(`/health-feedback/health-check/voice/${orderId}`);
+      }
     };
 
     return(

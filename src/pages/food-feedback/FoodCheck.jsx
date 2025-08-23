@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FoodCheck = () => {
     const navigate = useNavigate();
+    const { orderId } = useParams();
     const [selected, setSelected] = useState(null); // 'yes' | 'no'
 
     const handleDone = () => {
-        if (selected === 'yes') navigate('/food-feedback/satisfaction');
-        if (selected === 'no') navigate('/food-feedback/complaint');
+        if (selected === 'yes') navigate(`/food-feedback/satisfaction/${orderId}`);
+        if (selected === 'no') navigate(`/food-feedback/complaint/${orderId}`);
     };
 
     return(

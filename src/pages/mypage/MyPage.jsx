@@ -1,32 +1,31 @@
 import "../../assets/styles/mypage.css";
 
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import api from "../../api";
 
 export default function MyPage() {
     const navigate = useNavigate();
-    const [user, setUser] = useState({
-        id: 2,
-        disease_id: [1, 2],
-    });
-
-    /*
-    useEffect(() => {
-        const storedUser = JSON.parse(localStorage.getItem('user'));
-        setUser(storedUser);
-    }, []);
-    */
+    
+    const user = JSON.parse(localStorage.getItem("user"));
 
     const handleEditDisease = () => {
-        const user_id = 2;
         navigate("/health-status", {
             state: {
                 editMode: true,
-                id: user_id,
-                currentDiseases: user.disease_id
+                currentDiseases: user?.disease_id || []
             }
         });
+    };
+
+    const handleLogout = async () => {
+        try {
+            await api.post(`/api/accounts/logout/`);
+            localStorage.removeItem("user");
+            localStorage.removeItem("accessToken");
+            navigate("/landing-page/black");
+        } catch (error) {
+            console.error("로그아웃 실패:", error);
+        }
     };
 
     return (
@@ -53,7 +52,7 @@ export default function MyPage() {
                 <div className='mypage-container2'>
                     <div className='mypage-text'>고객지원</div>
                     <MyPageButton text="이용약관" />
-                    <MyPageButton text="로그아웃" />
+                    <MyPageButton text="로그아웃" onClick={handleLogout} />
                     <MyPageButton 
                         text="탈퇴하기"
                         style={{

@@ -28,6 +28,11 @@ export default function Home() {
         }
     }, [currentSection]);
 
+    const handleCategoryClick = (categoryValue) => {
+        console.log("선택된 카테고리:", categoryValue);
+        navigate(`/search/result?category=${categoryValue}`);
+    }
+
     return (
         <>
             <div className='Home-container1'>
@@ -56,25 +61,25 @@ export default function Home() {
 
             <div className='Home-container3'>
                 <div className='home-menu'>
-                    <button className='menu-button'>
+                    <button className='menu-button' onClick={() => handleCategoryClick("0")}>
                         <img src='/icons/menu1.svg' width={66}></img>
                     </button>
                     <div className='menu-name'>국 · 찌개</div>
                 </div>
                 <div className='home-menu'>
-                    <button className='menu-button'>
+                    <button className='menu-button' onClick={() => handleCategoryClick("1")}>
                         <img src='/icons/menu2.svg' width={66}></img>
                     </button>
                     <div className='menu-name'>밥</div>
                 </div>
                 <div className='home-menu'>
-                    <button className='menu-button'>
+                    <button className='menu-button' onClick={() => handleCategoryClick("2")}>
                         <img src='/icons/menu3.svg' width={66}></img>
                     </button>
-                    <div className='menu-name'>국</div>
+                    <div className='menu-name'>죽</div>
                 </div>
                 <div className='home-menu'>
-                    <button className='menu-button'>
+                    <button className='menu-button' onClick={() => handleCategoryClick("3")}>
                         <img src='/icons/menu4.svg' width={66}></img>
                     </button>
                     <div className='menu-name'>반찬</div>

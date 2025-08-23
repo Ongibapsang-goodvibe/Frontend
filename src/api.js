@@ -1,12 +1,15 @@
-import axios from 'axios';
+import axios from "axios";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE,
 });
 
+// 요청할 때 매번 localStorage에서 토큰 가져오기
 api.interceptors.request.use((config) => {
-    const t = import.meta.env.VITE_DEV_TOKEN;
-    if (t) config.headers.Authorization = `Token ${t}`;
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+        config.headers.Authorization = `Token ${token}`;
+    }
     return config;
 });
 

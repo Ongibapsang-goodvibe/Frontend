@@ -11,17 +11,20 @@ export default function Payment() {
     const location = useLocation();
     const menuData = location.state?.menu || {};
 
+    console.log(menuData);
+
     const [selectedPayment, setSelectedPayment] = useState("cash");
     const [specialRequest, setSpecialRequest] = useState("");
     const [deliveryOption, setDeliveryOption] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [priceDetail, setPriceDetail] = useState({
+        order_amount: menuData.price || 0,
+        delivery_fee: menuData.deliveryFee ?? menuData.delivery_fee ?? 0,
+        small_order_fee: menuData.price < 10000 ? 500 : 0,
+        total: (menuData.price || 0) + (menuData.deliveryFee ?? menuData.delivery_fee ?? 0) + (menuData.price < 10000 ? 500 : 0)
+    });
     const dropdownRef = useRef(null);
-
-    const menuPrice = menuData.price || 0;
-    const deliveryFee = menuData.deliveryFee ?? menuData.delivery_fee ?? 0;
-    const deliveryTime = menuData.deliverTime ?? menuData.delivery_time ?? 30;
-    const extraFee = menuPrice < 10000 ? 500 : 0; 
-    const totalPayment = menuPrice + deliveryFee + extraFee;
 
     const deliveryOptions = [
         "도착하면 전화해주세요.",
@@ -30,6 +33,14 @@ export default function Payment() {
         "문 앞에 놔주세요.(초인종 O)",
         "문 앞에 놔주세요.(초인종 X)"
     ];
+
+    const deliveryMap = {
+        "도착하면 전화해주세요.": "call",
+        "도착하면 문자해주세요.": "text",
+        "직접 받을게요.(부재시 문 앞)": "in_person",
+        "문 앞에 놔주세요.(초인종 O)": "bell",
+        "문 앞에 놔주세요.(초인종 X)": "no_bell"
+    };
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -44,28 +55,49 @@ export default function Payment() {
     }, []);
 
     const handlePayment = async () => {
-        console.log("menuData:", menuData)
         const menuId = menuData.menu_id;
-        if (!menuId) {
-            alert("메뉴 정보가 없습니다.");
+        const restaurantId = menuData.restaurant_id;
+        if (!menuId || !restaurantId) {
+            alert("메뉴 또는 식당 정보가 없습니다.");
             return;
         }
 
-        try {
-            const res = await api.post("/api/orders/make/", { menu_id: menuId });
-            console.log("백엔드 응답 주문 데이터:", res.data);
+        setLoading(true);
 
-            // 주문 완료 후 request 페이지로 이동
+        const body = {
+            menu_id: menuId,
+            restaurant_request: specialRequest || "",
+            delivery_request: deliveryMap[deliveryOption] || "call",
+            payment_method: selectedPayment
+        };
+
+        try {
+            const res = await api.post("/api/orders/make/", body);
+
+            console.log({ restaurant_id: Number(restaurantId), menu_id: Number(menuId) });
+            const outputRes = await api.get("/api/orders/orderoutput/", {
+                params: {
+                restaurant_id: menuData.restaurant_id,
+                menu_id: menuData.menu_id
+                }
+            });
+
+            const { order_amount, delivery_fee, small_order_fee, total, eta_text } = outputRes.data;
+
+            setPriceDetail({ order_amount, delivery_fee, small_order_fee, total });
+
             navigate("/order/request", {
                 state: {
                     order: res.data,
-                    totalPayment,
-                    deliveryTime: menuData.deliveryTime || menuData.delivery_time || 30
+                    totalPayment: total,
+                    deliveryTime: eta_text
                 }
             });
         } catch (err) {
             console.error("주문 실패:", err.response?.data || err.message);
             alert("주문에 실패했습니다.");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -153,27 +185,27 @@ export default function Payment() {
         <div className="price-summary">
             <div className="ps">
                 <h5>주문 금액</h5>
-                <h4>{menuPrice.toLocaleString()}원</h4>
+                <h4>{priceDetail.order_amount.toLocaleString()}원</h4>
             </div>
             <div className='ps'>
                 <h5>+ 배달 금액</h5>
-                <h4>{deliveryFee.toLocaleString()}원</h4>
+                <h4>{priceDetail.delivery_fee.toLocaleString()}원</h4>
             </div>
             <div className='ps'>
                 <h5>+ 만원 미만 주문 수수료</h5>
-                <h4>{extraFee.toLocaleString()}원</h4>
+                <h4>{priceDetail.small_order_fee.toLocaleString()}원</h4>
             </div>
 
             <div className='bar'></div>
 
             <div className="total">
                 <h6>결제금액</h6>
-                <h1>{totalPayment.toLocaleString()}원</h1>
+                <h1>{priceDetail.total.toLocaleString()}원</h1>
             </div>
         </div>
 
         <div className='pmbt'>
-                <button className="pay-button" onClick={handlePayment}>{totalPayment.toLocaleString()}원 결제하기</button>
+                <button className="pay-button" onClick={handlePayment}>{priceDetail.total.toLocaleString()}원 결제하기</button>
         </div>
 
     </div>

@@ -20,51 +20,72 @@ export default function SearchResult() {
     const [selectedIdx, setSelectedIdx] = useState(null);
 
     useEffect(() => {
-        if (results && results.length > 0) {
-            // MenuText
-            setMenuList(results);
-            setLoading(false);
-        } else if (category) {
-            // 카테고리 GET
-            api.get(`/api/restaurants/menus/?category=${category}`)
+        setLoading(true);
+
+        console.log("카테고리:", category);
+        console.log("검색 쿼리:", searchQuery);
+        console.log("추천 메뉴:", recommendedMenu);
+
+        if(category) {
+            //메뉴 카테고리 GET
+            console.log("카테고리 검색:", category);
+            api.get(`/api/restaurants/menus/?category=${String(category)}`)
+
             .then(res => {
+                console.log("카테고리 응답 데이터:", res.data);
                 setMenuList(res.data.cards || []);
                 setLoading(false);
             })
             .catch(err => {
-                console.error(err);
+                console.error('카테고리 메뉴 리스트 로드 실패:', err);
                 setMenuList([]);
                 setLoading(false);
             });
-        } else if (recommendedMenu?.trim()) {
-            // 추천 메뉴 POST
-            api.post("/api/restaurants/search/", { text: recommendedMenu, limit: 10 })
-            .then(res => {
-                setMenuList(res.data.stage === "menu" ? res.data.cards || [] : []);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error(err);
+        }
+        else if (recommendedMenu) {
+            //메뉴 추천 POST
+            if(recommendedMenu.trim() !== "") {
+                api.post("/api/restaurants/search/", { text: recommendedMenu, limit: 10 })
+                .then(res => {
+                    console.log("추천 메뉴 응답 데이터:", res.data);
+                    const menus = res.data.stage === "menu" ? res.data.cards || [] : [];
+                    setMenuList(menus);
+                    setLoading(false);
+                })
+                .catch(err => {
+                    console.error('추천 메뉴 로드 실패:', err);
+                    setMenuList([]);
+                    setLoading(false);
+                });
+            } else {
+                console.warn("추천 메뉴 값이 비어있음");
                 setMenuList([]);
                 setLoading(false);
-            });
-        } else if (searchQuery?.trim()) {
-            // 검색어 POST
+            }
+        } 
+        else if (searchQuery && searchQuery !== "") {
+            //검색 POST
             api.post("/api/restaurants/search/", { text: searchQuery, limit: 10 })
             .then(res => {
-                setMenuList(res.data.stage === "menu" ? res.data.cards || [] : []);
+                console.log("검색 응답 데이터:", res.data);
+                const menus = res.data.stage === "menu" ? res.data.cards || [] : [];
+                setMenuList(menus);
                 setLoading(false);
             })
             .catch(err => {
-                console.error(err);
+                console.error('검색 메뉴 로드 실패:', err);
                 setMenuList([]);
                 setLoading(false);
             });
-        } else {
+        } 
+        // 아무 것도 없으면 빈 리스트
+        else {
+            console.log("검색 조건 없음, 빈 리스트로 설정");
             setMenuList([]);
             setLoading(false);
         }
-    }, [results, category, recommendedMenu, searchQuery]);
+
+    }, [category, searchQuery, recommendedMenu]);
 
     if (loading) return <div>로딩 중...</div>;
     if (!menuList.length) return <div>메뉴가 없습니다.</div>;

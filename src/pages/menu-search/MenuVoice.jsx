@@ -184,7 +184,9 @@ const MenuVoice = () => {
 
       if (Array.isArray(list) && list.length > 0) {
         // 검색 결과 페이지로 이동 (프엔 라우팅)
-        navigate(`/menu/search/result?q=${encodeURIComponent(captured)}&source=voice`);
+        navigate("/menu/search/result", {
+          state: { results: list, q: captured, stage: "menu" }
+        });
       } else {
         setPhase("noResult");
       }

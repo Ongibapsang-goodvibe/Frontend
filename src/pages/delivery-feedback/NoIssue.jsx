@@ -6,33 +6,57 @@ import api from '../../api';
 const REVIEWS_URL = '/api/deliveryreview/logs/';
 
 const NoIssue = () => {
-    const { orderId } = useParams();
-    const postedRef = useRef(false);
+  const { orderId } = useParams();
+  const postedRef = useRef(false);
 
-    useEffect(() => {
-      if (!orderId) {
-        console.warn('orderId가 없습니다.');
-        return;
-      }
-      if (postedRef.current) return;
-      postedRef.current = true;
+  useEffect(() => {
+    // orderId 없으면 홈으로
+    if (!orderId) {
+      navigate('/', { replace: true });
+      return;
+    }
+    // 중복 POST 방지
+    if (postedRef.current) return;
+    postedRef.current = true;
 
-      (async () => {
-        try {
+    let timer;
+
+    (async () => {
+      try {
+        const base = {
+          initial_label: 'BAD',
+          source: state?.source ?? 'BUTTON',
+          order: Number(orderId),
+        };
+
+        if (base.source === 'VOICE') {
           await api.post(REVIEWS_URL, {
-            initial_label: 'GOOD',
-            source: 'BUTTON',
-            order: Number(orderId),
-            option: 1,
-            option_label: '',
+            ...base,
+            text: (state?.text ?? '').trim(),
+          });
+        } else {
+          const optId = Number(state?.option);
+          await api.post(REVIEWS_URL, {
+            ...base,
+            option: optId,
+            option_label: LABELS[optId] ?? '',
             text: '',
           });
-        } catch (e) {
-          console.error('GOOD 리뷰 저장 실패:', e);
         }
-      })();
-    }, [orderId]);
+      } catch (e) {
+        console.error('이슈 리뷰 저장 실패:', e);
+      } finally {
+        // 저장 시도 끝난 뒤 5초 타이머 시작
+        timer = setTimeout(() => {
+          navigate('/home', { state: { from: 'food' }, replace: true });
+        }, 5000);
+      }
+    })();
 
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [orderId, state, navigate]);
 
     return(
         <>

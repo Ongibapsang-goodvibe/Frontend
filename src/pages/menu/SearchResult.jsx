@@ -24,6 +24,7 @@ export default function SearchResult() {
         if(category) {
             console.log("카테고리 검색:", category);
             api.get(`/api/restaurants/menus/?category=${String(category)}`)
+
             .then(res => {
                 console.log("응답 데이터:", res.data);
                 setMenuList(res.data.cards || []);

@@ -2,6 +2,7 @@ import "../../assets/styles/Home.css";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from '../../api';
+import formatDeliveryTime from '../../components/FormatDeliveryTime';
 
 export default function Home() {
     console.log("토큰:", localStorage.getItem("token"));
@@ -33,10 +34,10 @@ export default function Home() {
     // 섹션 전환 (wait → delivery)
     useEffect(() => {
         if (section === 'wait') {
-            const timer = setTimeout(() => setSection('delivery'), 5000);
+            const timer = setTimeout(() => setSection('delivery'), (deliveryTime || 1800) * 1000); 
             return () => clearTimeout(timer);
         }
-    }, [section]);
+    }, [section, deliveryTime]);
 
     // 카테고리 클릭
     const handleCategoryClick = (categoryValue) => {
@@ -49,7 +50,7 @@ export default function Home() {
         default: <SectionDefault user={user} />,
         wait: <SectionWait deliveryTime={deliveryTime || 30} />,
         delivery: <SectionDelivery navigate={navigate} orderId={orderId}/>,
-        food: <SectionFood navigate={navigate} />
+        food: <SectionFood navigate={navigate} orderId={orderId}/>
     };
 
     return (
@@ -113,7 +114,7 @@ function SectionWait({ deliveryTime }) {
     return (
         <>
             <div className='q'>
-                <div className='nickname'>약 {deliveryTime}분 뒤</div>
+                <div className='nickname'>약 {formatDeliveryTime(deliveryTime)} 뒤</div>
                 <div className='q1'>에</div>
             </div>
             <div className='q1'>음식이 도착합니다.</div>

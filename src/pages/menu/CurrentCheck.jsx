@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import "../../assets/styles/SearchResult.css";
 import "../../assets/styles/CurrentOrder.css";
 import api from '../../api';
+import formatDeliveryTime from '../../components/FormatDeliveryTime';
 
 export default function CurrentCheck() {
     const navigate = useNavigate();
@@ -41,7 +42,8 @@ export default function CurrentCheck() {
                     <div className='menu-bar' style={{ backgroundColor: "#fff" }}></div>
                     <div className='menu-delivery'>
                         <div className='menu-delivery-text1' style={{ color: "#fff" }}>배달시간</div>
-                        <div className='menu-delivery-text2' style={{ color: "#fff" }}>{menu.deliveryTime ? `${menu.deliveryTime.toLocaleString()}분` : "정보 없음"}</div>
+                        <div className='menu-delivery-text2' style={{ color: "#fff" }}>{menu.deliveryTime ? formatDeliveryTime(menu.deliveryTime) : "정보 없음"
+}</div>
                     </div>
                 </div>
             </div>

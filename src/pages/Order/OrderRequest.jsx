@@ -12,8 +12,8 @@ export default function OrderRequest() {
 
     const timerRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
-    const { orderId, order, totalPayment, deliveryTime } = location.state || {};
-    console.log("홈에서 받은 orderId:", orderId);
+    const { order, totalPayment, deliveryTime } = location.state || {};
+
     console.log("OrderRequest로 넘어온 deliveryTime:", deliveryTime);
     const startTimer = () => {
         timerRef.current = setTimeout(() => {

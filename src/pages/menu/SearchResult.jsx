@@ -108,7 +108,7 @@ function MenuCard({ menu, isSelected, onClick }) {
         <div className={`menu-container ${isSelected ? "selected" : ""}`} onClick={onClick}>
             <div className='menu-card'>
                 <div className='menu-pic'>
-                    <img src={menu.image_url || "/images/default-menu.png"} alt={menu.menu_name} width={101} height={133}></img>
+                    <img src={menu.image_url || "/images/food1.png"} alt={menu.menu_name} width={101} height={133}></img>
                     {isSelected && <div className="overlay">선택됨</div>}
                 </div>
                 <div className='menu-review-detail'>

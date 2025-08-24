@@ -4,7 +4,6 @@ import DOWN from "../../../public/icons/down.svg";
 
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-
 import api from '../../api';
 
 export default function Payment() {
@@ -19,8 +18,9 @@ export default function Payment() {
     const dropdownRef = useRef(null);
 
     const menuPrice = menuData.price || 0;
-    const deliveryFee = menuData.delivery_fee || 0;
-    const extraFee = menuPrice < 10000 ? 500 : 0; // 만원 미만 수수료
+    const deliveryFee = menuData.deliveryFee ?? menuData.delivery_fee ?? 0;
+    const deliveryTime = menuData.deliverTime ?? menuData.delivery_time ?? 30;
+    const extraFee = menuPrice < 10000 ? 500 : 0; 
     const totalPayment = menuPrice + deliveryFee + extraFee;
 
     const deliveryOptions = [
@@ -44,27 +44,30 @@ export default function Payment() {
     }, []);
 
     const handlePayment = async () => {
-    if (!menuData.menu_id) {
-        alert("메뉴 정보가 없습니다.");
-        return;
-    }
+        console.log("menuData:", menuData)
+        const menuId = menuData.menu_id;
+        if (!menuId) {
+            alert("메뉴 정보가 없습니다.");
+            return;
+        }
 
-    try {
-        const res = await api.post("/api/orders/make/", { menu_id: menuData.menu_id });
-        console.log("주문 완료:", res.data);
-        // 주문 완료 후 request 페이지로 이동
-        navigate("/order/request", {
-            state: {
-                order: res.data,
-                totalPayment,
-                deliveryTime: menuData.delivery_time || 30
-            }
-        });
-    } catch (err) {
-        console.error("주문 실패:", err.response?.data || err.message);
-        alert("주문에 실패했습니다.");
-    }
-};
+        try {
+            const res = await api.post("/api/orders/make/", { menu_id: menuId });
+            console.log("백엔드 응답 주문 데이터:", res.data);
+
+            // 주문 완료 후 request 페이지로 이동
+            navigate("/order/request", {
+                state: {
+                    order: res.data,
+                    totalPayment,
+                    deliveryTime: menuData.deliveryTime || menuData.delivery_time || 30
+                }
+            });
+        } catch (err) {
+            console.error("주문 실패:", err.response?.data || err.message);
+            alert("주문에 실패했습니다.");
+        }
+    };
 
     return (
         <div className='Wrapper-payment'>

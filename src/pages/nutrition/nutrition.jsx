@@ -46,7 +46,8 @@ export default function Nutrition() {
                         <NutritionCard
                             key={disease}
                             disease={disease}
-                            aiFeedback={data[disease].ai_feedback}
+                            aiFeedback1={data[disease].ai_feedback_1}
+                            aiFeedback2={data[disease].ai_feedback_2}
                         />
                     ))}
                     
@@ -103,13 +104,13 @@ export default function Nutrition() {
     );
 }
 
-function NutritionCard({ disease, aiFeedback }) {
+function NutritionCard({ disease, aiFeedback1, aiFeedback2 }) {
     return (
         <>
         <div className='nutrition-card'>
             <div className='nutrition-name'>{disease}</div>
-            <div className='nutrition-comment'>탄수화물과 당분 조절이 필요해요.</div>
-            <div className='nutrition-warn'>⚠️ {aiFeedback}</div>
+            <div className='nutrition-comment'>{aiFeedback1}</div>
+            <div className='nutrition-warn'>⚠️ {aiFeedback2}</div>
             <div className='nutrition-good'>✓ 나머지는 다 잘하고 계세요.</div>
         </div>
         </>

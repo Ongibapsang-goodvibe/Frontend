@@ -13,10 +13,16 @@ export default function OrderRequest() {
     const timerRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
     const { order, totalPayment, deliveryTime } = location.state || {};
-
+    console.log("OrderRequest로 넘어온 deliveryTime:", deliveryTime);
     const startTimer = () => {
         timerRef.current = setTimeout(() => {
-            navigate("/order/completed", { state: { order, totalPayment, deliveryTime } });
+            navigate("/order/completed", {
+                state: {
+                    menu: order.menu,
+                    totalPayment,
+                    deliveryTime,
+                }
+            });
         }, 5000);
     };
 

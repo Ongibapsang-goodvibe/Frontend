@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import "../../assets/styles/SearchResult.css";
 import "../../assets/styles/CurrentOrder.css";
@@ -8,12 +8,13 @@ import api from '../../api';
 export default function CurrentCheck() {
     const navigate = useNavigate();
     const location = useLocation();
-    const menu = location.state?.menu;
+    const { menu } = location.state || {};
+    console.log("넘겨받은 주문:", menu);
 
     if (!menu) {
         return <div>선택된 메뉴가 없습니다.</div>;
     }
-
+    
     return (
         <>
         <div className='Wrapper-current'>
@@ -35,12 +36,12 @@ export default function CurrentCheck() {
                 <div className='menu-delivery-card' style={{ backgroundColor: "#424242", height: 47 }}>
                     <div className='menu-fee'>
                         <div className='menu-fee-text1' style={{ color: "#fff" }}>배달비</div>
-                        <div className='menu-fee-text2'>{menu.fee ? `${menu.fee.toLocaleString()}원` : "정보 없음"}</div>
+                        <div className='menu-fee-text2'>{menu.deliveryFee ? `${menu.deliveryFee.toLocaleString()}원` : "정보 없음"}</div>
                     </div>
                     <div className='menu-bar' style={{ backgroundColor: "#fff" }}></div>
                     <div className='menu-delivery'>
                         <div className='menu-delivery-text1' style={{ color: "#fff" }}>배달시간</div>
-                        <div className='menu-delivery-text2' style={{ color: "#fff" }}>{menu.deliveryTime ? `${menu.deliveryTime.toLocaleString()}원` : "정보 없음"}</div>
+                        <div className='menu-delivery-text2' style={{ color: "#fff" }}>{menu.deliveryTime ? `${menu.deliveryTime.toLocaleString()}분` : "정보 없음"}</div>
                     </div>
                 </div>
             </div>
@@ -51,7 +52,10 @@ export default function CurrentCheck() {
                 </button>
                 <button
                     className='choose'
-                    onClick={() => navigate("/order/payment")}
+                    onClick={() => {
+                        console.log("CurrentCheck에서 Payment로 넘길 menu:", menu);
+                        navigate("/order/payment", { state: { menu } });
+                    }}
                 >
                     <div className='choosetext'>네</div>
                 </button>

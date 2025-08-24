@@ -44,6 +44,7 @@ export default function Home() {
         default: <SectionDefault user={user} />,
         wait: <SectionWait deliveryTime={deliveryTime || 30} />,
         delivery: <SectionDelivery navigate={navigate} />,
+        food: <SectionFood navigate={navigate} />
     };
 
     return (
@@ -120,7 +121,24 @@ function SectionDelivery({ navigate }) {
         <>
             <div className='bobby-comment'>
                 <div className='bobby-ment'>배달 잘 받으셨나요?</div>
-                <button className='bobby-button' onClick={() => navigate("/delivery-feedback/check")}>
+                <button className='bobby-button' onClick={() => navigate("/delivery-feedback/check:orderId")}>
+                    <div className='answer-text'>눌러서 답하기</div>
+                    <img src='/icons/ment.svg' width={6} alt="ment"/>
+                </button>
+            </div>
+            <div className='polygon'>
+                <img src='/icons/polygon.svg' width={25.0264} alt="polygon"/>
+            </div>
+        </>
+    );
+}
+
+function SectionFood({ navigate }) {
+    return (
+        <>
+            <div className='bobby-comment'>
+                <div className='bobby-ment'>식사 잘 하셨나요?</div>
+                <button className='bobby-button' onClick={() => navigate("/food-feedback/check:orderId")}>
                     <div className='answer-text'>눌러서 답하기</div>
                     <img src='/icons/ment.svg' width={6} alt="ment"/>
                 </button>

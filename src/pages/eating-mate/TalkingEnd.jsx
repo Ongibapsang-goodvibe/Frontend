@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import api from '../../api';
 
 const TalkingEnd = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  // 페이지 진입 시 한 번만 대화 종료 API 호출
+  useEffect(() => {
+    const endChat = async () => {
+      try {
+        await api.post('/api/chat/end-chat/'); // 바디 없이 POST, 토큰은 인터셉터로 자동 첨부
+      } catch (e) {
+        console.error('end_chat 실패:', e?.response?.data || e.message);
+      }
+    };
+    endChat();
+  }, []);
+
 
     return(
         <>

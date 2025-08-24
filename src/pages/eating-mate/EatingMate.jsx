@@ -50,7 +50,7 @@ const UI = {
   [STATES.SPEAKING]: {
     heading: (
       <>
-        바비의 말이<EmOrange>끝나면</EmOrange><br />말씀해주세요.
+        바비의 말이<EmOrange> 끝나면</EmOrange><br />말씀해주세요.
       </>
     ),
     status: <>바비가 말하는 중 …</>,
@@ -71,15 +71,28 @@ export default function EatingMate() {
   const chunksRef = useRef([]);
   const stopTimerRef = useRef(null);
 
+  const isActiveRef = useRef(true);   // 대화 진행 여부 플래그
+  const ttsDoneRef = useRef(false);   // TTS 종료 핸들러 1회 보장
+  const ttsTimerRef = useRef(null);   // TTS 안전 타이머
+
   // 페이지 진입시 무조건 IDLE로 리셋 + 언마운트 정리
   useEffect(() => {
     setState(STATES.IDLE);
     return () => {
+      isActiveRef.current = false;
+      clearTtsTimer();              // 언마운트 시 타이머 정리
       cleanupAudio();
       cleanupRecorder(true);
       clearStopTimer();
     };
   }, []);
+
+  const clearTtsTimer = () => {
+    if (ttsTimerRef.current) {
+      clearTimeout(ttsTimerRef.current);
+      ttsTimerRef.current = null;
+    }
+  };
 
   const clearStopTimer = () => {
     if (stopTimerRef.current) {
@@ -91,7 +104,12 @@ export default function EatingMate() {
   const stopCurrentAudio = () => {
     const a = audioRef.current;
     if (a) {
-      try { a.pause(); } catch {}
+      try {
+        clearTtsTimer();            // 오디오 멈출 때 타이머도 정리
+        a.pause();
+        a.src = "";                 // 소스 제거
+        a.load?.();                 // 로딩 초기화(네트워크/디코딩 중단)
+      } catch {}
       audioRef.current = null;
     }
   };
@@ -117,6 +135,8 @@ export default function EatingMate() {
 
   // 🎤 녹음 시작 (IDLE → LISTENING)
   const startListening = async () => {
+    isActiveRef.current = true; // 혹시 이전 턴에서 false로 떨어져 있었으면 복구
+
     stopCurrentAudio();
     clearStopTimer();
 
@@ -141,7 +161,7 @@ export default function EatingMate() {
       setState(STATES.LISTENING);
       mr.start();
 
-      // UI 변경 없이 자동 종료 타이머(예: 5초) — 별도 UI 추가 없이 동작만
+      // UI 변경 없이 자동 종료 타이머(예: 5초)
       stopTimerRef.current = setTimeout(() => {
         stopListening();
       }, 5000);
@@ -174,19 +194,16 @@ export default function EatingMate() {
       }
 
       const formData = new FormData();
-      // 서버 예시가 mp3지만, 브라우저에선 webm/opus가 일반적입니다.
-      // 변환은 클라이언트에서 어렵기 때문에 파일명만 맞춰 주거나(간단 체크 우회),
-      // 백엔드에서 webm도 허용하도록 하세요.
-      // ⇒ Blob을 File로 래핑 + 일반적 필드명 'audio' 사용
+      // 브라우저에서는 webm/opus가 일반적 → File로 래핑 후 'audio' 필드로 전송
       const file = new File([audioBlob], "temp_audio.webm", {
         type: audioBlob.type || "audio/webm",
       });
       formData.append("audio", file);
 
       // Content-Type을 수동 지정하지 말 것(axios가 boundary 자동 설정)
-      const res = await api.post("/api/chat/process_audio/", formData);
+      const res = await api.post("/api/chat/process-audio/", formData);
 
-      const { audio_url } = res.data; // 예: "/media/response.mp3"
+      const { audio_url } = res.data; // 예: "/media/response.mp3" 또는 "uuid.mp3"
       if (!audio_url) throw new Error("오디오 URL이 없습니다.");
 
       await playTTS(audio_url);
@@ -201,26 +218,105 @@ export default function EatingMate() {
     setState(STATES.SPEAKING);
 
     try {
-      // 토큰 포함해서 blob으로 받기 (api 인스턴스가 Authorization 헤더 자동 부착)
-      // 상대경로가 올 수 있어 /api 접두사 및 끝 슬래시 보정
-      const fixedUrl = audioUrl.startsWith("http")
-        ? audioUrl
-        : `/api${audioUrl.replace(/\/+$/, "")}/`;
+      // 서버는 파일명만 내려줌 → /media/{uuid}.mp3 로 고정
+      const buildMediaUrl = (u) => {
+        if (!u) return null;
+        const fname = u.trim().split("/").filter(Boolean).pop(); // "xxxx.mp3" or "xxxx"
+        const ensured = fname.endsWith(".mp3") ? fname : `${fname}.mp3`;
+        return `/media/${ensured}`;
+      };
 
-      const res = await api.get(fixedUrl, { responseType: "blob" });
-      const blobUrl = URL.createObjectURL(res.data); // Blob -> 재생 URL
+      const finalUrl = buildMediaUrl(audioUrl);
 
-      const audio = new Audio(blobUrl);
+      // 절대 URL을 바로 재생
+      const base = (api.defaults.baseURL || "").replace(/\/$/, "");
+      const absUrl = import.meta.env.DEV
+        ? finalUrl                               // dev: /media/... → Vite 프록시가 대신 요청
+        : (finalUrl?.startsWith("http") ? finalUrl : `${base}${finalUrl}`);
+      const audio = new Audio(absUrl);
+      audio.preload = "auto";
+      try { audio.crossOrigin = "anonymous"; } catch {}
+
       audioRef.current = audio;
 
-      audio.addEventListener("ended", () => {
-        setState(STATES.LISTENING);
-        // 자동 재녹음
-        startListening();
-      });
-      audio.addEventListener("error", () => setState(STATES.IDLE));
+      // TTS 종료 → 다음 턴 시작을 1회만 보장하는 함수
+      ttsDoneRef.current = false;
+      const beginNextTurn = () => {
+        if (ttsDoneRef.current) return;
+        ttsDoneRef.current = true;
+        clearTtsTimer();  // 트리거되면 타이머 정리
 
-      await audio.play();
+        // ✅ UI 전환은 항상 수행 (대화 종료 상태여도 '말하기 종료' → '듣는 중' 반영)
+        setState(STATES.LISTENING);
+        // 자동 재녹음은 isActiveRef가 true일 때만
+        if (!isActiveRef.current) return;
+        setTimeout(() => {
+          startListening().catch(err =>
+            console.error("auto startListening failed:", err)
+          );
+        }, 0);
+          };
+
+      // 기본: ended 한 번만
+      audio.addEventListener("ended", beginNextTurn, { once: true });
+
+      // 보조1: 어떤 환경에선 ended 대신 pause만 끝에서 뜰 수 있음
+      audio.addEventListener("pause", () => {
+        const d = audio.duration;
+        if (Number.isFinite(d) && Math.abs(audio.currentTime - d) < 0.1) {
+          beginNextTurn();
+        }
+      });
+
+      // 보조2: timeupdate로 거의 끝에 도달했을 때도 트리거
+      audio.addEventListener("timeupdate", () => {
+        const d = audio.duration;
+        if (Number.isFinite(d) && d > 0 && audio.currentTime >= d - 0.2) {
+          beginNextTurn();
+        }
+      });
+
+      // 폴백 A: loadedmetadata가 떴을 때 duration 기반 타이머
+      audio.addEventListener("loadedmetadata", () => {
+        const d = audio.duration;
+        // 일부 환경에서 Infinity/NaN 이 나옴 → 안전값 사용
+        const ms = Number.isFinite(d) && d > 0 ? Math.ceil(d * 1000) + 600 : 15000;
+        clearTtsTimer();
+        ttsTimerRef.current = setTimeout(beginNextTurn, ms);
+      });
+
+      // 폴백 B: 네트워크 이슈로 ended가 누락될 때 대비
+      const networkEdgeToEnd = () => {
+        const d = audio.duration;
+        if (Number.isFinite(d) && d > 0 && audio.currentTime >= d - 0.15) {
+          beginNextTurn();
+        }
+      };
+      audio.addEventListener("stalled", networkEdgeToEnd);
+      audio.addEventListener("suspend", networkEdgeToEnd);
+      audio.addEventListener("waiting", networkEdgeToEnd);
+
+      // 폴백 C: 재생 시작 직후에도 "최종 하드 타이머" 한 겹 더
+      const armHardFallback = () => {
+        // 이미 메타기반 타이머가 있으면 유지, 없으면 18초 하드컷
+        if (!ttsTimerRef.current) {
+          ttsTimerRef.current = setTimeout(beginNextTurn, 18000);
+        }
+      };
+      audio.addEventListener("playing", armHardFallback, { once: true });
+
+      audio.addEventListener("error", () => {
+        console.error("오디오 재생 오류(event):", absUrl);
+        // 실패해도 다음 턴으로(듣기 상태 복귀)
+        beginNextTurn();
+      });
+
+      // 재생 정책/포맷 문제로 play()가 실패해도 다음 턴으로
+      await audio.play().catch(err => {
+        console.error("audio.play() 실패:", err?.name || err);
+        beginNextTurn();
+      });
+
     } catch (err) {
       console.error("오디오 재생 오류:", err);
       setState(STATES.IDLE);
@@ -258,6 +354,8 @@ export default function EatingMate() {
     } else {
       // 대화 종료: 리소스 정리 후 종료화면
       try {
+        isActiveRef.current = false;  // 이후 ended 콜백에서 재녹음 금지
+        stopCurrentAudio();           // 재생 중이면 즉시 멈춤
         clearStopTimer();
         cleanupAudio();
         cleanupRecorder(true);

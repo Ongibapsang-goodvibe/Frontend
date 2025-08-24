@@ -6,22 +6,26 @@ import api from '../../api';
 const REVIEWS_URL = '/api/healthcare/logs/';
 
 const LABELS = {
-    1 : 'GREAT', //최고예요!
-    2 : 'FINE', //괜찮아요
-    3 : 'SOSO', //그냥 그래요
-    4 : 'BAD', //안 좋아요
-    5 : 'TERRIBLE', //나빠요
+  1: 'GREAT',     // 최고예요!
+  2: 'FINE',      // 괜찮아요
+  3: 'SOSO',      // 그냥 그래요
+  4: 'BAD',       // 안 좋아요
+  5: 'TERRIBLE',  // 나빠요
 };
 
 const HealthForwarding = () => {
   const { orderId } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
+
   const postedRef = useRef(false);
+  const timerRef = useRef(null); // ← 타이머 ref 추가
 
   useEffect(() => {
-    // orderId 없으면 홈으로
-    if (!orderId) {
+    const derivedOrderId = Number(orderId);
+
+    // orderId 유효성(숫자) 확인
+    if (!Number.isInteger(derivedOrderId)) {
       navigate('/', { replace: true });
       return;
     }
@@ -33,27 +37,36 @@ const HealthForwarding = () => {
       try {
         const optId = Number(state?.option);
         await api.post(REVIEWS_URL, {
-          initial_label: state.initial_label,
-          order: Number(orderId),
+          initial_label: state?.initial_label,      // 없으면 백엔드 기본값 사용
+          order: derivedOrderId,
           text: state?.text ?? '',
-          mood_label: LABELS[optId] ?? '',
+          mood_label: LABELS[optId] ?? '',          // optId 없으면 빈 문자열
         });
       } catch (e) {
-        console.error('이슈 리뷰 저장 실패:', e);
+        console.error('건강 리뷰 저장 실패:', e?.response?.status, e?.response?.data ?? e);
+      } finally {
+        // 저장 성공/실패 관계없이 5초 후 홈으로 이동
+        timerRef.current = setTimeout(() => {
+          navigate('/home', { state: { from: 'health' }, replace: true });
+        }, 3000);
       }
     })();
+
+    // 언마운트 시 타이머 정리
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
   }, [orderId, state, navigate]);
 
-  return(
-      <>
-          <Wrapper>
-              <h1><span>모든</span> 답변이 끝났어요</h1>
-              <h2>답변이 보고서에 반영되었어요.</h2>
-              <p>*보호자 계정과 연결되어 있는 경우 <br />
-              보호자용 보고서에도 반영</p>
-              <img src="/images/LovelyImage.png" alt="하트뿅뿅 너구리" />
-          </Wrapper>
-      </>
+  return (
+    <>
+      <Wrapper>
+        <h1><span>모든</span> 답변이 끝났어요</h1>
+        <h2>답변이 보고서에 반영되었어요.</h2>
+        <p>*보호자 계정과 연결되어 있는 경우 <br />보호자용 보고서에도 반영</p>
+        <img src="/images/LovelyImage.png" alt="하트뿅뿅 너구리" />
+      </Wrapper>
+    </>
   );
 };
 

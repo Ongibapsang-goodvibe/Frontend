@@ -47,7 +47,7 @@ const HealthForwarding = () => {
       } finally {
         // 저장 성공/실패 관계없이 5초 후 홈으로 이동
         timerRef.current = setTimeout(() => {
-          navigate('/home', { state: { from: 'health' }, replace: true });
+          navigate('/home', { state: 'default', replace: true });
         }, 3000);
       }
     })();

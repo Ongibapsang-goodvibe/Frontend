@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import "../../assets/styles/Review.css";
 import "../../assets/styles/SearchResult.css";
 import api from "../../api";
+import formatDeliveryTime from '../../components/FormatDeliveryTime';
 
 export default function SearchResult() {
     const navigate = useNavigate();
@@ -130,7 +131,10 @@ function MenuCard({ menu, isSelected, onClick }) {
                 <div className='menu-bar' style={{ backgroundColor: isSelected ? "#fff" : "#252525" }}></div>
                 <div className='menu-delivery'>
                     <div className='menu-delivery-text1' style={{ color: isSelected ? "#fff" : "#252525" }}>배달시간</div>
-                    <div className='menu-delivery-text2' style={{ color: isSelected ? "#fff" : "#252525" }}>{menu.delivery_time ? menu.delivery_time + "분" : "30분"}</div>
+                    <div className='menu-delivery-text2' style={{ color: isSelected ? "#fff" : "#252525" }}>{menu.delivery_time
+    ? formatDeliveryTime(menu.delivery_time)
+    : "약 30분 뒤"
+}</div>
                 </div>
             </div>
         </div>

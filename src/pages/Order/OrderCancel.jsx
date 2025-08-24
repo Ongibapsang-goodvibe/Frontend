@@ -3,7 +3,6 @@ import "../../assets/styles/OrderCancel.css";
 import { useNavigate } from 'react-router-dom';
 
 export default function OrderCancel() {
-    const navigate = useNavigate();
 
     return (
         <>

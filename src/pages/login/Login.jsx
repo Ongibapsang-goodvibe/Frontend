@@ -37,14 +37,10 @@ const Login = () => {
         const data = res.data;
         
         // 3) 토큰 저장
+        // 로그인 성공 핸들러
         if (data?.token) {
-          const existingToken = localStorage.getItem("token");
-          if (!existingToken) {
-            localStorage.setItem("token", data.token);
-          } else {
-          // 기존 토큰 유지, 필요하면 갱신 여부 체크 가능
-          console.log("기존 토큰 유지:", existingToken);
-          }
+          localStorage.setItem("token", data.token);   // 무조건 갱신
+          // (JWT라면 refresh_token도 함께 저장)
         }
         // 4) 유저 정보 저장
         if (data?.user) {

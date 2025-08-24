@@ -23,6 +23,8 @@ const IssueForwarding = () => {
     if (postedRef.current) return;
     postedRef.current = true;
 
+    let timer;
+
     (async () => {
       try {
         const base = {
@@ -31,14 +33,12 @@ const IssueForwarding = () => {
           order: Number(orderId),
         };
 
-        // VOICE: option/option_label 없이 text만 보냄
         if (base.source === 'VOICE') {
           await api.post(REVIEWS_URL, {
             ...base,
             text: (state?.text ?? '').trim(),
           });
         } else {
-          // BUTTON: option 필수, option_label은 맵에서 라벨
           const optId = Number(state?.option);
           await api.post(REVIEWS_URL, {
             ...base,
@@ -49,8 +49,17 @@ const IssueForwarding = () => {
         }
       } catch (e) {
         console.error('이슈 리뷰 저장 실패:', e);
+      } finally {
+        // 저장 시도 끝난 뒤 5초 타이머 시작
+        timer = setTimeout(() => {
+          navigate('/home', { state: { from: 'food' }, replace: true });
+        }, 5000);
       }
     })();
+
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
   }, [orderId, state, navigate]);
 
   return(

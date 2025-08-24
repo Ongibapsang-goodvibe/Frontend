@@ -8,7 +8,8 @@ export default function Home() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { from, deliveryTime } = location.state || {};
+    const { from, deliveryTime, orderId } = location.state || {};
+    console.log("홈에서 받은 orderId:", orderId);
     
     // 사용자 정보 상태
     const [user, setUser] = useState({ username: "", district_name: "" });
@@ -116,12 +117,12 @@ function SectionWait({ deliveryTime }) {
     );
 }
 
-function SectionDelivery({ navigate }) {
+function SectionDelivery({ navigate, orderId }) {
     return (
         <>
             <div className='bobby-comment'>
                 <div className='bobby-ment'>배달 잘 받으셨나요?</div>
-                <button className='bobby-button' onClick={() => navigate("/delivery-feedback/check/:orderId")}>
+                <button className='bobby-button' onClick={() => navigate(`/delivery-feedback/check/${orderId}`)}>
                     <div className='answer-text'>눌러서 답하기</div>
                     <img src='/icons/ment.svg' width={6} alt="ment"/>
                 </button>
@@ -133,12 +134,12 @@ function SectionDelivery({ navigate }) {
     );
 }
 
-function SectionFood({ navigate }) {
+function SectionFood({ navigate, orderId }) {
     return (
         <>
             <div className='bobby-comment'>
                 <div className='bobby-ment'>식사 잘 하셨나요?</div>
-                <button className='bobby-button' onClick={() => navigate("/food-feedback/check/:orderId")}>
+                <button className='bobby-button' onClick={() => navigate(`/food-feedback/check/${orderId}`)}>
                     <div className='answer-text'>눌러서 답하기</div>
                     <img src='/icons/ment.svg' width={6} alt="ment"/>
                 </button>

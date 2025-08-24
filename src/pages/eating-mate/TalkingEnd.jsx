@@ -18,34 +18,35 @@ const TalkingEnd = () => {
     endChat();
   }, []);
 
+  return (
+    <Wrapper>
+      <h1>즐거운 대화였어요!<br />다음에 또 만나요.</h1>
 
-    return(
-        <>
-            <Wrapper>
-                <h1>즐거운 대화였어요!<br />
-                다음에 또 만나요.</h1>
+      <img src="/images/ByeBarbi.png" alt="인사하는 너구리" />
 
-                <img src="/images/ByeBarbi.png" alt="인사하는 너구리" />
+      <Button
+        type="button"
+        className="eating-mate"
+        onClick={() => navigate("/eating-mate")}
+      >
+        다시 대화하기
+      </Button>
 
-                <Button
-                    type="button"
-                    className="eating-mate"
-                    onClick={()=>navigate("/eating-mate")}
-                >
-                    다시 대화하기
-                </Button>
-
-                <Button
-                    type="button"
-                    className="home"
-                    onClick={()=>navigate("/home")}
-                >
-                    이 화면 닫기
-                </Button>
-
-            </Wrapper>
-        </>
-    );
+      <Button
+        type="button"
+        className="home"
+        onClick={() => {
+          try {
+            // DOM에 붙은 <audio>가 있을 경우 폴백으로 정지
+            Array.from(document.querySelectorAll('audio')).forEach(a => { a.pause(); a.src = ""; });
+          } catch {}
+          navigate("/home");
+        }}
+      >
+        이 화면 닫기
+      </Button>
+    </Wrapper>
+  );
 };
 
 export default TalkingEnd;
@@ -78,7 +79,7 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   border: none;
   border-radius: 0.75rem;
 
@@ -88,7 +89,6 @@ const Button = styled.button`
   &.eating-mate{
     background: #424242;
     color: #FFF;
-    
     margin-bottom: 1.5rem;
   }
 

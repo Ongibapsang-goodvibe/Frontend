@@ -1,4 +1,3 @@
-// src/pages/talk/EatingMate.jsx
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
@@ -74,6 +73,7 @@ export default function EatingMate() {
   const isActiveRef = useRef(true);   // 대화 진행 여부 플래그
   const ttsDoneRef = useRef(false);   // TTS 종료 핸들러 1회 보장
   const ttsTimerRef = useRef(null);   // TTS 안전 타이머
+  const reqAbortRef = useRef(null);   // STT 요청 취소용 AbortController
 
   // 페이지 진입시 무조건 IDLE로 리셋 + 언마운트 정리
   useEffect(() => {
@@ -84,6 +84,8 @@ export default function EatingMate() {
       cleanupAudio();
       cleanupRecorder(true);
       clearStopTimer();
+      try { reqAbortRef.current?.abort(); } catch {}
+      reqAbortRef.current = null;
     };
   }, []);
 
@@ -200,20 +202,41 @@ export default function EatingMate() {
       });
       formData.append("audio", file);
 
+      // 이전 요청 있으면 취소
+      if (reqAbortRef.current) {
+        try { reqAbortRef.current.abort(); } catch {}
+      }
+      const controller = new AbortController();
+      reqAbortRef.current = controller;
+
       // Content-Type을 수동 지정하지 말 것(axios가 boundary 자동 설정)
-      const res = await api.post("/api/chat/process-audio/", formData);
+      const res = await api.post("/api/chat/process-audio/", formData, {
+        signal: controller.signal,
+      });
 
       const { audio_url } = res.data; // 예: "/media/response.mp3" 또는 "uuid.mp3"
       if (!audio_url) throw new Error("오디오 URL이 없습니다.");
 
+      // 언마운트/종료 후면 무시
+      if (!isActiveRef.current) return;
+
       await playTTS(audio_url);
     } catch (err) {
+      // axios 취소
+      if (err?.name === "CanceledError" || err?.name === "AbortError") {
+        return; // 정상 종료로 간주
+      }
       console.error("STT 처리 오류:", err);
       setState(STATES.IDLE);
+    } finally {
+      reqAbortRef.current = null;
     }
   };
 
   const playTTS = async (audioUrl) => {
+    // 이미 종료/이탈했으면 재생 금지
+    if (!isActiveRef.current) return;
+
     stopCurrentAudio();
     setState(STATES.SPEAKING);
 
@@ -233,9 +256,13 @@ export default function EatingMate() {
       const absUrl = import.meta.env.DEV
         ? finalUrl                               // dev: /media/... → Vite 프록시가 대신 요청
         : (finalUrl?.startsWith("http") ? finalUrl : `${base}${finalUrl}`);
+
       const audio = new Audio(absUrl);
       audio.preload = "auto";
       try { audio.crossOrigin = "anonymous"; } catch {}
+
+      // 재생 직전에도 한 번 더 점검
+      if (!isActiveRef.current) return;
 
       audioRef.current = audio;
 
@@ -255,7 +282,7 @@ export default function EatingMate() {
             console.error("auto startListening failed:", err)
           );
         }, 0);
-          };
+      };
 
       // 기본: ended 한 번만
       audio.addEventListener("ended", beginNextTurn, { once: true });
@@ -311,7 +338,6 @@ export default function EatingMate() {
         beginNextTurn();
       });
 
-      // 재생 정책/포맷 문제로 play()가 실패해도 다음 턴으로
       await audio.play().catch(err => {
         console.error("audio.play() 실패:", err?.name || err);
         beginNextTurn();
@@ -359,6 +385,8 @@ export default function EatingMate() {
         clearStopTimer();
         cleanupAudio();
         cleanupRecorder(true);
+        try { reqAbortRef.current?.abort(); } catch {}
+        reqAbortRef.current = null;
       } catch {}
       navigate("/eating-mate/end");
     }

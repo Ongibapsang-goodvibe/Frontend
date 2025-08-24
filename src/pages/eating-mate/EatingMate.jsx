@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import api from "../../api";
 
 export const STATES = {
   IDLE: "idle",
@@ -167,44 +168,61 @@ export default function EatingMate() {
     cleanupRecorder(true);
 
     try {
+      // 방어: 빈 녹음 방지
+      if (!audioBlob || audioBlob.size === 0) {
+        throw new Error("녹음된 오디오가 비어 있습니다.");
+      }
+
       const formData = new FormData();
-      formData.append("file", audioBlob, "speech.webm");
+      // 서버 예시가 mp3지만, 브라우저에선 webm/opus가 일반적입니다.
+      // 변환은 클라이언트에서 어렵기 때문에 파일명만 맞춰 주거나(간단 체크 우회),
+      // 백엔드에서 webm도 허용하도록 하세요.
+      // ⇒ Blob을 File로 래핑 + 일반적 필드명 'audio' 사용
+      const file = new File([audioBlob], "temp_audio.webm", {
+        type: audioBlob.type || "audio/webm",
+      });
+      formData.append("audio", file);
 
-      const res = await fetch("/api/stt", { method: "POST", body: formData });
-      const data = await res.json(); // { text: "...", reply: "..." }
+      // Content-Type을 수동 지정하지 말 것(axios가 boundary 자동 설정)
+      const res = await api.post("/api/chat/process_audio/", formData);
 
-      await playTTS(data?.reply ?? "죄송해요, 잘 못 들었어요. 다시 말씀해주시겠어요?");
+      const { audio_url } = res.data; // 예: "/media/response.mp3"
+      if (!audio_url) throw new Error("오디오 URL이 없습니다.");
+
+      await playTTS(audio_url);
     } catch (err) {
-      console.error("STT 오류:", err);
+      console.error("STT 처리 오류:", err);
       setState(STATES.IDLE);
     }
   };
 
-  const playTTS = async (text) => {
+  const playTTS = async (audioUrl) => {
     stopCurrentAudio();
     setState(STATES.SPEAKING);
 
     try {
-      const res = await fetch("/api/tts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
+      // 토큰 포함해서 blob으로 받기 (api 인스턴스가 Authorization 헤더 자동 부착)
+      // 상대경로가 올 수 있어 /api 접두사 및 끝 슬래시 보정
+      const fixedUrl = audioUrl.startsWith("http")
+        ? audioUrl
+        : `/api${audioUrl.replace(/\/+$/, "")}/`;
 
-      const audioData = await res.arrayBuffer();
-      const audio = new Audio(URL.createObjectURL(new Blob([audioData])));
+      const res = await api.get(fixedUrl, { responseType: "blob" });
+      const blobUrl = URL.createObjectURL(res.data); // Blob -> 재생 URL
+
+      const audio = new Audio(blobUrl);
       audioRef.current = audio;
 
       audio.addEventListener("ended", () => {
         setState(STATES.LISTENING);
-        // 자동 재녹음 원하면 다음 줄 주석 해제:
-        // startListening();
+        // 자동 재녹음
+        startListening();
       });
       audio.addEventListener("error", () => setState(STATES.IDLE));
 
       await audio.play();
     } catch (err) {
-      console.error("TTS 오류:", err);
+      console.error("오디오 재생 오류:", err);
       setState(STATES.IDLE);
     }
   };
@@ -218,34 +236,33 @@ export default function EatingMate() {
     // LISTENING/THINKING/SPEAKING 전이는 내부 로직이 처리
   };
 
-  // util: 이전 페이지가 같은 도메인인지 확인
   const canGoBackInApp = () => {
     try {
-        const ref = document.referrer;
-        if (!ref) return false;
-        const sameOrigin = new URL(ref).origin === window.location.origin;
-        return sameOrigin;
+      const ref = document.referrer;
+      if (!ref) return false;
+      const sameOrigin = new URL(ref).origin === window.location.origin;
+      return sameOrigin;
     } catch {
-        return false;
+      return false;
     }
   };
 
-  // 하단 버튼 동작 그대로
+  // 하단 버튼 동작
   const handleBottomButton = async () => {
     if (state === STATES.IDLE) {
-        if (canGoBackInApp()) {
+      if (canGoBackInApp()) {
         navigate(-1);
-        } else {
+      } else {
         navigate("/home", { replace: true }); // ← 외부에서 진입했으면 홈으로
-        }
+      }
     } else {
-        // 대화 종료: 리소스 정리 후 종료화면
-        try {
+      // 대화 종료: 리소스 정리 후 종료화면
+      try {
         clearStopTimer();
         cleanupAudio();
         cleanupRecorder(true);
-        } catch {}
-        navigate("/eating-mate/end");
+      } catch {}
+      navigate("/eating-mate/end");
     }
   };
 
@@ -259,7 +276,7 @@ export default function EatingMate() {
       <CharButton
         type="button"
         onClick={handleCharacterClick}
-        $clickable={state === STATES.IDLE}   // ✅ 기존 그대로 유지
+        $clickable={state === STATES.IDLE}   // 기존 그대로 유지
       >
         <img src={ui.img} alt="" draggable={false} />
       </CharButton>

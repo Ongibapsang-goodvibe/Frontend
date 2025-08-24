@@ -74,6 +74,9 @@ export default function Payment() {
         try {
             const res = await api.post("/api/orders/make/", body);
 
+            const orderId = res.data.id;
+            console.log("생성된 orderId:", orderId);
+
             console.log({ restaurant_id: Number(restaurantId), menu_id: Number(menuId) });
             const outputRes = await api.get("/api/orders/orderoutput/", {
                 params: {
@@ -82,15 +85,16 @@ export default function Payment() {
                 }
             });
 
-            const { order_amount, delivery_fee, small_order_fee, total, eta_text } = outputRes.data;
+            const { order_amount, delivery_fee, small_order_fee, total, eta_minutes } = outputRes.data;
 
             setPriceDetail({ order_amount, delivery_fee, small_order_fee, total });
 
             navigate("/order/request", {
                 state: {
+                    orderId,
                     order: res.data,
                     totalPayment: total,
-                    deliveryTime: eta_text
+                    deliveryTime: eta_minutes,
                 }
             });
         } catch (err) {

@@ -43,10 +43,15 @@ export default function CurrentOrder() {
                     const weekday = week[date.getDay()];
 
                     return {
+                        menu_id: order.id,
                         imgSrc: order.image_url || "/images/food1.png",
                         date: `${month}월 ${day}일 (${weekday})`,
                         name: order.menu_name,
                         restaurant: order.restaurant_name,
+
+                        price: order.price,
+                        deliveryFee: order.delivery_fee,
+                        deliveryTime: order.delivery_time,
                     };
                 });
 

@@ -89,7 +89,7 @@ function MenuRecomCard({ menu, isSelected, onClick }) {
             style={{ backgroundColor: isSelected ? "#FFF" : "" }}
         >
             <div className="menu-pic">
-                <img src={menu.image_url || "/images/default-menu.png"} alt={menu.menu_name} />
+                <img src={menu.image_url || "/images/food1.png"} alt={menu.menu_name} />
                 {isSelected && <div className="overlay">선택됨</div>}
             </div>
             <div className='menu-detail'>

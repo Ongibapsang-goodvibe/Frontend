@@ -22,7 +22,6 @@ export default function OrderRequest() {
                     menu: order.menu,
                     totalPayment,
                     deliveryTime,
-                    orderId,
                 }
             });
         }, 5000);

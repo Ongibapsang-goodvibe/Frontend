@@ -77,6 +77,8 @@ export default function Payment() {
             const orderId = res.data.id;
             console.log("생성된 orderId:", orderId);
 
+            localStorage.setItem("orderId", orderId);
+
             console.log({ restaurant_id: Number(restaurantId), menu_id: Number(menuId) });
             const outputRes = await api.get("/api/orders/orderoutput/", {
                 params: {
@@ -91,7 +93,6 @@ export default function Payment() {
 
             navigate("/order/request", {
                 state: {
-                    orderId,
                     order: res.data,
                     totalPayment: total,
                     deliveryTime: eta_minutes,

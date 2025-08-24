@@ -8,8 +8,8 @@ export default function Home() {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const { from, deliveryTime, orderId } = location.state || {};
-    console.log("홈에서 받은 orderId:", orderId);
+    const { from, deliveryTime } = location.state || {};
+    const [orderId, setOrderId] = useState(null);
     
     // 사용자 정보 상태
     const [user, setUser] = useState({ username: "", district_name: "" });
@@ -18,6 +18,10 @@ export default function Home() {
     // API로 사용자 정보 가져오기
     useEffect(() => {
         console.log("토큰:", localStorage.getItem("token"));
+
+        const storedOrderId = localStorage.getItem("orderId");
+        if (storedOrderId) setOrderId(storedOrderId);
+
         api.get('/api/accounts/user/')  // DRF 뷰셋 URL
             .then(res => {
                 setUser(res.data);
@@ -44,7 +48,7 @@ export default function Home() {
     const sectionMap = {
         default: <SectionDefault user={user} />,
         wait: <SectionWait deliveryTime={deliveryTime || 30} />,
-        delivery: <SectionDelivery navigate={navigate} />,
+        delivery: <SectionDelivery navigate={navigate} orderId={orderId}/>,
         food: <SectionFood navigate={navigate} />
     };
 

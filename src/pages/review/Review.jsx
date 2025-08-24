@@ -72,11 +72,11 @@ export default function Review() {
                 <div className='review-container2'>
                     <div className='review-good'>😊 좋았던 점</div>
                     {goodOptions
-                        .sort((a, b) => b.sort_order - a.sort_order) // 많이 선택된 순서대로 정렬
+                        .sort((a, b) => b.sort_order - a.sort_order)
                         .map(opt => (
                             <div className='review-text' key={opt.id}>
                                 <div className='review-text1'>{opt.label}</div>
-                                <div className='review-text2'>{opt.sort_order}</div> {/* 개수 표시 */}
+                                <div className='review-text2'>{opt.sort_order}</div>
                             </div>
                         ))
                     }

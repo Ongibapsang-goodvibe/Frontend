@@ -5,10 +5,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from 'react';
 
 import api from '../../api';
+import formatDeliveryTime from '../../components/FormatDeliveryTime';
 
 export default function OrderRequest() {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const menuData = location.state?.menu || {};
 
     const timerRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +22,10 @@ export default function OrderRequest() {
         timerRef.current = setTimeout(() => {
             navigate("/order/completed", {
                 state: {
-                    menu: order.menu,
+                    menu: menuData,
                     totalPayment,
-                    deliveryTime,
-                }
+                    deliveryTime: deliveryTime ?? menuData.deliveryTime ?? menuData.delivery_time,
+            }
             });
         }, 5000);
     };

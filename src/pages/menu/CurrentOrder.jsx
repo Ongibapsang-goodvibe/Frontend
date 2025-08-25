@@ -20,7 +20,7 @@ export default function CurrentOrder() {
             return;
         }
 
-        api.get(`api/orders/list/`)
+        api.get(`/api/orders/list/`)
             .then((res) => {
                 console.log("백엔드 전체 응답:", res);
                 

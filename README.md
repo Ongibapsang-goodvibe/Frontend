@@ -3,12 +3,27 @@
 
 <br>
 
-## 🔗 배포링크
-[온기밥상](https://www.google.com "https://ongibapsang.vercel.app/")
+## 🔗 배포
+
+### 링크
+https://ongibapsang.vercel.app
 
 <br>
 
-## 💻 기술 스택
+### 테스트 계정
+|이름|비밀번호|
+|:------:|:------:|
+|김철수|123123|
+
+<br>
+
+### 보호자 전송용 영양/건강 보고서
+로그인 후, 아래 경로로 주소 변경<br>
+https://ongibapsang.vercel.app/guard/report
+
+<br>
+
+## 🛠️ 기술 스택
 <span>프론트엔드: </span> 
 <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
 <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> 
@@ -24,7 +39,7 @@
 
 <br>
 
-## 👩‍💻 팀원 소개
+## 💻 팀원 소개
 멋쟁이사자처럼 13기 중앙해커톤 이화여대 3팀 - goodvibe
 |김지후|송나영|서예린|유진서|신지민|황규리|
 |:------:|:------:|:------:|:------:|:------:|:------:|

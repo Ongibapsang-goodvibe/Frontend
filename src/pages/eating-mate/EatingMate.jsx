@@ -246,7 +246,13 @@ export default function EatingMate() {
         if (!u) return null;
         const fname = u.trim().split("/").filter(Boolean).pop(); // "xxxx.mp3" or "xxxx"
         const ensured = fname.endsWith(".mp3") ? fname : `${fname}.mp3`;
-        return `/media/${ensured}`;
+        if (import.meta.env.DEV) {
+          // 로컬: Vite 프록시로 /media/... 사용
+          return `/media/${ensured}`;
+        } else {
+          // 배포: Django serve_audio 뷰로 CORS 허용
+          return `/api/chat/media/${ensured}`;
+        }
       };
 
       const finalUrl = buildMediaUrl(audioUrl);

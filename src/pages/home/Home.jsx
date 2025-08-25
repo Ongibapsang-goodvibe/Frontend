@@ -102,7 +102,7 @@ function SectionDefault({ user }) {
     return (
         <>
             <div className='q'>
-                <div className='nickname'>{user.username}</div>
+                <div className='nickname'>{user?.username}</div>
                 <div className='q1'>님, 오늘은</div>
             </div>
             <div className='q1'>무엇을 드시고 싶으세요?</div>

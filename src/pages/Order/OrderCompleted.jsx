@@ -7,26 +7,27 @@ import FormatDeliveryTime from '../../components/FormatDeliveryTime';
 export default function OrderCompleted() {
     const navigate = useNavigate();
     const location = useLocation();
+    const menuData = location.state?.menu || {};
 
     const { order, totalPayment, deliveryTime, menu } = location.state || {};
 
+    console.log("OrderCompleted로 넘어온 deliveryTime:", deliveryTime);
     useEffect(() => {
         const timer = setTimeout(() => {
             navigate("/home", { state: { from: "wait", deliveryTime: deliveryTime || 30 } });
-        }, 5000);
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, [navigate]);
 
-    const orderTime = menu?.time ? new Date(menu.time) : new Date();
-    const deliverySeconds = menu?.deliveryTime || deliveryTime || 1800;
-    const estimatedArrival = new Date(orderTime.getTime() + deliverySeconds * 1000);
+const now = new Date();
+const estimatedArrival = new Date(now.getTime() + deliveryTime * 1000);
 
-    const arrivalHours = estimatedArrival.getHours();
-    const arrivalMinutes = estimatedArrival.getMinutes();
-    const arrivalSeconds = estimatedArrival.getSeconds();
+const arrivalHours = estimatedArrival.getHours();
+const arrivalMinutes = estimatedArrival.getMinutes().toString().padStart(2, '0');
+const arrivalSeconds = estimatedArrival.getSeconds().toString().padStart(2, '0');
 
-    const arrivalTimeStr = `${arrivalHours}시 ${arrivalMinutes.toString().padStart(2,'0')}분 ${arrivalSeconds.toString().padStart(2,'0')}초`;
+const arrivalTimeStr = `${arrivalHours}시 ${arrivalMinutes}분 ${arrivalSeconds}초`;
 
     console.log(arrivalTimeStr);
 

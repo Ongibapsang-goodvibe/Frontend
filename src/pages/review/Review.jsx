@@ -68,7 +68,7 @@ export default function Review() {
                     <div className='review-text2'>{opt.count}</div>
                   </div>
                 ))}
-            </div>
+              </div>
 
             <div className='review-bar'></div>
 

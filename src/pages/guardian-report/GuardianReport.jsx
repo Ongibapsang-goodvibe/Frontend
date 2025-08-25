@@ -134,7 +134,7 @@ const Inner = styled.div`
   display: block;
 
   border-radius: 0.5rem;
-  background: #fff;
+  background: var(--background-color);
   
   overflow-y: auto;               /* 세로 스크롤 역할 */
   overflow-x: hidden;             /* 가로 스크롤 방지 */

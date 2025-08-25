@@ -60,7 +60,7 @@ export default function CurrentCheck() {
                         navigate("/order/payment", { state:
                             {  
                                 menu,
-                                deliveryTime: deliveryTime,
+                                deliveryTime: menu.deliveryTime ?? menu.delivery_time,
                                 order,
                                 totalPayment,
                             }

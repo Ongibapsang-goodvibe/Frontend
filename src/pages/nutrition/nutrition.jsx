@@ -26,8 +26,13 @@ export default function Nutrition() {
             .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <div>로딩중...</div>;
-    if (!data) return <div>데이터가 없습니다.</div>;
+    if (loading) return (
+        <>
+        <div className='Wrapper-black'>로딩 중</div>
+        </>
+    );
+
+    if (!data) return <div className='Wrapper-black'>데이터가 없습니다.</div>;
 
     const firstDisease = Object.keys(data)[0];
     const diseaseData = data[firstDisease];

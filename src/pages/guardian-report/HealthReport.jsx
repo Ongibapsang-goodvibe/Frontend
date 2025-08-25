@@ -7,11 +7,11 @@ const DAY_KO = ["일요일","월요일","화요일","수요일","목요일","금
 
 // 백엔드 무드코드 → 한글 라벨
 const moodCodeToKorean = {
-  GREAT: "최고인 날",
-  FINE: "괜찮은 날",
+  GREAT: "기분 좋은 날",
+  FINE: "기분 좋은 날",
   SOSO: "그냥 그런 날",
-  BAD: "안 좋은 날",
-  TERRIBLE: "나쁜 날",
+  BAD: "기분 나쁜 날",
+  TERRIBLE: "기분 나쁜 날",
 };
 // 무드코드 → 아이콘 경로
 const moodCodeToIcon = {

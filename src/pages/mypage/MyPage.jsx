@@ -1,4 +1,4 @@
-import "../../assets/styles/mypage.css";
+import "../../assets/styles/MyPage.css";
 
 import { useNavigate } from 'react-router-dom';
 import api from "../../api";

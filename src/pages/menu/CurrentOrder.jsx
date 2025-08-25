@@ -42,8 +42,10 @@ export default function CurrentOrder() {
                     const week = ["일", "월", "화", "수", "목", "금", "토"];
                     const weekday = week[date.getDay()];
 
+                    console.log("order 객체 확인:", order);
                     return {
                         menu_id: order.id,
+                        restaurant_id: order.restaurant_id,
                         imgSrc: order.image_url || "/images/food1.png",
                         date: `${month}월 ${day}일 (${weekday})`,
                         name: order.menu_name,
@@ -69,7 +71,11 @@ export default function CurrentOrder() {
     const handleClick = (idx) => {
         setSelectedIdx(idx);
         const selectedMenu = currentList[idx];
-        navigate("/menu/current-order/check", { state: { menu: selectedMenu } });
+        navigate("/menu/current-order/check", {
+            state: {
+                menu: selectedMenu,
+                deliveryTime: selectedMenu.deliveryTime,
+            } });
     };
 
     return (

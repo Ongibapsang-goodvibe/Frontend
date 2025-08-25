@@ -9,8 +9,9 @@ import formatDeliveryTime from '../../components/FormatDeliveryTime';
 export default function CurrentCheck() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { menu } = location.state || {};
+    const { menu, order, totalPayment, deliveryTime } = location.state || {};
     console.log("넘겨받은 주문:", menu);
+    console.log("CurrentCheck로 넘어온 deliveryTime:", deliveryTime);
 
     if (!menu) {
         return <div>선택된 메뉴가 없습니다.</div>;
@@ -56,7 +57,14 @@ export default function CurrentCheck() {
                     className='choose'
                     onClick={() => {
                         console.log("CurrentCheck에서 Payment로 넘길 menu:", menu);
-                        navigate("/order/payment", { state: { menu } });
+                        navigate("/order/payment", { state:
+                            {  
+                                menu,
+                                deliveryTime: menu.deliveryTime ?? menu.delivery_time,
+                                order,
+                                totalPayment,
+                            }
+                        });
                     }}
                 >
                     <div className='choosetext'>네</div>

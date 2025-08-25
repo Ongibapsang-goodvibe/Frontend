@@ -3,7 +3,7 @@ import "../../assets/styles/OrderCancel.css";
 import { useNavigate } from 'react-router-dom';
 
 export default function OrderCancel() {
-
+    
     return (
         <>
         <div className='Wrap'>

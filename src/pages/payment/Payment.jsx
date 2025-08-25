@@ -5,6 +5,8 @@ import DOWN from "../../../public/icons/down.svg";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import api from '../../api';
+import formatDeliveryTime from '../../components/FormatDeliveryTime';
+
 
 export default function Payment() {
     const navigate = useNavigate();
@@ -18,13 +20,14 @@ export default function Payment() {
     const [deliveryOption, setDeliveryOption] = useState("");
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [priceDetail, setPriceDetail] = useState({
-        order_amount: menuData.price || 0,
-        delivery_fee: menuData.deliveryFee ?? menuData.delivery_fee ?? 0,
-        small_order_fee: menuData.price < 10000 ? 500 : 0,
-        total: (menuData.price || 0) + (menuData.deliveryFee ?? menuData.delivery_fee ?? 0) + (menuData.price < 10000 ? 500 : 0)
-    });
     const dropdownRef = useRef(null);
+
+    const menuPrice = menuData.price || 0;
+    const deliveryFee = menuData.deliveryFee ?? menuData.delivery_fee ?? 0;
+    const deliveryTime = menuData.deliverTime ?? menuData.delivery_time ?? 30;
+    const extraFee = menuPrice < 10000 ? 500 : 0; 
+    const totalPayment = menuPrice + deliveryFee + extraFee;
+
 
     const deliveryOptions = [
         "도착하면 전화해주세요.",
@@ -56,54 +59,44 @@ export default function Payment() {
 
     const handlePayment = async () => {
         const menuId = menuData.menu_id;
-        const restaurantId = menuData.restaurant_id;
-        if (!menuId || !restaurantId) {
-            alert("메뉴 또는 식당 정보가 없습니다.");
+        if (!menuId) {
+            alert("메뉴 정보가 없습니다.");
             return;
         }
 
         setLoading(true);
 
+        const deliveryRequest = deliveryMap[deliveryOption] || "call";
+        const paymentMethod = selectedPayment || "cash";
+
         const body = {
             menu_id: menuId,
             restaurant_request: specialRequest || "",
-            delivery_request: deliveryMap[deliveryOption] || "call",
-            payment_method: selectedPayment
+            delivery_request: deliveryRequest,
+            payment_method: paymentMethod
         };
 
         try {
-            const res = await api.post("/api/orders/make/", body);
+        // 주문 생성
+        const res = await api.post("/api/orders/make/", body);
+        const orderId = res.data.id;
+        localStorage.setItem("orderId", orderId);
 
-            const orderId = res.data.id;
-            console.log("생성된 orderId:", orderId);
-
-            localStorage.setItem("orderId", orderId);
-
-            console.log({ restaurant_id: Number(restaurantId), menu_id: Number(menuId) });
-            const outputRes = await api.get("/api/orders/orderoutput/", {
-                params: {
-                restaurant_id: menuData.restaurant_id,
-                menu_id: menuData.menu_id
-                }
-            });
-
-            const { order_amount, delivery_fee, small_order_fee, total, eta_minutes } = outputRes.data;
-
-            setPriceDetail({ order_amount, delivery_fee, small_order_fee, total });
-
+        // 생성된 주문 정보를 바로 사용 (GET /orderoutput/ 대신)
+        const { order_amount, delivery_fee, small_order_fee, total, eta_minutes } = res.data;
             navigate("/order/request", {
                 state: {
                     order: res.data,
                     totalPayment: total,
-                    deliveryTime: eta_minutes,
+                    deliveryTime: menuData.deliveryTime ?? menuData.delivery_time,
                 }
-            });
-        } catch (err) {
-            console.error("주문 실패:", err.response?.data || err.message);
-            alert("주문에 실패했습니다.");
-        } finally {
-            setLoading(false);
-        }
+        });
+    } catch (err) {
+        console.error("주문 실패:", err.response?.data || err.message);
+        alert("주문에 실패했습니다.");
+    } finally {
+        setLoading(false);
+    }
     };
 
     return (
@@ -152,6 +145,7 @@ export default function Payment() {
                                 }}
                             >
                                 {option}
+
                             </div>
                         ))}
                     </div>
@@ -190,27 +184,27 @@ export default function Payment() {
         <div className="price-summary">
             <div className="ps">
                 <h5>주문 금액</h5>
-                <h4>{priceDetail.order_amount.toLocaleString()}원</h4>
+                <h4>{menuPrice.toLocaleString()}원</h4>
             </div>
             <div className='ps'>
                 <h5>+ 배달 금액</h5>
-                <h4>{priceDetail.delivery_fee.toLocaleString()}원</h4>
+                <h4>{deliveryFee.toLocaleString()}원</h4>
             </div>
             <div className='ps'>
                 <h5>+ 만원 미만 주문 수수료</h5>
-                <h4>{priceDetail.small_order_fee.toLocaleString()}원</h4>
+                <h4>{extraFee.toLocaleString()}원</h4>
             </div>
 
             <div className='bar'></div>
 
             <div className="total">
                 <h6>결제금액</h6>
-                <h1>{priceDetail.total.toLocaleString()}원</h1>
+                <h1>{totalPayment.toLocaleString()}원</h1>
             </div>
         </div>
 
         <div className='pmbt'>
-                <button className="pay-button" onClick={handlePayment}>{priceDetail.total.toLocaleString()}원 결제하기</button>
+                <button className="pay-button" onClick={handlePayment}>{totalPayment.toLocaleString()}원 결제하기</button>
         </div>
 
     </div>

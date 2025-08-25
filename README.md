@@ -36,7 +36,7 @@
 <img width="1920" height="1080" alt="KakaoTalk_Photo_2025-08-25-18-17-32 002" src="https://github.com/user-attachments/assets/d6ecb904-3846-4cd4-adbf-8801fc10d477" />
 <img width="1920" height="1080" alt="KakaoTalk_Photo_2025-08-25-18-17-56 003" src="https://github.com/user-attachments/assets/39bbe445-caf9-44e1-96f4-5728bb31ab3d" />
 <img width="1920" height="1080" alt="KakaoTalk_Photo_2025-08-25-18-17-57 004" src="https://github.com/user-attachments/assets/f0852c36-c2e0-412d-a57c-07435dfcd7fe" />
-<img width="1920" height="1080" alt="KakaoTalk_Photo_2025-08-25-18-17-58 005" src="https://github.com/user-attachments/assets/e28dbc0d-f2f9-4e7f-a3cd-77ca482af7e0" />
+<img width="1920" height="1080" alt="KakaoTalk_Photo_2025-08-25-18-57-35" src="https://github.com/user-attachments/assets/ea8d98b5-1ab5-42d1-a249-d1fd1f1fa51a" />
 <img width="1920" height="1080" alt="KakaoTalk_Photo_2025-08-25-18-18-00 006" src="https://github.com/user-attachments/assets/e006e763-edbc-444f-9dd4-e8960a209c95" />
 <img width="1920" height="1080" alt="KakaoTalk_Photo_2025-08-25-18-18-01 007" src="https://github.com/user-attachments/assets/46eb2683-cdfe-4b90-aa0b-7f1b579744dc" />
 <img width="1920" height="1080" alt="KakaoTalk_Photo_2025-08-25-18-18-02 008" src="https://github.com/user-attachments/assets/8f7af28e-e116-466b-874d-b4ddf5502a94" />
